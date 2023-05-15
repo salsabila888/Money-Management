@@ -36,12 +36,9 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MexpensesDAO;
-import com.sdd.caption.domain.Mbranch;
-import com.sdd.caption.domain.Mexpenses;
-import com.sdd.caption.domain.Muser;
 import com.sdd.caption.model.MexpensesListModel;
-import com.sdd.caption.utils.AppData;
+import com.sdd.management.domain.Mexpenses;
+import com.sdd.management.domain.Muser;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
@@ -238,16 +235,6 @@ public class MexpensesVm {
 		btnCancel.setDisabled(true);
 		btnDelete.setDisabled(true);
 		btnSave.setLabel(Labels.getLabel("common.save"));
-	}
-
-	public ListModelList<Mbranch> getMbranch() {
-		ListModelList<Mbranch> lm = null;
-		try {
-			lm = new ListModelList<Mbranch>(AppData.getMbranch());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
 	}
 
 	public Validator getValidator() {

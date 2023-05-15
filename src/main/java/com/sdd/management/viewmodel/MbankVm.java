@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Date;
 
@@ -27,7 +27,6 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
@@ -36,15 +35,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MbankDAO;
-import com.sdd.caption.dao.MpaymentDAO;
-import com.sdd.caption.domain.Mbank;
-import com.sdd.caption.domain.Mbranch;
-import com.sdd.caption.domain.Mpayment;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.model.MbankListModel;
-import com.sdd.caption.model.MpaymentListModel;
-import com.sdd.caption.utils.AppData;
+import com.sdd.management.dao.MbankDAO;
+import com.sdd.management.domain.Mbank;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.model.MbankListModel;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
@@ -238,16 +232,6 @@ public class MbankVm {
 		btnCancel.setDisabled(true);
 		btnDelete.setDisabled(true);
 		btnSave.setLabel(Labels.getLabel("common.save"));
-	}
-
-	public ListModelList<Mbranch> getMbranch() {
-		ListModelList<Mbranch> lm = null;
-		try {
-			lm = new ListModelList<Mbranch>(AppData.getMbranch());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
 	}
 
 	public Validator getValidator() {

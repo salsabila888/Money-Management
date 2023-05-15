@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,15 +60,10 @@ import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MmenuDAO;
-import com.sdd.caption.dao.TmutationDAO;
-import com.sdd.caption.domain.Mmenu;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Tmutation;
-import com.sdd.caption.handler.NotifHandler;
-import com.sdd.caption.model.TmutationListModel;
-import com.sdd.caption.utils.AppData;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.TmutationDAO;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.domain.Tmutation;
+import com.sdd.management.model.TmutationListModel;
 import com.sdd.utils.StringUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
