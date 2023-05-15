@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="labelpaket" language="groovy" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="467" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa715faa-a5ee-44e7-859e-7a1b6b080505">
+	<property name="ireport.zoom" value="1.8150000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAKETTYPE" class="java.lang.String"/>
+	<field name="mbranch.branchid" class="java.lang.String"/>
+	<field name="mbranch.branchname" class="java.lang.String"/>
+	<field name="dlvid" class="java.lang.String"/>
+	<field name="mcouriervendor.vendorcode" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="142" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="18" width="252" height="27" uuid="7a10aa7c-2b98-4d59-b90f-72f3c62eeb68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="45" width="252" height="20" uuid="80e81f8d-2cd2-4106-9edc-63759198531c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="68" width="252" height="20" uuid="27f11084-e0b7-47bd-8adc-a51bb661b55e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Surat No :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="88" width="252" height="20" uuid="1be367bb-d86c-431c-83dc-d83bfee43703"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dlvid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="108" width="252" height="20" uuid="85540e15-1164-4752-88c4-cd6e7c3f2b73"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mcouriervendor.vendorcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

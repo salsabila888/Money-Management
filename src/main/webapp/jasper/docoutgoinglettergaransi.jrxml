@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Surat Pengiriman" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7caa8980-e740-436e-9325-26ac4989057c">
+	<property name="ireport.zoom" value="2.000000000000001"/>
+	<property name="ireport.x" value="76"/>
+	<property name="ireport.y" value="44"/>
+	<parameter name="BRANCHNAME" class="java.lang.String"/>
+	<parameter name="PERIHAL" class="java.lang.String"/>
+	<parameter name="LETTERDATE" class="java.lang.String"/>
+	<parameter name="PRODUCT" class="java.lang.String"/>
+	<parameter name="ORDERID" class="java.lang.String"/>
+	<parameter name="ORDERDATE" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Program\\SDD\\Caption\\Code\\caption\\WebContent\\jasper\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOUTGOINGPK" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DAYNAME" class="java.lang.String"/>
+	<parameter name="NOTEST" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select owner, tproductdocdetail.* from tproductdocdetail join tproductdoc on tproductdocfk = tproductdocpk
+where toutgoingfk = $P{TOUTGOINGPK}]]>
+	</queryString>
+	<field name="owner" class="java.lang.String"/>
+	<field name="tproductdocdetailpk" class="java.lang.Integer"/>
+	<field name="tproductdocfk" class="java.lang.Integer"/>
+	<field name="docno" class="java.lang.String"/>
+	<field name="docamount" class="java.math.BigDecimal"/>
+	<field name="lastupdated" class="java.sql.Timestamp"/>
+	<field name="updatedby" class="java.lang.String"/>
+	<field name="bilyetno" class="java.lang.String"/>
+	<field name="warrantyno" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="215" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="27" width="50" height="20" uuid="839b3935-77b2-4eb9-8863-25b054b758e9"/>
+				<text><![CDATA[Nomor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="47" width="50" height="19" uuid="72320eff-dfc2-4bed-b1b2-0fc841696738"/>
+				<text><![CDATA[Hal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="110" width="216" height="16" uuid="a71aa7cb-8202-453d-90a6-673798879fa0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. Bank Negara Indonesia (Persero) Tbk]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement key="line" mode="Transparent" x="31" y="11" width="1" height="35" forecolor="#FFFFFF" uuid="94ff960a-027b-45b0-9228-15713aa1b39d"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement key="line" mode="Transparent" x="564" y="11" width="1" height="35" forecolor="#FFFFFF" uuid="54bf285e-8eac-4dda-a006-616a626bc19e"/>
+			</line>
+			<line>
+				<reportElement key="line-1" mode="Transparent" x="293" y="11" width="1" height="35" forecolor="#FFFFFF" uuid="f7b5d393-8223-41f3-8648-3a6eb11f8447"/>
+			</line>
+			<textField>
+				<reportElement x="52" y="27" width="501" height="20" uuid="a61a5382-0990-49d9-b9dc-8d64f7ebbf77"/>
+				<textFieldExpression><![CDATA[": " + $P{ORDERID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="126" width="216" height="16" uuid="2c70f451-db45-48f9-a628-e3f6c2ad46a6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kantor Cabang " + $P{BRANCHNAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="38" y="0" width="180" height="20" uuid="364677d3-00b1-421b-b761-b6dae742e581"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="36" height="20" uuid="f8238ee4-d2e4-4102-a4e7-ca64c2c5b28c"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="66" width="50" height="19" uuid="7b8ae0e3-8277-4c12-b000-943f27eb664c"/>
+				<text><![CDATA[Lampiran]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="47" width="501" height="19" uuid="dbf120b8-590e-436f-a303-126acc8835e3"/>
+				<text><![CDATA[: Pengembalian Jaminan Garansi Bank/BNI Instan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="166" width="551" height="49" uuid="d387e4e2-4964-4cbd-b9fb-bdaaf10faa15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Menunjuk Surat Saudara Testkey " + $P{NOTEST} + ", " + $P{PERIHAL} + ", maka pada hari ini " + $P{DAYNAME} + " tanggal " + $P{LETTERDATE} + ", diserahkan Bilyet Deposito kepada saudara sebagai berikut :"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="94" width="216" height="16" uuid="399aee0c-5b5a-481e-b3d8-7f09bb964a93"/>
+				<text><![CDATA[Kepada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="66" width="166" height="19" uuid="e5467076-f8e1-4651-b511-a7aba80903a9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[: Deposito]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="0" y="1" width="21" height="33" backcolor="#CCCCCC" uuid="751696c6-fe04-41db-8c1e-7808aa8f1968"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="0" y="0" width="555" height="1" uuid="bfbb7fbc-8ff7-49bb-ae40-2b77adb90237"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="34" width="555" height="1" uuid="4853fc7d-e0c4-4727-8480-c8442a1c5bb9"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="0" width="1" height="35" uuid="d984a5ae-f48c-4ab9-984e-4e0f5ff118cd"/>
+			</line>
+			<line>
+				<reportElement key="line" x="21" y="0" width="1" height="35" uuid="998265d8-0ddc-44af-a0f6-5909d821cf8e"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement key="line" x="554" y="0" width="1" height="35" uuid="3eae29bf-4ad4-4cf9-a9e9-fc9645c89962"/>
+			</line>
+			<line>
+				<reportElement key="line" x="186" y="0" width="1" height="34" uuid="b15c9a16-9ec6-4efb-a8d9-8390abb5b7cb"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-2" mode="Opaque" x="396" y="1" width="158" height="33" backcolor="#CCCCCC" uuid="001afa51-3ab9-489d-b278-0ad485ae30dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nominal]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-3" x="395" y="1" width="1" height="33" uuid="b06147b5-7892-4bca-bb27-100cebcf4ac5"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="22" y="1" width="164" height="33" backcolor="#CCCCCC" uuid="1d25bc61-a567-4ab6-bd7a-5a8dec367d3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nama Nasabah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="187" y="1" width="106" height="33" backcolor="#CCCCCC" uuid="5a8081c0-2ceb-4356-91bb-b5bfd755276c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[No Rek Jaminan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="293" y="1" width="102" height="33" backcolor="#CCCCCC" uuid="c4d018ef-2425-41c8-a45c-91fa0e68d364"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[No Seri]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="292" y="1" width="1" height="34" uuid="aba2abfb-c606-49c8-a802-0f9d3c5228c8"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="0" width="18" height="15" isPrintWhenDetailOverflows="true" uuid="8beff555-4d7a-4936-b6d1-38323ec1b97c"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="0" y="0" width="1" height="16" uuid="1c54cf44-4f3d-4916-8493-72e8b63933c9"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="15" width="555" height="1" uuid="bfdf0fef-05d5-4de5-81f8-0e59a389614f"/>
+			</line>
+			<line>
+				<reportElement key="line" x="21" y="0" width="1" height="16" uuid="bc3bcf3a-bc0f-4a3d-8bf4-edb4fa3d9d12"/>
+			</line>
+			<line>
+				<reportElement key="line" x="186" y="-1" width="1" height="16" uuid="a533a881-aaa7-4639-9620-fe9a623c1313"/>
+			</line>
+			<line>
+				<reportElement key="line" x="554" y="0" width="1" height="16" uuid="0ce5979d-d9be-46c5-946f-409ae015124e"/>
+			</line>
+			<line>
+				<reportElement key="line-4" x="395" y="-1" width="1" height="16" uuid="153963bf-d02b-434c-b5f1-8c2eed6bd200"/>
+			</line>
+			<textField>
+				<reportElement x="187" y="0" width="105" height="15" uuid="67f4a942-c180-424f-9a6f-e504ef44cd8c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{docno}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="396" y="0" width="157" height="15" uuid="ae07f096-d86b-4182-bb4c-dda30a1f2335"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{docamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="159" height="15" uuid="feaabcf4-b0d0-4408-8100-4254fca5961b"/>
+				<textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="292" y="0" width="1" height="16" uuid="8e6d3c08-a62f-4474-971c-4c9dd3f8cbe0"/>
+			</line>
+			<textField>
+				<reportElement x="293" y="0" width="102" height="15" uuid="b19c12f6-bba8-4b18-b1cf-b66cdc1797ce"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{bilyetno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="116">
+			<elementGroup/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="116" uuid="f5a0df3d-c34b-4bd2-8851-15a63a674424"/>
+				<subreportParameter name="TOUTGOINGPK">
+					<subreportParameterExpression><![CDATA[$P{TOUTGOINGPK}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="OWNER">
+					<subreportParameterExpression><![CDATA[$F{owner}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/docoutgoinglettergaransi_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

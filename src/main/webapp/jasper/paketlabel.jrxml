@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paketlabel" language="groovy" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="467" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa715faa-a5ee-44e7-859e-7a1b6b080505">
+	<property name="ireport.zoom" value="1.8150000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="nopaket" class="java.lang.String"/>
+	<field name="mbranch.branchid" class="java.lang.String"/>
+	<field name="mbranch.branchname" class="java.lang.String"/>
+	<field name="orderdate" class="java.util.Date"/>
+	<field name="tpaket.mproduct.productname" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="142" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="10" width="252" height="20" uuid="7a10aa7c-2b98-4d59-b90f-72f3c62eeb68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="30" width="252" height="20" uuid="80e81f8d-2cd2-4106-9edc-63759198531c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="50" width="252" height="20" uuid="86ce4f36-c6b3-4b12-8ed3-5c2256c5e562"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["No. Paket : " + $F{nopaket}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="94" width="252" height="20" uuid="0a2c67bc-357f-4393-bb46-a3cd91964d52"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA["Tgl Terima Data : " + new SimpleDateFormat("dd MMM yyyy").format($F{orderdate})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="114" width="42" height="20" uuid="ebc55797-2f1f-4db8-b446-eb0c0063355c"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[Jumlah : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="70" width="252" height="24" uuid="cecb7b8c-3e0d-497b-9f53-242a55b1a3cd"/>
+				<textElement verticalAlignment="Top">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tpaket.mproduct.productname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="114" width="100" height="20" uuid="50e4f9a9-8804-4645-92ec-6307296e7e23"/>
+				<textFieldExpression><![CDATA[$F{quantity} + " Set"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

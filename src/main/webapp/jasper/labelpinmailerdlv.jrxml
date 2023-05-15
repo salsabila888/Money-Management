@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="labelpaket" language="groovy" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="467" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa715faa-a5ee-44e7-859e-7a1b6b080505">
+	<property name="ireport.zoom" value="1.8150000000000004"/>
+	<property name="ireport.x" value="13"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAKETTYPE" class="java.lang.String"/>
+	<field name="mbranch.branchid" class="java.lang.String"/>
+	<field name="mbranch.branchname" class="java.lang.String"/>
+	<field name="dlvid" class="java.lang.String"/>
+	<field name="mcouriervendor.vendorcode" class="java.lang.String"/>
+	<field name="processtime" class="java.util.Date"/>
+	<field name="totaldata" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="142" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="18" width="252" height="27" uuid="7a10aa7c-2b98-4d59-b90f-72f3c62eeb68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchname} + " ("+$F{mbranch.branchid}+")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="68" width="70" height="20" uuid="27f11084-e0b7-47bd-8adc-a51bb661b55e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tanggal Data  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="45" width="182" height="20" uuid="e7ca0246-db55-40e2-a972-b13a1232bf93"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{dlvid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="68" width="182" height="20" uuid="c17ffe76-5fa5-4aec-bc14-1376a5e08238"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + new SimpleDateFormat("dd-MM-yyyy").format($F{processtime})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="88" width="182" height="20" uuid="4845f963-0c12-4660-a49f-856e1fdbd9e7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{totaldata}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="45" width="70" height="20" uuid="a754214b-2f30-42fc-a6ca-b8682567c780"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Nomor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="88" width="70" height="20" uuid="f53e81c3-3478-4d35-87fe-ed97092a6a4d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="20" y="108" width="164" height="24" uuid="ec9d4f42-c376-462d-a32b-ef8ef8f73a3b"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{dlvid}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

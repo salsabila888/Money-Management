@@ -1,0 +1,410 @@
+
+select productgroupname, doctype from mproducttype where productgroupcode = '04';
+
+update mproducttype set doctype = 'DEPO' where productgroupname like '%DEPOSITO%'
+update mproducttype set doctype = 'GIRO' where productgroupname like '%GIRO%'
+update mproducttype set doctype = 'TBG' where productgroupname like '%TABUNGAN%'
+update mproducttype set doctype = 'WKT' where productgroupname like '%WARKAT%'
+
+CREATE SEQUENCE MREPAIRREASON_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE MUSERGROUPLEVEL_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+
+CREATE TABLE MREPAIRREASON (
+	MREPAIRREASONPK INTEGER NOT NULL,
+	REPAIRREASON CHAR(40) DEFAULT '';
+	PRIMARY KEY (MREPAIRREASONPK)
+);
+
+CREATE TABLE MUSERGROUPLEVEL (
+	MUSERGROUPLEVELPK INTEGER NOT NULL,
+	MUSERGROUPFK INTEGER,
+	AMOUNTSTART DECIMAL(17,0) DEFAULT 0,
+	AMOUNTEND DECIMAL(17,0) DEFAULT 0,
+	PRIMARY KEY (MUSERGROUPLEVELPK)
+);
+
+ALTER TABLE MUSERGROUPLEVEL ADD CONSTRAINT MUSERGROUPLEVEL_FK1 FOREIGN KEY (MUSERGROUPFK)
+	REFERENCES MUSERGROUP (MUSERGROUPPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE TREPAIR ADD COLUMN MREPAIRREASONFK INTEGER;
+ALTER TABLE TREPAIR ADD CONSTRAINT TREPAIR_FK5 FOREIGN KEY (MREPAIRREASONFK)
+	REFERENCES MREPAIRREASON (MREPAIRREASONPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+	
+
+ALTER TABLE TREPAIR ADD COLUMN PINPADTYPE CHAR(1) DEFAULT '';
+
+CREATE SEQUENCE treturnmemo_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+ALTER TABLE TDELIVERY ADD COLUMN BERATITEM CHAR(10) DEFAULT '';
+
+ALTER TABLE TORDER ADD COLUMN MEMONO CHAR(40) DEFAULT '';
+
+CREATE SEQUENCE MREPAIRREASON_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+ALTER TABLE TDELIVERY ADD COLUMN CITY CHAR(50) DEFAULT '';
+ALTER TABLE TDELIVERY ADD COLUMN BERATITEM CHAR(10) DEFAULT '';
+ALTER TABLE TPAKETDATA ADD COLUMN CITY CHAR(50) DEFAULT '';
+ALTER TABLE MBRANCH ADD COLUMN ZIPCODE CHAR(6) DEFAULT '';
+CREATE SEQUENCE moutlet_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE TABLE MOUTLET (
+	MOUTLETPK INTEGER NOT NULL,
+	MBRANCHFK INTEGER,
+	OUTLETCODE CHAR(2) DEFAULT '',
+	BICODE CHAR(9) DEFAULT '',
+	OUTLETNAME CHAR(100) DEFAULT '',
+	ADDRESS CHAR(200) DEFAULT '',
+	ZIPCODE CHAR(6) DEFAULT '',
+	OUTLETCITY CHAR(50) DEFAULT '',
+	STATUS CHAR(15) DEFAULT '',
+	PRIMARY KEY (MOUTLETPK)
+);
+ALTER TABLE MOUTLET ADD CONSTRAINT MOUTLET_FK1 FOREIGN KEY (MBRANCHFK)
+	REFERENCES MBRANCH (MBRANCHPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+CREATE SEQUENCE tbookdata_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE TABLE TBOOKDATA (
+	TBOOKDATAPK INTEGER NOT NULL,
+	TBOOKFILEFK INTEGER,
+	TDELIVERYDATAFK INTEGER,
+	SEQNUM CHAR(10) DEFAULT '',
+	QUANTITY INTEGER DEFAULT 0,
+	TOTALAMOUNT DECIMAL(19,0) DEFAULT 0,
+	STATUS CHAR(3) DEFAULT '',
+	ERRCODE CHAR(4) DEFAULT '',
+	ERRDESC CHAR(30) DEFAULT '',
+	PRIMARY KEY (TBOOKDATAPK)
+);
+ALTER TABLE TBOOKDATA ADD CONSTRAINT TBOOKDATA_FK1 FOREIGN KEY (TBOOKFILEFK)
+	REFERENCES TBOOKFILE (TBOOKFILEPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE TBOOKDATA ADD CONSTRAINT TBOOKDATA_FK2 FOREIGN KEY (TDELIVERYDATAFK)
+	REFERENCES TDELIVERYDATA (TDELIVERYDATAPK) ON DELETE RESTRICT ON UPDATE NO ACTION;
+	
+ALTER TABLE TDELIVERY ADD COLUMN PENERIMA2 CHAR(40) DEFAULT '';
+ALTER TABLE TDELIVERY ADD COLUMN TGLTERIMA2 DATE;
+
+CREATE SEQUENCE TREGISTERSTOCK_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+create table tregisterstock(
+        tregisterstockpk integer primary key,
+        branch char(70) default null,
+        productgroup char(3) default null,
+        mproduct char(70) default null,
+        tglincoming date default null,
+        prefix char(5) default null,
+        numerawalinc char(13) default null,
+        numerakhirinc char(13) default null,
+        jumlahinc integer default null,
+        tgloutgoing date default null,
+        numerawaloutg char(13) default null,
+        numerakhiroutg char(13) default null,
+        jumlahoutg integer default null,
+        numerawalouts char(13) default null,
+        numerakhirouts char(13) default null,
+        jumlahouts integer default null,
+        tincomingfk integer default null,
+        branchlevel integer default null
+);
+ALTER TABLE TREGISTERSTOCK ADD CONSTRAINT TREGISTERSTOCK_FK1 FOREIGN KEY (TINCOMINGFK)
+	REFERENCES TINCOMING (TINCOMINGPK) ON DELETE RESTRICT ON UPDATE NO ACTION;
+
+ALTER TABLE TORDER ADD COLUMN MEMONO CHAR(40) DEFAULT '';
+
+INSERT INTO TSCHEDULER VALUES (6, 'PAYROLLSTAT_TRIGGER', 'GROUP1', 'SERVICES FOR READER FILE PAYROLLSTAT', '0', 'AT HOUR', 19, 'com.sdd.caption.handler.PayrollDataHandler', '2022-04-24 14:31:05', 'BY SYSTEM');
+
+ALTER TABLE TREPAIRITEM ADD COLUMN PINPADTYPE CHAR(1) DEFAULT '';
+ALTER TABLE TREPAIRITEM ADD COLUMN TID CHAR(20) DEFAULT '';
+ALTER TABLE TREPAIRITEM ADD COLUMN MID CHAR(20) DEFAULT '';
+ALTER TABLE TREPAIRITEM ADD COLUMN PINPADMEMO CHAR(100) DEFAULT '';
+ALTER TABLE TBOOKFILE ADD COLUMN TOTALERROR INTEGER DEFAULT 0;
+
+ALTER TABLE TBOOKDATA ADD COLUMN ITEMPRICE DECIMAL(19,0) DEFAULT 0;
+ALTER TABLE TBOOKFILE ADD COLUMN TOTALSUCCESS INTEGER DEFAULT 0;
+
+ALTER TABLE TDELIVERY ADD COLUMN TOTALAMOUNT DECIMAL(19,0) DEFAULT 0;
+ALTER TABLE TDELIVERYDATA ADD COLUMN TOTALPRICE DECIMAL(19,0) DEFAULT 0;
+
+ALTER TABLE TPAKETDATA ADD COLUMN ORDERID CHAR(20) DEFAULT NULL;
+ALTER TABLE TDELIVERYDATA ADD COLUMN ORDERID CHAR(20) DEFAULT NULL;
+ALTER TABLE TORDERITEM ADD COLUMN PREFIX CHAR(5) DEFAULT NULL;
+
+ALTER TABLE TBOOKFILE ADD COLUMN DECISIONTIME TIMESTAMP;
+ALTER TABLE TBOOKFILE ADD COLUMN DECISIONBY CHAR(40) DEFAULT '';
+ALTER TABLE TBOOKDATA ADD COLUMN LASTUPDATED TIMESTAMP;
+
+ALTER TABLE TINCOMING ADD COLUMN VENDORLETTERNO CHAR(20) DEFAULT '';
+ALTER TABLE TINCOMING ADD COLUMN VENDORLETTERDATE DATE;
+ALTER TABLE TINCOMING ADD COLUMN PKSNO CHAR(20) DEFAULT '';
+ALTER TABLE TINCOMING ADD COLUMN PKSDATE DATE;
+
+ALTER TABLE TPLAN ADD COLUMN DECISIONTIMEPFA TIMESTAMP;
+ALTER TABLE TPLAN ADD COLUMN DECISIONBYPFA CHAR(40) DEFAULT '';
+
+INSERT INTO MMENU VALUES (503	,435	,'Report'	,'Report'	,'Report Surat Berharga'	,'/view/report/reportdatadocument.zul', '', ''	 	 	,'report.png'	,'list.png'	,'list.png');
+INSERT INTO MMENU VALUES (331  	,207	,'Delivery'	,'Delivery'	,'Approval Delivery'	,'/view/delivery/cardapprovaldelivery.zul', 'arg', 'approval'	 	 	,'delivery.png'	,'decisionlogo.png'	,'decisionlogo.png');
+
+alter table tincoming drop column manufacturedate
+alter table tincoming add column manufacturedate integer 
+
+ALTER TABLE MRETURNREASON ADD COLUMN PRODUCTGROUP CHAR(2) DEFAULT '';
+ALTER TABLE TRETURNITEM ADD COLUMN ITEMPRICE DECIMAL(17,0) DEFAULT 0;
+
+alter table musergrouplevel add column grouplevel integer default 0;
+alter table musergrouplevel add column branchlevel integer default 0;
+
+=======================================================================
+alter table muser drop column lastlogin;
+ALTER TABLE MUSER ADD COLUMN LASTLOGIN TIMESTAMP;
+ALTER TABLE TREPAIRITEM ADD COLUMN ITEMPRICE DECIMAL(17,0) DEFAULT 0;
+	
+INSERT INTO MMENU VALUES (127	,169	,'Order Produk'	,'Order'	,'Approval Order JAL'	,'/view/order/orderapprovaldiv.zul                                      ', 'arg', 'jal'	 	 	,'order.png'	,'order.png'	,'decisionlogo.png');
+INSERT INTO MMENU VALUES (129  	,170	,'Order Produk'	,'Order'	,'Approval Order OPR'	,'/view/order/orderapprovaldiv.zul                                      ', 'arg', 'opr'	 	 	,'order.png'	,'order.png'	,'decisionlogo.png');
+ALTER TABLE TRETURN ADD COLUMN FILENAME CHAR(200) DEFAULT NULL;
+
+INSERT INTO MPRODUCTOWNER (4, 439);
+UPDATE MPRODUCTTYPE SET MPRODUCTOWNERFK = 4 WHERE PRODUCTGROUPCODE = '03';
+
+===============================================================================
+INSERT INTO TSCHEDULER VALUES (7, 'GFXFILE_GENERATE_TRIGGER', 'GROUP1', 'SERVICES FOR CREATE GFX FILE', '0', 'AT HOUR', 19, 'com.sdd.caption.handler.GFXFileGenerator', '2022-08-12 14:31:05', 'BY SYSTEM');
+INSERT INTO TSCHEDULER VALUES (8, 'GFXFILE_READER_TRIGGER', 'GROUP1', 'SERVICES FOR READER GFX FILE', '0', 'AT HOUR', 19, 'com.sdd.caption.handler.GFXFileReader', '2022-08-12 14:31:05', 'BY SYSTEM');
+INSERT INTO MSYSPARAM VALUES (111, 'IMSTOCOREPATH', 'PATH FOLDER IMS TO CORE', '', 'D:/Project/IMS/FLATFILE/TOCORE/', 'GFX', 'Y', NOW(), 'ALFIAN');
+INSERT INTO MSYSPARAM VALUES (112, 'CORETOIMSPATH', 'PATH FOLDER CORE TO IMS', '', 'D:/Project/IMS/FLATFILE/TOIMS/', 'GFX', 'Y', NOW(), 'ALFIAN');
+
+ALTER TABLE TBRANCHITEMBUCKET ADD COLUMN ISGENERATE CHAR(1) DEFAULT 'N';
+ALTER TABLE TBRANCHSTOCKITEM ADD COLUMN ACCNO CHAR(20) DEFAULT NULL;
+ALTER TABLE TBRANCHSTOCKITEM ADD COLUMN DATEACTIVATED DATE;
+
+ALTER TABLE TORDER ADD COLUMN LASTUPDATED TIMESTAMP;
+
+UPDATE MMENU SET MENUORDERNO = 470 WHERE MENUORDERNO = 444;
+UPDATE MMENU SET MENUORDERNO = 471 WHERE MENUORDERNO = 445;
+UPDATE MMENU SET MENUORDERNO = 472 WHERE MENUORDERNO = 446;
+UPDATE MMENU SET MENUORDERNO = 475 WHERE MENUORDERNO = 450;
+
+
+INSERT INTO MMENU VALUES (455	,445	,'Report'	,'Report'	,'Report Order Kartu'	,'/view/report/reportordermanual.zul                                      ', 'arg', '01'	 	 	,'report.png'	,'report.png'	,'report.png');
+INSERT INTO MMENU VALUES (456  	,446	,'Report'	,'Report'	,'Report Order Token'	,'/view/menutab/menutabreportordertoken.zul                                      ', 'arg', '02'	 	 	,'report.png'	,'report.png'	,'report.png');
+INSERT INTO MMENU VALUES (457	,447	,'Report'	,'Report'	,'Report Order Pinpad'	,'/view/report/reportordermanual.zul                                      ', 'arg', '03'	 	 	,'report.png'	,'report.png'	,'report.png');
+INSERT INTO MMENU VALUES (458  	,448	,'Report'	,'Report'	,'Report Order Pinmailer'	,'/view/report/reportordermanual.zul                                      ', 'arg', '06'	 	 	,'report.png'	,'report.png'	,'report.png');
+
+update mmenu set menugroup = 'Repair Pinpad' where mmenupk = '370'; 
+update mmenu set menusubgroup = 'Repair Pinpad' where mmenupk = '370'; 
+update mmenu set menuname = 'Entry Repair Pinpad' where mmenupk = '370'; 
+
+update mmenu set menugroup = 'Repair Pinpad' where mmenupk = '371' ;
+update mmenu set menusubgroup = 'Repair Pinpad' where mmenupk = '371' ;
+update mmenu set menuname = 'Approval Repair Pinpad' where mmenupk = '371' ;
+
+update mmenu set menugroup = 'Repair Pinpad' where mmenupk = '374' ;
+update mmenu set menusubgroup = 'Repair Pinpad' where mmenupk = '374' ;
+update mmenu set menuname = 'Approval Repair Pinpad by OPR' where mmenupk = '374' ;
+
+update mmenu set menugroup = 'Repair Pinpad' where mmenupk = '372' ;
+update mmenu set menusubgroup = 'Repair Pinpad' where mmenupk = '372' ;
+update mmenu set menuname = 'Daftar Repair Pinpad' where mmenupk = '372' ;
+
+ALTER TABLE TREPAIR ADD COLUMN FILENAME CHAR(200) DEFAULT NULL;
+===================================================================================================
+CREATE SEQUENCE TPINPADORDERPRODUCT_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE TREPAIRDLV_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+
+CREATE TABLE TPINPADORDERPRODUCT (
+	TPINPADORDERPRODUCTPK INTEGER,
+	TORDERFK INTEGER,
+	MPRODUCTFK INTEGER,
+	PRODUCTCODE CHAR(10) DEFAULT '',
+	QUANTITY INTEGER DEFAULT 0,
+	STATUS CHAR(3) DEFAULT '',
+	PRIMARY KEY (TPINPADORDERPRODUCTPK),
+	CONSTRAINT TPINPADORDERPRODUCT_FK1 FOREIGN KEY (TORDERFK) REFERENCES TORDER (TORDERPK) ON DELETE CASCADE,
+	CONSTRAINT TPINPADORDERPRODUCT_FK2 FOREIGN KEY (MPRODUCTFK) REFERENCES MPRODUCT (MPRODUCTPK) ON DELETE RESTRICT
+);
+
+CREATE TABLE TREPAIRDLV (
+	TREPAIRDLVPK INTEGER,
+	TREPAIRFK INTEGER,
+	DLVNO CHAR(15) DEFAULT '',
+	QUANTITY INTEGER  DEFAULT 0,
+	ISREPAIRDLV CHAR(1) DEFAULT '',
+	STATUS CHAR(3) DEFAULT '',
+	PROCESSBY CHAR(40) DEFAULT '',
+	PROCESSTIME TIMESTAMP,
+	PRIMARY KEY (TREPAIRDLVPK),
+	CONSTRAINT TREPAIRDLV_FK1 FOREIGN KEY (TREPAIRFK) REFERENCES TREPAIR (TREPAIRPK) ON DELETE CASCADE
+);
+
+ALTER TABLE TPAKET ADD COLUMN TREPAIRDLVFK INTEGER;
+ALTER TABLE TPAKET ADD CONSTRAINT TPAKET_FK9 FOREIGN KEY (TREPAIRDLVFK)
+	REFERENCES TREPAIRDLV (TREPAIRDLVPK) ON DELETE RESTRICT ON UPDATE NO ACTION;
+	
+ALTER TABLE TREPAIR ADD COLUMN TOTALPROSES INTEGER DEFAULT 0;
+ALTER TABLE TREPAIR ADD COLUMN TGLPEMENUHAN DATE;
+ALTER TABLE TREPAIRITEM ADD COLUMN TREPAIRDLVFK INTEGER;
+ALTER TABLE TREPAIRITEM ADD CONSTRAINT TREPAIRITEM_FK2 FOREIGN KEY (TREPAIRDLVFK)
+	REFERENCES TREPAIRDLV (TREPAIRDLVPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+	
+ALTER TABLE TORDER ADD COLUMN ORDERPINPADTYPE CHAR(1) DEFAULT '';
+ALTER TABLE TORDERITEM ADD COLUMN TPINPADORDERPRODUCTFK INTEGER;
+ALTER TABLE TORDERITEM ADD CONSTRAINT TORDERITEM_FK5 FOREIGN KEY (TPINPADORDERPRODUCTFK)
+	REFERENCES TPINPADORDERPRODUCT (TPINPADORDERPRODUCTPK) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE TPAKET ADD COLUMN TPINPADORDERPRODUCTFK INTEGER;
+ALTER TABLE TPAKET ADD CONSTRAINT TPAKET_FK8 FOREIGN KEY (TPINPADORDERPRODUCTFK)
+	REFERENCES TPINPADORDERPRODUCT (TPINPADORDERPRODUCTPK) ON DELETE RESTRICT ON UPDATE NO ACTION;
+===================================================================================================================================
+INSERT INTO MMENU VALUES (373  	,407	,'Repair Pinpad'	,'Repair Pinpad'	,'Proses Pemenuhan Repair'	,'/view/repair/repairprocess.zul', '', ''	 	 	,'repair.png'	,'list.png'	,'list.png');
+ALTER TABLE TREPAIRDLV ADD COLUMN TOTALFAIL INTEGER DEFAULT 0;
+INSERT INTO TSCHEDULER VALUES (3, 'SERVICES FOR STOCK NOTIFICATIO', 'GROUP1', 'SERVICES FOR STOCK NOTIFICATION BY PAGU', 0, 'AT HOUR', 3, 'com.sdd.caption.handler.StockPaguAlertHandler', '2020-12-08 19:36:56', 'ADMIN');
+ALTER TABLE TPLANPRODUCT ADD COLUMN QTYPERUNIT INTEGER DEFAULT 0;
+ALTER TABLE TPLAN ADD COLUMN INCOMINGUSED INTEGER;
+
+update mmenu set menuname = 'Input Persediaan' where menuname = 'Entry Incoming';
+update mmenu set menuname = 'Approval Data Persediaan' where menuname = 'Approval Incoming';
+update mmenu set menuname = 'Daftar Persediaan' where menuname = 'Daftar Incoming';
+
+update mmenu set menuname = 'Approval Pemenuhan Persediaan' where menuname = 'Approval Outgoing';
+update mmenu set menuname = 'Approval Pemenuhan Persediaan by OPR' where menuname = 'Approval Outgoing by OPR';
+update mmenu set menuname = 'Daftar Pemenuhan Persediaan' where menuname = 'Daftar Outgoing';
+
+update mmenu set menugroup = 'Pemesanan Produk' where menugroup = 'Order Produk';
+update mmenu set menusubgroup = 'Pemesanan Manual' where menusubgroup = 'Order Manual';
+update mmenu set menusubgroup = 'Pemesanan' where menusubgroup = 'Order';
+update mmenu set menuname = 'Input Pemesanan Manual' where menuorderno = '163';
+update mmenu set menuname = 'Approval Pemesanan Manual' where menuorderno = '164';
+update mmenu set menuname = 'Daftar Pemesanan Manual' where menuorderno = '165';
+update mmenu set menuname = 'Inject Token' where menuorderno = '166';
+update mmenu set menuname = 'Input Pemesanan' where menuorderno = '167';
+update mmenu set menuname = 'Approval Pemesanan' where menuorderno = '168';
+update mmenu set menuname = 'Approval Pemesanan JAL' where menuorderno = '169';
+update mmenu set menuname = 'Approval Pemesanan OPR' where mmenupk = '129';
+update mmenu set menuname = 'Daftar Pemesanan' where mmenupk = '122';
+
+update mmenu set menuname = 'Pemesanan Vendor Pengiriman' where mmenupk = '202';
+update mmenu set menuname = 'Penerimaan Barang' where mmenupk = '330';
+
+ALTER TABLE TORDER ADD COLUMN TOTALQTY INTEGER DEFAULT 0;
+
+=============
+
+update mmenu set menuname = 'Input Inisiasi Pengadaan' where mmenupk = '100'
+update mmenu set menuname = 'Input Retur' where mmenupk = '250'
+update mmenu set menuname = 'Input Repair Pinpad' where mmenupk = '370'
+
+update mmenu set menugroup = 'Planning' where menugroup = 'Inisiasi Pengadaan'
+update mmenu set menusubgroup = 'Planning' where menusubgroup = 'Inisiasi Pengadaan'
+
+UPDATE MPRODUCTTYPE SET GROUPTYPE = '01' WHERE PRODUCTGROUPCODE = '04';
+UPDATE MPRODUCTTYPE SET GROUPTYPE = '01' WHERE PRODUCTGROUPCODE = '04' AND PRODUCTGROUPNAME LIKE '%DEPOSITO%';
+UPDATE MPRODUCTTYPE SET GROUPTYPE = '02' WHERE PRODUCTGROUPCODE = '04' AND PRODUCTGROUPNAME LIKE '%TABUNGAN%';
+UPDATE MPRODUCTTYPE SET GROUPTYPE = '03' WHERE PRODUCTGROUPCODE = '04' AND PRODUCTGROUPNAME LIKE '%BILYET GIRO%';
+UPDATE MPRODUCTTYPE SET PRODUCTGROUPNAME = 'CEK', GROUPTYPE = '04' WHERE MPRODUCTTYPEPK IN (2339, 2340);
+UPDATE MPRODUCTTYPE SET PRODUCTGROUPNAME = 'BILYET GIRO', GROUPTYPE = '03' WHERE MPRODUCTTYPEPK IN (2341, 2342);
+
+ALTER TABLE MPICPRODUCT ADD COLUMN MBRANCHFK INTEGER;
+ALTER TABLE MPICPRODUCT ADD CONSTRAINT MPICPRODUCT_FK1 FOREIGN KEY (MBRANCHFK)
+	REFERENCES MBRANCH (MBRANCHPK) ON DELETE RESTRICT ON UPDATE NO ACTION;
+	
+ALTER TABLE TPLAN ADD COLUMN ISDECLINE CHAR(1) DEFAULT '';
+
+INSERT INTO MMENU VALUES (107  	,107	,'Planning'	,'Planning'	,'Daftar Inisiasi Pengadaan Ditolak'	,'/view/planning/planning.zul                                      ', 'arg', 'listfail'	 	 	,'usulan.png'	,'list.png'	,'list.png');
+
+INSERT INTO MMENU VALUES (116  	,116	,'Inventory'	,'Inventory'	,'Input Pemenuhan Persediaan'	,'/view/inventory/outgoing.zul                                      ', 'arg', 'scan'	 	 	,'inventory.png'	,'list.png'	,'list.png');
+
+ALTER TABLE TDELIVERY ADD COLUMN FILENAME CHAR(200) DEFAULT NULL;
+delete from mbranchproductgroup where mbranchproductgrouppk = 9
+delete from mbranchproductgroup where mbranchproductgrouppk = 6
+delete from mbranchproductgroup where mbranchproductgrouppk = 10
+delete from mbranchproductgroup where mbranchproductgrouppk = 7
+
+
+INSERT INTO TSCHEDULER VALUES (5, 'PAGU_TRIGGER', 'GROUP1', 'SERVICES FOR STOCK PAGU', 0, 'AT HOUR', 3, 'com.sdd.caption.handler.StockPaguHandler', '2022-09-05 19:36:56', 'ADMIN');
+
+CREATE SEQUENCE TINCOMINGVENDOR_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE TABLE TINCOMINGVENDOR (
+	TINCOMINGVENDORPK INTEGER,
+	TINCOMINGFK INTEGER,
+	MSUPPLIERFK INTEGER,
+	SUPPLIERNAME CHAR(70),
+	PICNAME CHAR(40),
+	PICHP CHAR(40),
+	PRIMARY KEY (TINCOMINGVENDORPK),
+	CONSTRAINT TINCOMINGVENDORPK_FK1 FOREIGN KEY (TINCOMINGFK) REFERENCES TINCOMING (TINCOMINGPK) ON DELETE CASCADE,
+	CONSTRAINT TINCOMINGVENDORPK_FK2 FOREIGN KEY (MSUPPLIERFK) REFERENCES MSUPPLIER (MSUPPLIERPK) ON DELETE RESTRICT
+);
+
+CREATE SEQUENCE TORDERFLOW_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+
+ALTER TABLE TORDER ADD COLUMN PENERIMA CHAR(40) DEFAULT NULL;
+ALTER TABLE TORDER ADD COLUMN FILETERIMA CHAR(200) DEFAULT NULL;
+ALTER TABLE TORDER ADD COLUMN TGLTERIMA DATE;
+
+INSERT INTO MMENU VALUES (329  	,329	,'Delivery'	,'Delivery'	,'Penerimaan Barang KCP'	,'/view/order/orderdashboard.zul', 'arg', 'pod'	 	 	,'delivery.png'	,'pod.png'	,'pod.png');
+INSERT INTO MMENU VALUES (251  	,381	,'Retur'	,'Retur'	,'Input Destroy'	,'/view/return/return.zul                                      ', 'arg', 'entrydes'	 	 	,'retur.png'	,'usulan.png'	,'usulan.png');
+
+ALTER TABLE TREPAIR ADD COLUMN DOCFILE CHAR(200) DEFAULT NULL;
+ALTER TABLE TRETURN ADD COLUMN ISDESTROY CHAR(1) DEFAULT '';
+INSERT INTO MSYSPARAM VALUES (118, 'PAGU_PERIOD', 'JANGKA WAKTU ORDER S/D TERPENUHI(BULAN)', '', '2', 'PAGUPERIOD', 'Y', NOW(), 'SYSTEM');
+
+INSERT INTO MMENU VALUES (323  	,331	,'Delivery'	,'Delivery'	,'Aktivasi Manual'	,'/view/aktivasi/activationdashboard.zul', '', ''	 	 	,'delivery.png'	,'pod.png'	,'pod.png');
+
+INSERT INTO MSYSPARAM VALUES (106, 'ICONHOST', 'ICON IP HOST', '', '192.168.155.110', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (107, 'ICONPORT', 'ICON PORT', '', '21', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (108, 'ICONUSER', 'USERNAME FTP HOST ICON', '', 'fnsonldd', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (109, 'ICONPASSWORD', 'PASSWORD FTP HOST ICON', '', 's3cur3', 'ICON', 'Y', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (111, 'CEMTEXTFOLDER', 'FOLDER FILE CEMTEXT', '', 'data/home/payroll/INVNGEN/transaction/input/', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (112, 'PAYROLLFOLDER', 'FOLDER FILE PAYROLL', '', 'data/home/payroll/INVNGEN/transaction/report/', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (113, 'GFXPATHTOCORE', 'PATH FOLDER IMS TO CORE', '', 'data/home/payroll/INVNGEN/integration/inbound/input/', 'ICON', 'N', NOW(), 'SYSTEM');
+INSERT INTO MSYSPARAM VALUES (114, 'GFXPATHTOIMS', 'PATH FOLDER CORE TO IMS', '', 'data/home/payroll/INVNGEN/integration/outbound/report/', 'ICON', 'N', NOW(), 'SYSTEM');
+
+ALTER TABLE MPRODUCTTYPE ADD COLUMN BOOKTYPE CHAR(10) DEFAULT '';
+
+ALTER TABLE TREPAIRITEM ADD COLUMN RESOLUTION CHAR(100) DEFAULT '';
+ALTER TABLE TREPAIRITEM ADD COLUMN REPLACEMENT CHAR(20) DEFAULT '';
+
+ALTER TABLE TBRANCHITEMBUCKET ADD COLUMN INSERTTIME TIMESTAMP;
+INSERT INTO MMENU VALUES (550  	,550	,'Integrasi Piloting'	,'Integrasi Piloting'	,'Input Persediaan Cabang/Wilayah'	,'/view/inventory/incomingbranchentry.zul', '', ''	 	 	,'inventory.png'	,'usulan.png'	,'usulan.png');
+INSERT INTO MMENU VALUES (552  	,552	,'Integrasi Piloting'	,'Integrasi Piloting'	,'Approval Persediaan Cabang/Wilayah'	,'/view/inventory/incomingbranchlist.zul', '', ''	 	 	,'inventory.png'	,'list.png'	,'list.png');
+INSERT INTO MMENU VALUES (553  	,553	,'Integrasi Piloting'	,'Integrasi Piloting'	,'Daftar Persediaan Cabang/Wilayah'	,'/view/inventory/incomingbranchapproval.zul', '', ''	 	 	,'inventory.png'	,'decisionlogo.png'	,'decisionlogo.png');
+
+ALTER TABLE TORDER ADD COLUMN TOTALCS INTEGER DEFAULT 0;
+ALTER TABLE TORDER ADD COLUMN TOTALTELLER INTEGER DEFAULT 0;
+
+CREATE SEQUENCE TPILOTING_SEQ INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE TABLE TPILOTING(
+	TPILOTINGPK INTEGER,
+	TBRANCHITEMBUCKETFK INTEGER,
+	BRANCHID CHAR(3),
+	BRANCHNAME CHAR(70),
+	PRODUCTTYPE CHAR(70),
+	OUTLET CHAR(2),
+	PREFIX CHAR(5),
+	STARTNO INTEGER,
+	ENDNO INTEGER,
+	TOTALITEM INTEGER,
+	ITEMPRICE DECIMAL(10,0),
+	STATUS CHAR(2),
+	INSERTEDBY CHAR(40),
+	INSERTTIME TIMESTAMP,
+	DECISIONBY CHAR(40),
+	DECISIONTIME TIMESTAMP,
+	PRIMARY KEY (TPILOTINGPK),
+	CONSTRAINT TPILOTING_FK1 FOREIGN KEY (TBRANCHITEMBUCKETFK) REFERENCES TBRANCHITEMBUCKET (TBRANCHITEMBUCKETPK) ON DELETE RESTRICT
+);
+
+ALTER TABLE TPILOTING ADD COLUMN DECISIONBY CHAR(40) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN DECISIONTIME TIMESTAMP;
+ALTER TABLE TPILOTING ADD COLUMN TOTALQTY INTEGER DEFAULT 0;
+
+------------------------
+ALTER TABLE TPILOTING ADD COLUMN FILENAME CHAR(70) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN MEMO CHAR(100) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN SPKNO CHAR(50) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN SPKDATE TIMESTAMP;
+ALTER TABLE TPILOTING ADD COLUMN PKSNO CHAR(50) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN PKSDATE TIMESTAMP;
+ALTER TABLE TPILOTING ADD COLUMN VENDORLETTERNO CHAR(50) DEFAULT '';
+ALTER TABLE TPILOTING ADD COLUMN VENDORLETTERDATE TIMESTAMP;
+ALTER TABLE TPILOTING ADD COLUMN MANUFACTUREDATE INTEGER DEFAULT 0;
+ALTER TABLE TPILOTING ADD COLUMN MSUPPLIERFK INTEGER;
+ALTER TABLE TPILOTING ADD CONSTRAINT TPILOTING_FK3 FOREIGN KEY (MSUPPLIERFK) REFERENCES MSUPPLIER (MSUPPLIERPK) ON DELETE RESTRICT;
+
+INSERT INTO MMENU VALUES (564, 564, 'Integrasi Piloting ', 'Integrasi Piloting ', 'Input Persediaan Piloting PFA', '/view/inventory/incomingdivisionentry.zul', '', '', 'inventory.png', 'usulan.png', 'usulan.png');
+INSERT INTO MMENU VALUES (565, 565, 'Integrasi Piloting ', 'Integrasi Piloting ', 'Approval Persediaan Piloting PFA', '/view/inventory/incomingdivisionapproval.zul', '', '', 'inventory.png', 'decisionlogo.png', 'decisionlogo.png');
+INSERT INTO MMENU VALUES (566, 566, 'Integrasi Piloting ', 'Integrasi Piloting ', 'Daftar Persediaan Piloting PFA', '/view/inventory/incomingdivisionlist.zul', '', '', 'inventory.png', 'list.png', 'list.png');
+

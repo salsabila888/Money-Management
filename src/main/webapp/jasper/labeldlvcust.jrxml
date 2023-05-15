@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="labeldlvcust" language="groovy" printOrder="Horizontal" pageWidth="595" pageHeight="467" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa715faa-a5ee-44e7-859e-7a1b6b080505">
+	<property name="ireport.zoom" value="2.415765000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PAKETTYPE" class="java.lang.String"/>
+	<parameter name="CUSTCITY" class="java.lang.String"/>
+	<field name="mbranch.branchid" class="java.lang.String"/>
+	<field name="mbranch.branchname" class="java.lang.String"/>
+	<field name="dlvid" class="java.lang.String"/>
+	<field name="mcouriervendor.vendorcode" class="java.lang.String"/>
+	<field name="processtime" class="java.util.Date"/>
+	<field name="totaldata" class="java.lang.String"/>
+	<field name="custname" class="java.lang.String"/>
+	<field name="address1" class="java.lang.String"/>
+	<field name="address2" class="java.lang.String"/>
+	<field name="address3" class="java.lang.String"/>
+	<field name="zipcode" class="java.lang.String"/>
+	<field name="hpno" class="java.lang.String"/>
+	<field name="mbranch.branchaddress" class="java.lang.String"/>
+	<field name="mbranch.branchcity" class="java.lang.String"/>
+	<field name="mbranch.zipcode" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="142">
+			<textField>
+				<reportElement x="20" y="34" width="238" height="13" uuid="1be367bb-d86c-431c-83dc-d83bfee43703"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="77" width="129" height="16" uuid="218ece15-dab9-48aa-bbb2-f727ed737d64"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zipcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="18" width="238" height="16" uuid="7a10aa7c-2b98-4d59-b90f-72f3c62eeb68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nama : " +  $F{custname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="61" width="238" height="16" uuid="2edbd9e4-b639-46fb-aa49-c1ff05653693"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address3} + ", " + $F{city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="47" width="238" height="14" uuid="9ae89936-c7cc-4c9d-9c64-31ba34d58f07"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address2}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="10" y="93" width="193" height="49" uuid="07cef50c-4748-432f-a583-33c25f9c1f7b"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="true" checksumRequired="true">
+					<jr:codeExpression><![CDATA[$F{dlvid}]]></jr:codeExpression>
+					<jr:applicationIdentifierExpression><![CDATA[$F{dlvid}]]></jr:applicationIdentifierExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="301" y="18" width="238" height="16" uuid="6dd9e883-c61a-4bb4-bbaa-2ef21c5af390"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Alamat Alternatif"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="34" width="238" height="16" uuid="b9eb7dd7-c036-422d-bbad-1f4aeac5938a"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchname} + "(" +$F{mbranch.branchid} + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="50" width="238" height="27" uuid="7fbb0818-df52-4a88-82fc-73f06716db34"/>
+				<textElement verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.branchaddress} + ", " + $F{mbranch.branchcity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="77" width="238" height="16" uuid="10d6cd4d-f9e5-404f-b2a3-2b17266fd936"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mbranch.zipcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="77" width="109" height="16" uuid="58219e50-3a0c-4c71-9f35-66d0765c6190"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" + $F{mcouriervendor.vendorcode} + ")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

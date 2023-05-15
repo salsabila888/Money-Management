@@ -1,0 +1,65 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		border="none" width="500px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChangepassVm')"
+		validationMessages="@id('vmsgs')" sclass="win">
+		<caption sclass="wincaption">
+			<div align="center">
+				<label value="Form Password Changes"
+					style="font-size: 16px" />
+			</div>
+		</caption>
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<grid>
+			<columns>
+				<column width="40%" />
+				<column width="60%" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Existing Password" />
+					<vbox>
+						<label style="color:red"
+							value="@load(vmsgs['oldPass'])" />
+						<textbox cols="20" maxlength="20"
+							type="password"
+							value="@save(vm.oldPass, before= 'save') @validator(vm.validator)"
+							focus="true" />
+					</vbox>
+				</row>
+				<row>
+					<label value="New Password" />
+					<vbox>
+						<label style="color:red"
+							value="@load(vmsgs['newPass'])" />
+						<textbox cols="20" maxlength="20"
+							type="password"
+							value="@save(vm.newPass, before= 'save') @validator(vm.validator)" />
+					</vbox>
+				</row>
+				<row>
+					<label value="New Password Confirmation" />
+					<vbox>
+						<label style="color:red"
+							value="@load(vmsgs['confirmNewPass'])" />
+						<textbox cols="20" maxlength="20"
+							type="password"
+							value="@save(vm.confirmNewPass, before= 'save') @validator(vm.validator)" onOK="@command('save')" />
+					</vbox>
+				</row>
+			</rows>
+			<foot width="100%">
+				<footer />
+				<footer width="100%">
+					<button sclass="btn btn-primary btn-sm"
+						label="${labels.common.save}" onClick="@command('save')"
+						autodisable="self" height="30px" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

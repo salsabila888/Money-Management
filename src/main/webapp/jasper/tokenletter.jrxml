@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="surat pengiriman token instan" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33f4b571-1f2a-4de8-a0b0-d99fec26b8a0">
+	<property name="ireport.zoom" value="1.4641000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<parameter name="LETTERNO" class="java.lang.String"/>
+	<parameter name="BRANCHNAME" class="java.lang.String"/>
+	<parameter name="TOTALDATA" class="java.lang.String"/>
+	<parameter name="SERIALBEGINNO" class="java.lang.String"/>
+	<parameter name="SERIALENDNO" class="java.lang.String"/>
+	<parameter name="WILAYAH" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="58" width="68" height="20" uuid="0b37e739-1377-4017-b09a-8c46eee4e1e0"/>
+				<text><![CDATA[Lamp.	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="37" width="68" height="20" uuid="7679faf3-5e16-44af-8427-743c78e02946"/>
+				<text><![CDATA[Nomor	:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="39" y="0" width="180" height="20" uuid="29f36371-cfb9-469e-88d6-bed2194c2a7f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="0" width="36" height="20" uuid="59e089da-67e5-4411-bc20-40e5db3f09f1"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="59" width="150" height="20" uuid="78e77336-442c-4269-a255-832686bf9afc"/>
+				<textFieldExpression><![CDATA[$P{TOTALDATA} + " Unit"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="37" width="150" height="20" uuid="55afa592-c7c8-4089-86f5-73454fbf9c8a"/>
+				<textFieldExpression><![CDATA[$P{LETTERNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="6" width="261" height="40" uuid="aa1e4b3c-bdee-4e3e-baed-0fbf429e8ae9"/>
+				<text><![CDATA[Kepada
+
+PT. Bank Negara Indonesia (Persero) Tbk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="64" width="261" height="20" uuid="2116e9b4-2f65-4de9-9e15-74368f21aa92"/>
+				<text><![CDATA[Up. Pemp. Bid. Pelayanan Nasabah (PBN)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="46" width="277" height="20" uuid="e76a6169-f29c-49ae-88cb-9c79b04e1c2e"/>
+				<textElement>
+					<font isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kantor Cabang " + $P{BRANCHNAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="261" height="20" uuid="e13eaf5b-f6e4-4f59-a6b0-b8d768a4f2b7"/>
+				<text><![CDATA[Perihal : Pengiriman Token Instan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="30" width="277" height="20" uuid="5c095ad6-a5bd-4d31-8fb0-0c70221e839c"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Surat Cabang No : " + $P{LETTERNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="269" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="1" width="550" height="34" uuid="b4031251-c7dc-4e82-8346-051103fd0b46"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Menunjuk surat Saudara tersebut diatas dan perihal pada pokok surat, dengan ini kami sampaikan BNI e-Secure Instan sebanyak 250 Unit dari alokasi Wilayah untuk triwulan ke 4 Tahun 2017 dengan rincian sbb :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="15" y="35" width="536" height="20" uuid="55c218ba-648f-4a4e-aea7-2ab0feb07736"/>
+				<textFieldExpression><![CDATA[$P{TOTALDATA} + " Paket BNI e-Secure dalam kondisi tersegel, masing-masing terdiri atas :"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="35" width="14" height="20" uuid="3facc9f9-a9eb-43d6-be3e-9767552f6148"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="55" width="12" height="20" uuid="3e4b793e-e478-4666-9211-1c0df26d0aa5"/>
+				<text><![CDATA[a.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="75" width="12" height="20" uuid="d90d4534-de8b-4240-9b52-34e53910a33b"/>
+				<text><![CDATA[b.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="27" y="55" width="429" height="20" uuid="ed2757c7-a297-4302-9340-2e392e6fe133"/>
+				<textFieldExpression><![CDATA["BNI e-Secure dengan serial Number " + $P{SERIALBEGINNO} + " sampai " + $P{SERIALENDNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="75" width="429" height="20" uuid="46629a7f-c164-4022-85e7-7057c348a0a6"/>
+				<textFieldExpression><![CDATA["Buku Petunjuk Penggunaan BNI -Secure"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="95" width="14" height="20" uuid="ecb626a1-47ff-4e1c-890e-45c1a645ab35"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="95" width="272" height="20" uuid="47195d6e-24ee-4d27-a675-da1be046dd0b"/>
+				<text><![CDATA[Report List BNI e-Secure Delivery]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="115" width="14" height="20" uuid="d78f9306-4d14-4c4f-8cc4-0997308983a9"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="115" width="441" height="20" uuid="776975f1-48e3-4a91-a55a-06143ad3da4e"/>
+				<textFieldExpression><![CDATA[$P{TOTALDATA} + " lembar Tanda terima BNI e-Secure"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="145" width="455" height="20" uuid="a8b4dd6a-10ed-4ff6-97f8-6f6058715060"/>
+				<text><![CDATA[Selanjutnya harap Saudara :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="165" width="272" height="20" uuid="c9336a63-418f-4f66-af77-752ecfd55831"/>
+				<text><![CDATA[Menerima dan mendata pake BNI e-Secure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="165" width="14" height="20" uuid="d29aebaa-5f54-4f95-8816-56eafa71ba5e"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="185" width="536" height="20" uuid="2a88f510-aa1e-4d60-afbf-714262534753"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Mengembalikan BNI e-Secure ke Divisi OPR apabila BNI e-Secure rusak atau tidak dapat digunakan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="185" width="14" height="20" uuid="80d2f3fb-fc91-4777-a2f5-f8b3e85db22a"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="205" width="536" height="30" uuid="37b95cd9-6167-4fd2-b3d5-1cd726d3a1da"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Mengembalikan copy surat ini kepada kami (setelah Saudara tanda tangani) sebagai bukti tanda terima kami melalui fax : (021)-52960357 atau email ke pkd.opr@bni.co.id dan opr.produksi@gmail.com.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="205" width="14" height="20" uuid="86a18f8c-862a-40af-85f5-173a4f0cbf02"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="245" width="550" height="20" uuid="43912ab9-b254-421a-9ec8-a44292074adb"/>
+				<text><![CDATA[Demikian kami sampaikan, atas perhatian dan kerjasamanya kami ucapkan terima kasih]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="326" y="71" width="213" height="26" uuid="f670198c-de76-44bf-a169-614b69c792b7"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[_____________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="97" width="213" height="20" uuid="cd6edb05-4213-4665-893f-195bb915af94"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Tanda Tangan, Nama Jelas & Cap]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="10" width="249" height="43" uuid="f103c163-7fcd-4d38-b6c9-d93e8f3af01f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. BANK NEGARA INDONESIA (Persero) Tbk.
+DIVISI OPERASIONAL
+Pengelola Produksi Kartu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="52" width="213" height="20" uuid="4ebd88e7-22d0-4891-bac8-0730ea0c0d2f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Diterima Oleh :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="33" width="213" height="20" uuid="217a0d85-f800-4b03-96ed-054dbf10060a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Diterima Tanggal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="85" width="249" height="20" uuid="1635ebc8-3798-4b68-9b2a-e2cfcf8abbbd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nugroho Puji Waskito]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="11" y="131" width="249" height="20" uuid="851f9f3f-17f4-40c4-ad80-45588e9ebaa8"/>
+				<textFieldExpression><![CDATA["CC: WILAYAH " + $P{WILAYAH}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

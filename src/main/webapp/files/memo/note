@@ -1,0 +1,34 @@
+List problem tgl 15 Juni:
+
+1. upload data pinmailer tidak bisa/masih error
+status: DONE
+2. menu entri manual order masih error pada user card cheker, card token pinpad maker1 & maker2
+status : DONE
+3. pada menu kartu, ada menu tree yang tidak muncul pada user produksi inventory distribusi approval
+status : open
+4. menu inventory user inventory delivery maker1 & maker2 , tidak muncul menu token dan pinmailer
+status : DONE
+5. menu inventory , entri incoming kartu juga masih error
+status : DONE
+6. inquiry by cabang, klik detail no kartu tidak ada info status nya (detail no surat , tgl surat dll)
+status : open
+7. bon pin mailer tampilannya kosong
+status : DONE
+8. laporan pengiriman pinmailer tampilannya kosong
+status : DONE
+9. update penerimaan POD
+status : DONE
+10. laporan stock cabang, belum tampil detail no kartunya, serta minta bisa diekspor ke file excel
+status : open
+11. menu inventory , approval incoming kartu masih error
+status : DONE
+12. menu pin mailer, daftar pin mailer, klik detail utk data seqnum ekspor ke file excel masih error
+status : DONE
+13. menu inventori,  approval incoming/outgoing, jika datanya banyak ,  tidak muncul ada berapa halamannya
+status : DONE
+14. Di menu order pin mailer, cetak manifestnya masih belum bisa di download ke pdf 
+status : open
+15. menu kartu, approval order tidak bs decline/approve
+status : open
+16. menu kartu , order perso , stok BJM1 error karena stok reserve
+status : open

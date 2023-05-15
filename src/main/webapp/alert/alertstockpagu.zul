@@ -1,0 +1,35 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window mode="overlapped" position="center,top" border="none"
+		sizable="true"
+		viewModel="@id('vm') @init('com.sdd.caprion.viewmodel.AlertPaguStockVm')">
+		<caption label="Alert Pagu Stock" style="font-weight: bold" />
+		<div class="row">
+			<a onClick="@command('doView')">
+				<div class="col-md-12">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<n:span
+										class="glyphicon glyphicon-bell">
+									</n:span>
+								</div>
+								<div class="col-xs-8 text-right">
+									<div class="huge">
+										<label
+											value="@load(vm.countalert)" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</window>
+</zk>

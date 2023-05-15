@@ -1,0 +1,59 @@
+/* @charset "ISO-8859-1";
+
+div.z-listbox {
+	border: 1px solid #B3B3B3;
+	background-color: #F2F2F2;
+	color: Black;
+}
+
+tr.z-listitem, tr.z-listitem a, tr.z-listitem a:visited {
+	background-color: #000000;
+	font-size: 10px;
+	font-weight: normal;
+	color: black;
+	text-decoration: none;
+}
+
+tr.z-listbox-odd {
+	background-color: #F2F2F0;
+}
+
+tr.z-listitem-seld {
+	background-color: #FFFFFF;
+	Color: #CC0000;
+	border: 1px solid #666666;
+} */
+.z-textbox-inplace::placeholder {
+	color: white;
+}
+
+.z-listheader-content .z-combobox {
+	color: #000;
+}
+
+.z-tree-header-border {
+	border-bottom: 1px solid #727272;
+	margin-top: -1px;
+	position: relative;
+}
+
+.z-treecols-bar {
+	border: 0px;
+	background: #ECF2FF !important;
+}
+
+.z-treecell-content {
+	/* background-color: #edfff8; */
+	background-color: #ECF2FF;
+}
+
+.z-treerow.z-treerow-selected>.z-treecell>.z-treecell-content {
+	/* background: #e8f5ff; */
+	background: rgb(244, 216, 254);
+	position: relative
+}
+
+.z-treecell-content:hover {
+	/* background: #e8f5ff; */
+	background: rgb(244, 216, 254);
+}

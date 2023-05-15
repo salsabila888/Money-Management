@@ -1,0 +1,77 @@
+body { 
+	padding: 0 0;	
+	background-color: #eeeeee;
+	#background-image: url('/wms/images/bg4.png');
+}
+img.bg { 
+    display: block;
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.bgchild {
+	#background-image: url('/wms/images/bg4.png');
+}
+.blnorth {
+	height: 60px;
+	overflow:visible;
+}
+.blwest {
+	width: 7px;
+	height: 100%;
+	background-color: #b9cbce;
+	#background-image: url('/wms/images/bg4.png');
+}
+.bleast {
+	width: 7px;
+	height: 100%;
+	background-color: #b9cbce;
+	#background-image: url('/wms/images/bg4.png');
+}
+.blcenter {
+	#background-color: #eeeeee;
+	#overflow: auto;
+	#background-image: url('/wms/images/bg4.png');
+}
+.blsouth {
+	height: 20px;  
+	color: #a6b6b7;
+	background-color: #314d60; 
+	#background-color: #444444;
+}
+.title {
+	font-size: 18px;
+}
+.subtitle {
+	font-size: 16px;
+}
+.textheader {
+	color: white;
+}
+.textheader-focus {
+	color: black;
+}
+
+.cheader {
+	color: white;
+	font-weight: bold;
+}
+.cheader:focus {
+	color: black;
+	font-weight: normal;
+}
+.cheader:blur {
+	color: black;
+	font-weight: bold;
+}
+.win { 
+	#background-color: #4299AA;
+}
+.wincaption {
+	#color: #eeeeee;
+	#background-color: #4299AA;
+}

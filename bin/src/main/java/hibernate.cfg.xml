@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/self_pro</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="connection.password">admin</property>
+		<!-- <property name="connection.password">bniopr</property> -->
+
+		<property name="hibernate.jdbc.batch_size">20</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+
+		<!-- Use the C3P0 connection pool. -->
+		<property name="hibernate.c3p0.min_size">10</property>
+		<property name="hibernate.c3p0.max_size">100</property>
+		<property name="hibernate.c3p0.acquire_increment\">1</property>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.timeout">1800</property>
+		<property name="hibernate.c3p0.validate">1800</property>
+
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable second-level cache. -->
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="cache.use_query_cache">false</property>
+		<!-- <property name="cache.use_minimal_puts">false</property> <property 
+			name="max_fetch_depth">3</property> -->
+
+		<property name="show_sql">true</property>
+		<property name="use_sql_comments">false</property>
+		<!-- <property name="format_sql">true</property> <property name="hbm2ddl.auto"></property> -->
+
+		<mapping class="com.sdd.caption.domain.Mbranch" />
+		<mapping class="com.sdd.caption.domain.Mbranchproductgroup" />
+		<mapping class="com.sdd.caption.domain.Mcourier" />
+		<mapping class="com.sdd.caption.domain.Mcouriervendor" />
+		<mapping class="com.sdd.caption.domain.Mcouriervendorbranch" />
+		<mapping class="com.sdd.caption.domain.Mholiday" />
+		<mapping class="com.sdd.caption.domain.Micon" />
+		<mapping class="com.sdd.caption.domain.Mletter" />
+		<mapping class="com.sdd.caption.domain.Mlettertype" />
+		<mapping class="com.sdd.caption.domain.Mmenu" />
+		<mapping class="com.sdd.caption.domain.Mnotif" />
+		<mapping class="com.sdd.caption.domain.Morg" />
+		<mapping class="com.sdd.caption.domain.Moutlet" />
+		<mapping class="com.sdd.caption.domain.Mpersovendor" />
+		<mapping class="com.sdd.caption.domain.Mpicproduct" />
+		<mapping class="com.sdd.caption.domain.Mproduct" />
+		<mapping class="com.sdd.caption.domain.Mproductgroup" />
+		<mapping class="com.sdd.caption.domain.Mproductowner" />
+		<mapping class="com.sdd.caption.domain.Mproductreq" />
+		<mapping class="com.sdd.caption.domain.Mproducttype" />
+		<mapping class="com.sdd.caption.domain.Mpendingreason" />
+		<mapping class="com.sdd.caption.domain.Mregion" />
+		<mapping class="com.sdd.caption.domain.Mreturnreason" />
+		<mapping class="com.sdd.caption.domain.Msupplier" />
+		<mapping class="com.sdd.caption.domain.Msysparam" />
+		<mapping class="com.sdd.caption.domain.Muser" />
+		<mapping class="com.sdd.caption.domain.Musergroup" />
+		<mapping class="com.sdd.caption.domain.Musergroupmenu" />
+		<mapping class="com.sdd.caption.domain.Musergroupnotif" />
+		<mapping class="com.sdd.caption.domain.Mcourierzipcode" />
+		<mapping class="com.sdd.caption.domain.Mrepairreason" />
+		<mapping class="com.sdd.caption.domain.Musergrouplevel" />
+
+		<mapping class="com.sdd.caption.domain.Tbranchitemtrack" />
+		<mapping class="com.sdd.caption.domain.Tbranchitembucket" />
+		<mapping class="com.sdd.caption.domain.Tbranchstock" />
+		<mapping class="com.sdd.caption.domain.Tbranchstockitem" />
+		<mapping class="com.sdd.caption.domain.Tcounterengine" />
+		<mapping class="com.sdd.caption.domain.Tdelivery" />
+		<mapping class="com.sdd.caption.domain.Tdeliverycourier" />
+		<mapping class="com.sdd.caption.domain.Tdeliverydata" />
+		<mapping class="com.sdd.caption.domain.Tderivatif" />
+		<mapping class="com.sdd.caption.domain.Tderivatifdata" />
+		<mapping class="com.sdd.caption.domain.Tderivatifproduct" />
+		<mapping class="com.sdd.caption.domain.Tembossbranch" />
+		<mapping class="com.sdd.caption.domain.Tembossdata" />
+		<mapping class="com.sdd.caption.domain.Tembossfile" />
+		<mapping class="com.sdd.caption.domain.Tembossproduct" />
+		<mapping class="com.sdd.caption.domain.Tfilebranchactv" />
+		<mapping class="com.sdd.caption.domain.Tfilephone" />
+		<mapping class="com.sdd.caption.domain.Tincoming" />
+		<mapping class="com.sdd.caption.domain.Tincomingvendor" />
+		<mapping class="com.sdd.caption.domain.Tmissingproduct" />
+		<mapping class="com.sdd.caption.domain.Tmissingbranch" />
+		<mapping class="com.sdd.caption.domain.Tnotif" />
+		<mapping class="com.sdd.caption.domain.Torder" />
+		<mapping class="com.sdd.caption.domain.TorderReport1DW" />
+		<mapping class="com.sdd.caption.domain.TorderReport1O" />
+		<mapping class="com.sdd.caption.domain.TorderReport2DW" />
+		<mapping class="com.sdd.caption.domain.TorderReport2O" />
+		<mapping class="com.sdd.caption.domain.TorderReport3DW" />
+		<mapping class="com.sdd.caption.domain.TorderReport3O" />
+		<mapping class="com.sdd.caption.domain.Torderflow" />
+		<mapping class="com.sdd.caption.domain.Torderdoc" />
+		<mapping class="com.sdd.caption.domain.Toutgoing" />
+		<mapping class="com.sdd.caption.domain.Tpaket" />
+		<mapping class="com.sdd.caption.domain.Tpaketdata" />
+		<mapping class="com.sdd.caption.domain.Tperso" />
+		<mapping class="com.sdd.caption.domain.Tpersodata" />
+		<mapping class="com.sdd.caption.domain.Tpersoupload" />
+		<mapping class="com.sdd.caption.domain.Tpersouploaddata" />
+		<mapping class="com.sdd.caption.domain.Tpersoopr" />
+		<mapping class="com.sdd.caption.domain.Tpinpadorderdata" />
+		<mapping class="com.sdd.caption.domain.Tpinpaditem" />
+		<mapping class="com.sdd.caption.domain.Tpinpadserial" />
+		<mapping class="com.sdd.caption.domain.Tpinmailerfile" />
+		<mapping class="com.sdd.caption.domain.Tpinmailerbranch" />
+		<mapping class="com.sdd.caption.domain.Tpinmailerdata" />
+		<mapping class="com.sdd.caption.domain.Tpinmailerproduct" />
+		<mapping class="com.sdd.caption.domain.Tproductmm" />
+		<mapping class="com.sdd.caption.domain.Treturn" />
+		<mapping class="com.sdd.caption.domain.Trollback" />
+		<mapping class="com.sdd.caption.domain.Ttokenorderdata" />
+		<mapping class="com.sdd.caption.domain.Ttokenitem" />
+		<mapping class="com.sdd.caption.domain.Ttokenserial" />
+		<mapping class="com.sdd.caption.domain.Tscheduler" />
+		<mapping class="com.sdd.caption.domain.Tstockcard" />
+		<mapping class="com.sdd.caption.domain.Tuneod" />
+		<mapping class="com.sdd.caption.domain.Tplan" />
+		<mapping class="com.sdd.caption.domain.Tplanproduct" />
+		<mapping class="com.sdd.caption.domain.Tplandoc" />
+		<mapping class="com.sdd.caption.domain.TReportPlan" />
+		<mapping class="com.sdd.caption.domain.Tsecuritiesitem" />
+		<mapping class="com.sdd.caption.domain.Torderitem" />
+		<mapping class="com.sdd.caption.domain.Tordermemo" />
+		<mapping class="com.sdd.caption.domain.Treturnitem" />
+		<mapping class="com.sdd.caption.domain.Treturnmemo" />
+		<mapping class="com.sdd.caption.domain.Treturntrack" />
+		<mapping class="com.sdd.caption.domain.Tswitch" />
+		<mapping class="com.sdd.caption.domain.Tswitchitem" />
+		<mapping class="com.sdd.caption.domain.Tswitchmemo" />
+		<mapping class="com.sdd.caption.domain.Trepair" />
+		<mapping class="com.sdd.caption.domain.Trepairitem" />
+		<mapping class="com.sdd.caption.domain.Trepairmemo" />
+		<mapping class="com.sdd.caption.domain.Trepairdlv" />
+		<mapping class="com.sdd.caption.domain.Tbookdata" />
+		<mapping class="com.sdd.caption.domain.Tbranchitembucket" />
+		<mapping class="com.sdd.caption.domain.Tpinpadorderproduct" />
+		<mapping class="com.sdd.caption.domain.Tpiloting" />
+
+		<mapping class="com.sdd.caption.domain.Vbranchdelivery" />
+		<mapping class="com.sdd.caption.domain.Vbranchstock" />
+		<mapping class="com.sdd.caption.domain.Vembossbranch" />
+		<mapping class="com.sdd.caption.domain.Vmissingbranch" />
+		<mapping class="com.sdd.caption.domain.Vmissingproduct" />
+		<mapping class="com.sdd.caption.domain.Vorderperso" />
+		<mapping class="com.sdd.caption.domain.Vpersoproduct" />
+		<mapping class="com.sdd.caption.domain.Vpersostatus" />
+		<mapping class="com.sdd.caption.domain.Vproductgroupsumdata" />
+		<mapping class="com.sdd.caption.domain.Vcouriervendorsumdata" />
+
+		<mapping class="com.sdd.caption.domain.Vderivatifgenerate" />
+		<mapping class="com.sdd.caption.domain.Vsumdate" />
+		<mapping class="com.sdd.caption.domain.Vsumregionstock" />
+		<mapping class="com.sdd.caption.domain.Vsumbranchstock" />
+		<mapping class="com.sdd.caption.domain.Vsumproductstock" />
+
+		<mapping class="com.sdd.caption.domain.Vinventory" />
+		<mapping class="com.sdd.caption.domain.Vpersodeliv" />
+		<mapping class="com.sdd.caption.domain.Vpersodelivdata" />
+		<mapping class="com.sdd.caption.domain.Vgroupbyregion" />
+		<mapping class="com.sdd.caption.domain.Vgroupbyregiondata" />
+		<mapping class="com.sdd.caption.domain.Vgroupbybranch" />
+		<mapping class="com.sdd.caption.domain.Vgroupbybranchdata" />
+		<mapping class="com.sdd.caption.domain.Vdeliverytotal" />
+
+		<mapping class="com.sdd.caption.domain.Vproductorgstock" />
+		<mapping class="com.sdd.caption.domain.Vproductprod" />
+		<mapping class="com.sdd.caption.domain.Vreportdlv" />
+		<mapping class="com.sdd.caption.domain.Vstatusembossbranch" />
+		<mapping class="com.sdd.caption.domain.Vstatusderivatif" />
+		<mapping class="com.sdd.caption.domain.Vtokenserial" />
+		<mapping class="com.sdd.caption.domain.Vuneod" />
+		<mapping class="com.sdd.caption.domain.Vsla" />
+		<mapping class="com.sdd.caption.domain.Vnotif" />
+		<mapping class="com.sdd.caption.domain.Vreportorder" />
+		<mapping class="com.sdd.caption.domain.Vreportdaily" />
+		<mapping class="com.sdd.caption.domain.Vreportdlvpinmailer" />
+		<mapping class="com.sdd.caption.domain.Vreportplan" />
+		<mapping class="com.sdd.caption.domain.Vinquiryplan" />
+
+		<mapping class="com.sdd.caption.domain.Vstockproducthistory" />
+		<mapping class="com.sdd.caption.domain.Vproducttypestock" />
+		<mapping class="com.sdd.caption.domain.Vproducttypestocksum" />
+		<mapping class="com.sdd.caption.domain.Vsumbyproductgroup" />
+		<mapping class="com.sdd.caption.domain.Vsumbranchstockbyorg" />
+		<mapping class="com.sdd.caption.domain.Vsumoutletstockbyorg" />
+		<mapping class="com.sdd.caption.domain.Vreportdatadocument" />
+
+		<mapping class="com.sdd.caption.domain.Tbookfile" />
+		<mapping class="com.sdd.caption.domain.Vitemprice" />
+		<mapping class="com.sdd.caption.domain.Mkolomreport" />
+		<mapping class="com.sdd.caption.domain.Treportplanf" />
+		<mapping class="com.sdd.caption.domain.Tregisterstock" />
+		
+		<mapping class="com.sdd.caption.domain.Mincome" />
+		<mapping class="com.sdd.caption.domain.Mexpenses" />
+		<mapping class="com.sdd.caption.domain.Maim" />
+		<mapping class="com.sdd.caption.domain.Mpayment" />
+		<mapping class="com.sdd.caption.domain.Mbank" />
+		<mapping class="com.sdd.caption.domain.Tmutation" />
+		<mapping class="com.sdd.caption.domain.Tmutationdoc" />
+		
+	</session-factory>
+</hibernate-configuration>

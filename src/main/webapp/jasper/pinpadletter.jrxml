@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Surat pengiriman pinpad teller" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ceba88b1-e83e-4b39-bc37-36f37eaa5de3">
+	<property name="ireport.zoom" value="1.210000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TOTALDATA" class="java.lang.String"/>
+	<parameter name="LETTERNO" class="java.lang.String"/>
+	<parameter name="BRANCHNAME" class="java.lang.String"/>
+	<field name="sereialno" class="java.lang.String"/>
+	<field name="sereialnoinjected" class="java.lang.String"/>
+	<field name="productserialtype" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="48" height="20" uuid="43faa129-ec9b-4d9c-a748-73620c99004a"/>
+				<text><![CDATA[No	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="48" height="20" uuid="68f594f2-b563-49bb-ab4a-9aa682437ddc"/>
+				<text><![CDATA[Hal	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="69" width="48" height="20" uuid="dcbb332b-b368-427d-9df9-1b6790f8be47"/>
+				<text><![CDATA[Lamp	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="50" width="154" height="20" uuid="ea5da56b-8c67-4d7e-8a44-feb39fab0d93"/>
+				<text><![CDATA[Pengiriman Pinpad Teller]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="38" y="0" width="180" height="20" uuid="036e3e12-c6e4-4e1a-a18b-0ce4b525d7f3"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="36" height="20" uuid="ddffc099-345b-408b-9403-ecb638967728"/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="30" width="154" height="20" uuid="448fb808-b2ab-4740-9664-ec959a82523f"/>
+				<textFieldExpression><![CDATA[$P{LETTERNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="69" width="154" height="20" uuid="25e90788-e57b-43f2-b9d5-0d95797c7182"/>
+				<textFieldExpression><![CDATA[$P{TOTALDATA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="202" height="28" uuid="d608f8ea-559b-427f-98ce-2c9b671cf8a1"/>
+				<text><![CDATA[Kepada
+PT. Bank Negara Indonesia (Persero) Tbk]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="86" width="515" height="20" uuid="f6e6893f-600b-453f-b20e-982b6cf9fe9a"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Surat Saudara No : -"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="108" width="555" height="30" uuid="88f01110-c8c7-4526-88b4-47d348ae2c59"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Menunjuk surat Saudara tersebut diatas perihal pada pokok surat, dengan ini kami kirimkan " + $P{TOTALDATA} + " unit pinpad dengan rincian sbb :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="38" width="295" height="20" uuid="b75de0d3-0814-49dd-85b4-c913608b0c70"/>
+				<textFieldExpression><![CDATA["Kantor Cabang " + $P{BRANCHNAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="58" width="202" height="13" uuid="60bc5fc4-99b7-4118-b49d-87d695aaa3f7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Up. Bag. Umum]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="0" y="1" width="21" height="33" backcolor="#CCCCCC" uuid="742ac6fd-05ca-48ef-adaa-49e01576a6aa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="0" y="0" width="555" height="1" uuid="79771bdb-9a19-4ed5-be5e-17d971afda81"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="34" width="555" height="1" uuid="1299800f-e118-4890-8002-891292aa1e0c"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="0" width="1" height="35" uuid="3c39a2c5-76d2-4cb6-867d-6e147b79bfdd"/>
+			</line>
+			<line>
+				<reportElement key="line" x="21" y="0" width="1" height="35" uuid="822330af-d950-47bc-b211-ced000191b2f"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement key="line" x="554" y="0" width="1" height="35" uuid="deba3c50-5ae4-4290-8514-8935c18dd904"/>
+			</line>
+			<line>
+				<reportElement key="line" x="122" y="1" width="1" height="33" uuid="5dbde9bb-e417-47d8-a31b-d38079256e61"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-1" mode="Opaque" x="224" y="1" width="101" height="33" backcolor="#CCCCCC" uuid="e97db188-5c82-425f-bad5-cafd3914b93f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="223" y="0" width="1" height="35" uuid="ca312e9c-1dd2-4de8-bb6b-cafbdd8a22db"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-2" mode="Opaque" x="326" y="1" width="228" height="33" backcolor="#CCCCCC" uuid="20e0dcf9-be05-4e4d-9964-acf213d85daa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Keterangan]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-3" x="325" y="1" width="1" height="33" uuid="68fb2ff4-30c2-41a3-a53e-b7c18d34a0e3"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="22" y="1" width="100" height="33" backcolor="#CCCCCC" uuid="a880fc49-401f-4dbb-a0d1-4a380270c554"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[TID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" mode="Opaque" x="123" y="1" width="100" height="33" backcolor="#CCCCCC" uuid="b6a42b15-0cf5-49e1-9cde-3f237cda8fad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[S/N]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="0" width="18" height="16" isPrintWhenDetailOverflows="true" uuid="5a9278dd-283a-4659-964f-95c74f8d1790"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="22" y="0" width="100" height="16" isPrintWhenDetailOverflows="true" uuid="f5c5ffa9-a6b1-4e43-ac65-bf9ddf1bcb39"/>
+				<textElement>
+					<font size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Jenis Kartu"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="0" y="0" width="1" height="16" uuid="3028cc1c-125c-4f99-9bcc-01e6ee798897"/>
+			</line>
+			<line>
+				<reportElement key="line" x="0" y="16" width="555" height="1" uuid="67901f77-f968-45b0-8c26-1f78643776f6"/>
+			</line>
+			<line>
+				<reportElement key="line" x="21" y="0" width="1" height="16" uuid="032589a5-111b-4fbc-90f8-8fe9cc424702"/>
+			</line>
+			<line>
+				<reportElement key="line" x="122" y="0" width="1" height="16" uuid="e3e12b6d-1c73-49e9-a6be-277fcd973e4d"/>
+			</line>
+			<line>
+				<reportElement key="line" x="554" y="0" width="1" height="16" uuid="881ec790-3bc8-4924-a2c0-4040c6da97aa"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="123" y="0" width="100" height="16" isPrintWhenDetailOverflows="true" uuid="ec71ac19-b59f-4796-b9c8-ff57b1657bac"/>
+				<textElement>
+					<font size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No Paket"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-2" x="223" y="0" width="1" height="16" uuid="3e8ffdbb-3e62-4d43-b427-c54242261e39"/>
+			</line>
+			<line>
+				<reportElement key="line-4" x="325" y="0" width="1" height="16" uuid="5400bbdc-d417-4c56-ac8d-53694ecd2bfd"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-1" x="223" y="0" width="102" height="16" isPrintWhenDetailOverflows="true" uuid="eca07778-a73a-4a54-a7ff-ebbbc0606d71"/>
+				<textElement>
+					<font size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tanggal Data"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-2" x="326" y="0" width="227" height="16" isPrintWhenDetailOverflows="true" uuid="45a0e128-019f-4517-bf7a-0e1529ff33a4"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Jumlah Kartu"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="69" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="10" width="552" height="32" uuid="f7db12b4-310f-4f6c-8c49-bda6119e03fb"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Kami harapkan bantuan Saudara untuk mengembalikan copy surat ini kepada kami (setelah Saudara tanda tangani). Info lebih lanjut dapat menghubungi Acep Zulqornaini / Roni Irawan no telp (021) 80826840 - ext. 8576/8569."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="49" width="552" height="20" uuid="1840a70e-d6b9-4e15-98cc-3fb9ee44e282"/>
+				<text><![CDATA[Demikian kami sampaikan, atas perhatian dan kerjasamanya kami ucapkan terima kasih.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="149" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="249" height="43" uuid="949ab420-c9ea-4a4d-8345-a25d7c06b032"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. BANK NEGARA INDONESIA (Persero) Tbk.
+DIVISI OPERASIONAL
+Pengelola Produksi Kartu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="75" width="249" height="20" uuid="cce96d58-aa20-4d52-a1a8-49e4807b8885"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nugroho Puji Waskito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="107" width="249" height="31" uuid="616543fb-401c-47ac-b48c-5f8a99562a21"/>
+				<text><![CDATA[Cc : - DIV JAL (KEL. OPERASIONAL JARINGAN)
+        - WIL JAKARTA KEMAYORAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="43" width="213" height="20" uuid="3c1567da-635b-4e69-a211-54a6070b71b1"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Diterima Tanggal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="62" width="213" height="20" uuid="1acef424-9f86-4bed-8118-699f7c4c56c7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Diterima Oleh :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="81" width="213" height="26" uuid="ce68ef82-1f3d-40ec-8a44-e72689f557f8"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[_____________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="107" width="213" height="20" uuid="ec43706b-f5c8-4c68-a7c3-a9504b30da60"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<paragraph firstLineIndent="2"/>
+				</textElement>
+				<text><![CDATA[Tanda Tangan, Nama Jelas & Cap]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
