@@ -1,4 +1,4 @@
-package com.sdd.caption.dao;
+package com.sdd.management.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -10,8 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.sdd.caption.domain.Msysparam;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.domain.Msysparam;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class TcounterengineDAO {

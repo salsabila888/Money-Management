@@ -1,11 +1,11 @@
-package com.sdd.caption.dao;
+package com.sdd.management.dao;
 
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import com.sdd.caption.domain.Tmutationdoc;
+import com.sdd.management.domain.Tmutationdoc;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class TmutationdocDAO {

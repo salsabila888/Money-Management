@@ -1,4 +1,4 @@
-package com.sdd.caption.domain;
+package com.sdd.management.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +23,6 @@ public class Tnotif implements Serializable {
 	private Integer branchlevel;
 	private Date notiftime;
 	private Mmenu mmenu;
-	private Mbranch mbranch;
 
 	public Tnotif() {
 	}
@@ -75,16 +74,6 @@ public class Tnotif implements Serializable {
 
 	public void setProductgroup(String productgroup) {
 		this.productgroup = productgroup;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "mbranchfk")
-	public Mbranch getMbranch() {
-		return mbranch;
-	}
-
-	public void setMbranch(Mbranch mbranch) {
-		this.mbranch = mbranch;
 	}
 
 	public Integer getBranchlevel() {

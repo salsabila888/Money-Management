@@ -1,4 +1,4 @@
-package com.sdd.caption.dao;
+package com.sdd.management.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import com.sdd.caption.domain.Tscheduler;
+import com.sdd.management.domain.Tscheduler;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class TschedulerDAO {

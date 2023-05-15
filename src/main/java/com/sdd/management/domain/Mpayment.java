@@ -1,4 +1,4 @@
-package com.sdd.caption.domain;
+package com.sdd.management.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;

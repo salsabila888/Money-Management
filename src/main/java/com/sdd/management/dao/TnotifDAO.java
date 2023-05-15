@@ -1,4 +1,4 @@
-package com.sdd.caption.dao;
+package com.sdd.management.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import com.sdd.caption.domain.Tnotif;
-import com.sdd.caption.domain.Vnotif;
+import com.sdd.management.domain.Tnotif;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class TnotifDAO {
@@ -81,22 +80,6 @@ public class TnotifDAO {
 		List oList = new ArrayList();
 		session = StoreHibernateUtil.openSession();
 		oList = session.createQuery("select " + fieldname + " from Tnotif order by " + fieldname).list();
-		session.close();
-		return oList;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Vnotif> listNotif(String filter) throws Exception {
-		List<Vnotif> oList = null;
-		if (filter == null || "".equals(filter))
-			filter = "0 = 0";
-		session = StoreHibernateUtil.openSession();
-		oList = session
-				.createSQLQuery("select musergrouppk, mmenupk, sum(notifcount) as totalnotif, notiftxt from Tnotif "
-						+ "join Mmenu on mmenufk = mmenupk join Musergroupmenu on musergroupmenu.mmenufk = mmenu.mmenupk "
-						+ "join Musergroup on musergroupfk = musergrouppk where " + filter
-						+ " group by musergrouppk, mmenupk, notiftxt")
-				.addEntity(Vnotif.class).list();
 		session.close();
 		return oList;
 	}

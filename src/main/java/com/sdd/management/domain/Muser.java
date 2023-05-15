@@ -1,4 +1,4 @@
-package com.sdd.caption.domain;
+package com.sdd.management.domain;
 
 import java.io.Serializable;
 
@@ -19,14 +19,12 @@ public class Muser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer muserpk;
 	private Musergroup musergroup;
-	private Mpersovendor mpersovendor;
 	private String userid;
 	private String username;
 	private String password;
 	private Date lastlogin;
 	private Date lastupdated;
 	private String updatedby;
-	private Mbranch mbranch;
 	
 	public Muser() {
 	}
@@ -110,25 +108,4 @@ public class Muser implements Serializable {
 	public void setMusergroup(Musergroup musergroup) {
 		this.musergroup = musergroup;
 	}
-	
-	@ManyToOne
-	@JoinColumn(name = "mpersovendorfk")
-	public Mpersovendor getMpersovendor() {
-		return mpersovendor;
-	}
-
-	public void setMpersovendor(Mpersovendor mpersovendor) {
-		this.mpersovendor = mpersovendor;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "mbranchfk")
-	public Mbranch getMbranch() {
-		return mbranch;
-	}
-
-	public void setMbranch(Mbranch mbranch) {
-		this.mbranch = mbranch;
-	}
-
 }

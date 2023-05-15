@@ -1,4 +1,4 @@
-package com.sdd.caption.domain;
+package com.sdd.management.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -26,7 +26,6 @@ public class Mproduct implements Serializable {
 	private String productgroup;
 	private String productname;
 	private String updatedby;
-	private Mproducttype mproducttype;
 	private String isdlvhome;
 	private String isopr;
 	
@@ -124,19 +123,6 @@ public class Mproduct implements Serializable {
 	public void setUpdatedby(String updatedby) {
 		this.updatedby = updatedby;
 	}
-
-
-	//bi-directional many-to-one association to Mproducttype
-	@ManyToOne
-	@JoinColumn(name="mproducttypefk")
-	public Mproducttype getMproducttype() {
-		return this.mproducttype;
-	}
-
-	public void setMproducttype(Mproducttype mproducttype) {
-		this.mproducttype = mproducttype;
-	}
-
 
 	public String getIsdlvhome() {
 		return isdlvhome;
