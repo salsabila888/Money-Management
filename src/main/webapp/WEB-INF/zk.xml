@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk>
+	<device-config>
+		<device-type>ajax</device-type>
+		<timeout-uri>/timeout.zul</timeout-uri><!-- An empty URL can cause the browser to reload the same URL -->
+	</device-config>
+	
+	<!-- <session-config>
+		<session-timeout>60</session-timeout>
+	</session-config> -->
+	
+	<preference>
+		<name>org.zkoss.zk.ui.WebApp.name</name>
+		<value>Money Management</value>
+	</preference>
+	
+	<listener>
+		<listener-class>com.sdd.utils.db.HibernateListeners</listener-class>		
+	</listener>
+	
+	<listener>
+		<listener-class>com.sdd.utils.scheduler.SchedulerService</listener-class>		
+	</listener>
+	
+	<library-property>
+		<name>org.zkoss.theme.preferred</name>
+		<value>iceblue_c</value>
+	</library-property>
+	
+	<library-property>
+		<name>org.zkoss.zul.Paging.mold</name>
+		<value>os</value>
+	</library-property>
+	
+	<library-property>
+		<name>maxFlush</name>
+		<value>80</value>
+	</library-property>
+	
+	<library-property>
+		<name>maxBatchCommit</name>
+		<value>80000</value>
+	</library-property>
+	
+</zk>

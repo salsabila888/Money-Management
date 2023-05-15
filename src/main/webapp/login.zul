@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/saving.png" ?>
+
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="font-awesome/css/all.css" ?>
+<!-- <?link rel="stylesheet" type="text/css"	href="mdb/css/stylelogin.css" ?> -->
+
+<!-- Favicon and touch icons -->
+<?link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<style>
+		#fmlogin { background-color: white; border-radius: 20px;
+		padding-top: 40px; padding-bottom: 10px; }
+	</style>
+	<div id="bdlogin" class="container-fluid"
+		style="background-image: url('images/pastelbg.jpg'); background-repeat: no-repeat; background-attachment: inherit;
+		background-position: center; background-size: cover;"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.AuthentificationVm')">
+		<div class="row animated fadeIn vh-100">
+			<div class="col-md-4 offset-md-4 text-center my-auto">
+				<n:img src="images/piggybank.png" class="img-fluid mb-4"
+					width="280px" height="120px">
+				</n:img>
+				<n:form id="fmlogin"
+					class="text-center border border-light z-depth-1-half pl-4 pr-4">
+					<label sclass="text-danger"
+						value="@bind(vm.lblMessage)" />
+					<textbox id="tbUsername" value="@bind(vm.userid)"
+						maxlength="15" focus="true"
+						style="background-color: #f1f2f2 !important;"
+						sclass="form-control form-control-md mb-4 rounded-pill"
+						placeholder="User ID" />
+					<textbox id="tbPassword" value="@bind(vm.password)"
+						type="password" maxlength="20"
+						style="background-color: #f1f2f2 !important;"
+						sclass="form-control form-control-md mb-4 rounded-pill"
+						onOK="@command('doLogin')" placeholder="Password" />
+					<button onClick="@command('doLogin')"
+						autodisable="self" style="background-color: #937DC2 !important;"
+						class="btn btn-info btn-block my-4 rounded-pill" label="LOG IN" />
+				</n:form>
+			</div>
+			<div class="col-md-1 my-auto"></div>
+		</div>
+	</div>
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="mdb/js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="mdb/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+</zk>

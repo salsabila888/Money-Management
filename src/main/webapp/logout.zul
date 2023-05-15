@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/saving.png" ?>
+
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="font-awesome/css/all.css" ?>
+<!-- <?link rel="stylesheet" type="text/css"	href="mdb/css/stylelogin.css" ?> -->
+
+<!-- Favicon and touch icons -->
+<?link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<style>
+		#fmlogin { background-color: white; border-radius: 20px;
+		padding-top: 40px; padding-bottom: 10px; }
+	</style>
+	<div id="bdlogin" class="container-fluid"
+		style="background-image: url('images/pastelbg.jpg'); background-repeat: no-repeat; background-attachment: inherit;
+		background-position: center; background-size: cover;"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.AuthentificationVm')">
+		<div class="row animated fadeIn vh-100">
+			<div class="col-md-4 offset-md-1 text-center my-auto">
+				<n:img src="images/piggybank.png" class="img-fluid mb-4"
+					width="380px" height="150px">
+				</n:img>
+				<n:div id="fmlogin"
+					class="text-center border border-light z-depth-1-half pl-4 pr-4">
+					<n:h4 class="card-title">
+						You are logged out from
+						${desktop.webApp.appName}.
+					</n:h4>
+					<n:p class="card-text">
+						Thank You for using this application.
+						<n:br />
+						Please log in to using this application again.
+						<n:br />
+						<n:a
+							class="btn btn-info btn-block my-4 rounded-pill" href="/ims"
+							style="background-color: #937DC2 !important;" role="button">
+							Log In
+						</n:a>
+					</n:p>
+				</n:div>
+			</div>
+			<div class="col-md-1 my-auto"></div>
+		</div>
+	</div>
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="mdb/js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="mdb/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+</zk>
