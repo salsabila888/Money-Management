@@ -1,0 +1,186 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifRejectVm')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Reject Data Kartu Berfoto</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="No Surat Cabang" />
+								<textbox value="@bind(vm.orderno)"
+									cols="30" maxlength="20" />
+							</row>
+							<row>
+								<label value="Pilih Tipe Reject" />
+								<hlayout>
+									<radiogroup
+										selectedItem="@bind(vm.type)"
+										onCheck="@command('doCheckedtype', type=vm.type)">
+										<radio value="M" label="Manual" />
+										<separator orient="vertical" />
+										<radio value="U"
+											label="Upload File" />
+									</radiogroup>
+								</hlayout>
+							</row>
+							<row id="rowUpload">
+								<label value="File" />
+								<vlayout>
+									<button id="btnBrowse"
+										label="Browse File..." upload="true, maxsize=500000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowse', upEvent=event)" />
+									<label id="fileBrowse"
+										value="@load(vm.filename)" />
+								</vlayout>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer id="footManual">
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" 
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" 
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button id="btnDownload"
+											autodisable="self" label="Download Template"
+											sclass="btn btn-default btn-sm"
+											onClick="@command('doTemplate')" 
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									</div>
+								</div>
+							</footer>
+							<footer id="footUpload">
+								<div class="row">
+									<div class="col-md-6">
+										<button
+											sclass="btn btn-default btn-sm" autodisable="self"
+											label="Upload" onClick="@command('doUpload')" />
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button autodisable="self" label="Download Template"
+											sclass="btn btn-default btn-sm"
+											onClick="@command('doTemplate')" 
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<groupbox id="gbManual">
+					<div class="row">
+						<div class="col-md-10">
+							<paging id="paging" autohide="true" />
+						</div>
+						<div class="col-md-2" align="right">
+							<label value="Total Record :"
+								style="font-weight: bold" />
+							<label value="@load(vm.pageTotalSize)"
+								style="font-weight: bold" />
+						</div>
+					</div>
+					<grid id="grid"
+						emptyMessage="${labels.common.emptymsg}">
+						<columns>
+							<column label="${labels.common.no}"
+								align="right" width="40px" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column align="center" width="50px"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+								<checkbox id="chkAll"
+									onCheck="@command('doCheckedall', checked=self.checked)" />
+							</column>
+							<column width="200px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+								<textbox inplace="true" class="cheader"
+									value="@bind(vm.cardno)" cols="10" maxlength="15"
+									placeholder="No. Order" style="text-align:center"
+									tooltiptext="${labels.common.searchonheader}"
+									onOK="@command('doSearch')" />
+							</column>
+							<column label="Nama" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column label="Kode Produk" align="center"
+								width="150px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column label="Cabang" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column label="Tgl Data" align="center"
+								width="150px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column id="action" visible="false"
+								label="Action" align="center" width="120px" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</columns>
+					</grid>
+				</groupbox>
+				<groupbox id="gbHasilUpload">
+					<caption label="Hasil Upload" />
+					<grid mold="paging" pageSize="20"
+						pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Total Data" />
+								<label
+									value="@load(vm.totalupload) @converter('formatedNumber', format='###,##0')" />
+							</row>
+							<row>
+								<label value="Total Inserted" />
+								<a
+									label="@load(vm.inserted) @converter('formatedNumber', format='###,##0')"
+									onClick="@command('doViewSuccess')" />
+							</row>
+							<row>
+								<label value="Total Failed" />
+								<a
+									label="@load(vm.failed) @converter('formatedNumber', format='###,##0')"
+									onClick="@command('doView')" />
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator />
+				<div align="right">
+					<label value="Memo" style="font-weight: bold" />
+					<textbox value="@bind(vm.memo)" cols="30" rows="3"
+						maxlength="100" />
+					<separator />
+					<button width="120px" autodisable="self"
+						label="Submit" sclass="btn btn-primary btn-sm"
+						onClick="@command('doSave')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

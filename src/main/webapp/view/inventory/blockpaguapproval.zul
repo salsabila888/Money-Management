@@ -1,0 +1,47 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.captiond.viewmodel.BlockpaguApprovalVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Daftar Approval Block Pagu Stock</n:b></n:h3>
+		<n:hr />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column align="center" width="60px">
+					<checkbox onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column label="Org" align="center" width="170px" />
+				<column label="Grup Produk" width="110px" />
+				<column label="Tipe Produk" />				
+				<column label="Stock" width="110px" align="right" />
+				<column label="Pagu Stock" width="110px" align="right" />
+				<column label="Waktu Block" align="center"
+					width="160px" />				
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<button width="120px"
+				autodisable="self" label="Approve" sclass="btn btn-primary btn-sm"
+				onClick="@command('doSave')" />
+		</div>
+		<separator />
+	</window>
+</zk>

@@ -1,0 +1,165 @@
+<?page title="LIST CUSTOMER" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winBranchGetData"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifGetDataOldVm')">
+		<caption />
+		<div class="card">
+			<div class="card-body" form="@id('e') @load(vm.obj)">
+				<groupbox mold="3d">
+					<caption label="Detail Order Cabang" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="No Surat Cabang" />
+								<label id="orderno"
+									value="@bind(vm.obj.orderno)" />
+							</row>
+							<row>
+								<label value="Cabang" />
+								<label id="cabang"
+									value="@bind(vm.obj.mbranch.branchname)" />
+							</row>
+							<row>
+								<label value="Tanggal Cabang Order" />
+								<label
+									value="@load(vm.obj.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+							</row>
+						</rows>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col">
+						<groupbox mold="3d">
+							<caption label="Manual Get Data" />
+							<grid>
+								<columns>
+									<column width="150px" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										<label value="Nomor Kartu" />
+										<textbox cols="30" focus="true"
+											value="@bind(vm.cardno)" maxlength="20"
+											onOK="@command('doGet')" />
+									</row>
+								</rows>
+								<foot>
+									<footer />
+									<footer>
+										<button id="btnSearch"
+											sclass="btn btn-primary btn-sm" label="Get Data"
+											onClick="@command('doGet')" />
+									</footer>
+								</foot>
+							</grid>
+						</groupbox>
+					</div>
+					<div class="col">
+						<groupbox mold="3d">
+							<caption label="Upload Get Data" />
+							<grid>
+								<columns>
+									<column width="150px" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										<label value="File" />
+										<vlayout>
+											<button id="btnBrowse"
+												label="Browse File..." upload="true, maxsize=500000"
+												sclass="btn btn-default btn-sm"
+												onUpload="@command('doBrowse', upEvent=event)" />
+											<label id="fileBrowse"
+												value="@load(vm.filename)" />
+										</vlayout>
+									</row>
+								</rows>
+								<foot>
+									<footer />
+									<footer>
+										<button
+											sclass="btn btn-primary btn-sm" label="Upload"
+											onClick="@command('doUpload')" />
+									</footer>
+								</foot>
+							</grid>
+						</groupbox>
+					</div>
+				</div>
+				<separator />
+				<groupbox id="groupUpload" visible="false">
+					<grid id="gridUpload">
+						<columns>
+							<column label="${labels.common.no}"
+								align="right" width="40px" />
+							<column align="center" label="No.Kartu"
+								width="200px" />
+							<column label="Nama" />
+							<column label="Kode Produk" align="center"
+								width="120px" />
+							<column label="Jenis Produk" />
+							<column label="Tanggal Data" align="center"
+								width="130px" />							
+						</columns>
+						<rows />
+						<foot>
+							<footer span="6" align="center">
+								<button sclass="btn btn-primary btn-sm" width="200px"
+									label="Save" onClick="@command('doSaveUpload')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<n:hr />
+				<n:h5>Daftar Get Data</n:h5>
+				<separator />
+				<div align="right">
+					<label value="Total Record :"
+						style="font-weight: bold" />
+					<label value="@load(vm.totaldata)"
+						style="font-weight: bold" />
+				</div>
+				<grid id="grid" mold="paging" pageSize="20"
+					pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column align="center" label="No.Kartu"
+							width="200px" />
+						<column label="Nama" />
+						<column label="Kode Produk" align="center"
+							width="120px" />
+						<column label="Jenis Produk" />
+						<column label="Tanggal Data" align="center"
+							width="130px" />
+						<column label="Action" align="center"
+							width="120px" />
+					</columns>
+					<rows />
+					<foot>
+						<footer span="7" align="center">
+							<button autodisable="self" width="200px"
+								id="btnSubmit" label="Submit" sclass="btn btn-primary btn-sm"
+								onClick="@command('doSubmit')" />
+						</footer>
+					</foot>
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,334 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifListVm')"
+		validationMessages="@id('vmsgs')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<label value="@load(vm.title)" style="font-size: 28px" />
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)" cols="20"/>
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button autodisable="self"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" 
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+											<button autodisable="self"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" 
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"/>
+										</n:div>
+									</div>
+									<div class="col-md-6" align="right"
+										id="divExport" visible="false">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self" 
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column align="center" width="50px" id="colCheck"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<checkbox id="chkAll"
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column align="center" width="200px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.orderno)" cols="20" maxlength="20"
+								placeholder="No.Surat" style="text-align:center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column width="200px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.filename)" cols="20" maxlength="20"
+								placeholder="Filename"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column align="center" width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.productcode)" cols="10" maxlength="10"
+								placeholder="Kode Produk" style="text-align:center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Jenis Produk" width="300px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column width="300px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.branchname)" cols="30" maxlength="30"
+								placeholder="Cabang"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Tgl Cabang Order" align="center"
+							width="160px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Jumlah Data" align="right"
+							width="120px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Rejected" align="right"
+							width="120px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Status" align="center"
+							width="150px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Memo" width="250px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="${labels.common.action}"
+							align="center" width="200px" id="colAction" visible="false" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					</columns>
+					<foot id="footOutApr" visible="false">
+						<footer />
+						<footer />
+						<footer>
+							<label value="TOTAL"
+								style="font-size: 16px; font-weight: bold" />
+						</footer>
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer align="right">
+							<decimalbox cols="9"
+								value="@load(vm.totaldata)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right; font-weight: bold" />
+						</footer>
+						<footer align="right">
+							<decimalbox cols="9"
+								value="@load(vm.totalreject)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right; font-weight: bold" />
+						</footer>
+					</foot>
+				</grid>
+				<separator />
+
+				<div id="divVerify" align="right" visible="false">
+					<grid width="330px">
+						<columns>
+							<column label="Update Status Done"
+								align="center" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</columns>
+						<rows>
+							<row>
+								<div sclass="row" align="left">
+									<div sclass="col-md-5">
+										<label value="Tanggal Proses"
+											style="font-weight: bold" width="120px" />
+									</div>
+									<div sclass="col-md-7">
+										<datebox
+											value="@bind(vm.dateverify)" format="dd-MM-yyyy" cols="12"
+											maxlength="10" />
+									</div>
+								</div>
+							</row>
+							<row id="rowMemo" visible="false">
+								<div sclass="row" align="left">
+									<div sclass="col-md-5">
+										<label value="Memo"
+											style="font-weight: bold" />
+									</div>
+									<div sclass="col-md-7">
+										<textbox value="@bind(vm.memo)"
+											cols="23" rows="3" maxlength="100" />
+									</div>
+								</div>
+							</row>
+						</rows>
+						<foot>
+							<footer>
+								<button width="97%" autodisable="self"
+									label="Submit" sclass="btn btn-primary btn-sm"
+									onClick="@command('doVerify')" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+							</footer>
+						</foot>
+					</grid>
+				</div>
+
+				<div id="divPersoOrder" visible="false" align="right">
+					<button autodisable="self"
+						label="Buat Manifest Perso" sclass="btn btn-primary btn-sm"
+						onClick="@command('doOrderPerso')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</div>
+
+				<div id="divApproval" align="right" visible="false">
+					<label value="Action" style="font-weight: bold" />
+					<radiogroup id="rgapproval"
+						selectedItem="@bind(vm.action)">
+						<radio id="rba" label="Approve" value="A"
+							style="font-weight: bold" />
+						<radio id="rbd" label="Decline" value="D"
+							style="font-weight: bold" />
+					</radiogroup>
+					<separator />
+					<label value="Memo" style="font-weight: bold" />
+					<textbox value="@bind(vm.decisionmemo)" cols="30"
+						rows="3" maxlength="100" />
+					<separator />
+					<button width="120px" autodisable="self"
+						label="Submit" sclass="btn btn-primary btn-sm"
+						onClick="@command('doApproval')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</div>
+
+				<div id="divPersoList" visible="false" align="right">
+					<grid width="430px">
+						<columns>
+							<column label="Action" align="center" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						</columns>
+						<rows>
+							<row>
+								<hbox>
+									<button width="190px"
+										autodisable="self" label="Cetak Bon Kartu"
+										image="/images/printer_label.png" sclass="btn btn-info btn-sm"
+										onClick="@command('doBon')" 
+										style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									<button width="190px"
+										autodisable="self" label="Cetak Manifest"
+										image="/images/printer.png" sclass="btn btn-success btn-sm"
+										onClick="@command('doPersoManifest')" 
+										style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+								</hbox>
+							</row>
+							<row>
+								<button id="btnPersoDone" width="97%"
+									autodisable="self" label="Update Status Done"
+									image="/images/done.png" sclass="btn btn-primary btn-sm"
+									onClick="@command('doPersoDone')" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+
+							</row>
+						</rows>
+					</grid>
+				</div>
+
+				<div id="divPaketOrder" visible="false" align="right">
+					<button autodisable="self"
+						label="Buat Manifest Paket" sclass="btn btn-primary btn-sm"
+						onClick="@command('doOrderPaket')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</div>
+
+				<div id="divPaketList" align="right" visible="false">
+					<grid width="370px">
+						<columns>
+							<column label="Action" align="center" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</columns>
+						<rows>
+							<row>
+								<hbox>
+									<button width="160px"
+										autodisable="self" label="Cetak Label"
+										image="/images/printer_label.png"
+										sclass="btn btn-primary btn-sm"
+										onClick="@command('doPaketLabel')" 
+										style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									<button width="160px"
+										autodisable="self" label="Cetak Output"
+										image="/images/printer_data.png" sclass="btn btn-info btn-sm"
+										onClick="@command('doPaketOutput')" 
+										style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+								</hbox>
+							</row>
+							<row>
+								<button width="97%" autodisable="self"
+									label="Paket Done" sclass="btn btn-primary btn-sm"
+									image="/images/done.png" onClick="@command('doPaketDone')" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+							</row>
+						</rows>
+					</grid>
+				</div>
+
+				<div id="divDlvOrder" visible="false" align="right">
+					<button autodisable="self"
+						label="Buat Manifest Pengiriman" sclass="btn btn-primary btn-sm"
+						onClick="@command('doDeliveryGroup')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</div>
+
+				<div id="divDlvList" align="right" visible="false">
+					<grid width="200px">
+						<columns>
+							<column label="Action" align="center" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</columns>
+						<rows>
+							<row>
+								<button width="190px" autodisable="self"
+									label="Cetak Surat" image="/images/printer_data.png"
+									sclass="btn btn-info btn-sm"
+									onClick="@command('doPrintLetter')" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

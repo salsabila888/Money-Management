@@ -1,0 +1,8 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk>
+<window id="window" border="none" height="100%" width="100%"
+	viewModel="@id('vm') @init('com.sdd.caption.viewmodel.JasperViewerVm')" contentStyle="overflow: auto">		
+	<div id="div" width="100%" height="100%" align="center" />	
+</window>
+</zk>

@@ -1,0 +1,92 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifInquiryVm')">
+		<div class="card">
+			<div class="card-header">
+				<n:h3>
+					<n:b>Inquiry Surat Kartu Berfoto</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row id="rowBranch">
+								<label value="Cabang" />
+								<combobox id="cbBranch"
+									model="@load(vm.mbranchmodel)" cols="40"
+									selectedItem="@bind(vm.mbranch)">
+									<template name="model"
+										var="mbranch">
+										<comboitem
+											label="@load(mbranch.branchname)" />
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Tanggal Data" />
+								<datebox format="dd-MM-yyyy"
+									value="@bind(vm.orderdate)" cols="10" maxlength="10" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<n:div class="btn-group" role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column align="center" width="120px">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.orderid)" cols="12" maxlength="12"
+								placeholder="No Surat" style="text-align: center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Tanggal Order" align="center"
+							width="125px" />
+						<column label="Jumlah" align="right"
+							width="100px" />
+						<column label="Memo" />
+						<column label="Status" align="center"
+							width="200px" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,85 @@
+<?page title="LIST CUSTOMER" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MproductreqVm')">
+		<n:h3><n:b>Request Jenis Kartu</n:b></n:h3>
+		<n:hr />
+		<div class="card">
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Status" />
+								<combobox id="cbStatus"
+									selectedItem="@bind(vm.status)">
+									<comboitem label="NEW" value="E" />
+									<comboitem label="VERIFIED"
+										value="V" />
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<n:div class="btn-group" role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.totalrecord)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid" pagingPosition="top"
+					emptyMessage="${labels.common.emptymsg}" mold="paging"
+					pageSize="20">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column label="" align="center"
+							width="200px">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.productcode)" cols="20" maxlength="10"
+								placeholder="Kode Produk" style="text-align: center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Jenis Produk" />
+						<column label="Instant?" align="center"
+							width="120px" />
+						<column label="Berfoto?" align="center"
+							width="120px" />
+						<column label="Waktu Entri" align="center"
+							width="130px" />
+						<column label="Status" align="center"
+							width="150px" />
+						<column label="Action" align="center"
+							width="120px" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

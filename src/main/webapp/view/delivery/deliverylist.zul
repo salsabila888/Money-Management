@@ -1,0 +1,240 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryListVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" visible="false" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" id="dlv" visible="false"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Manifest Delivery</n:b>
+				</n:h3>
+			</div>
+			<div class="card-header" id="dlvCust" visible="false"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Manifest Delivery Koresponden</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox id="gbSearch" mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tanggal" />
+								<datebox value="@bind(vm.processtime)"
+									format="dd-MM-yyyy" cols="12" maxlength="10" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button autodisable="self"
+												sclass="btn-default" label="${labels.common.search}"
+												onClick="@command('doSearch')"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+											<button autodisable="self"
+												sclass="btn-default" label="${labels.common.reset}"
+												onClick="@command('doReset')"
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;" />
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<n:div role="group">
+											<button
+												sclass="btn btn-default btn-sm" label="Export to Excel"
+												image="/images/excel.png" onClick="@command('doExport')"
+												autodisable="self"
+												style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+											<button
+												sclass="btn btn-default btn-sm" label="Softcopy"
+												id="btnSoftcopy" image="/images/excel.png"
+												onClick="@command('doGenerateSoftcopy')" autodisable="self"
+												style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<panel border="normal">
+					<panelchildren>
+						<tabbox id="tabbox" width="100%"
+							sclass="nav_tabs">
+							<tabs id="tabs">
+								<!-- <tab label="Kartu"
+									onSelect="@command('doTab', tab='01')" />
+									<tab label="Kartu Berfoto"
+									onSelect="@command('doTab', tab='09')" />
+									<tab label="Token"
+									onSelect="@command('doTab', tab='02')" />
+									<tab label="Pinpad"
+									onSelect="@command('doTab', tab='03')" />
+									<tab label="Pinmailer"
+									onSelect="@command('doTab', tab='06')" />
+									<tab label="Surat Berharga"
+									onSelect="@command('doTab', tab='12')" /> -->
+							</tabs>
+						</tabbox>
+						<separator />
+						<div class="row">
+							<div class="col-md-10">
+								<paging id="paging" autohide="true" />
+							</div>
+							<div class="col-md-2" align="right">
+								<label value="Total Record :"
+									style="font-weight: bold" />
+								<label value="@load(vm.pageTotalSize)"
+									style="font-weight: bold" />
+							</div>
+						</div>
+						<grid id="grid"
+							emptyMessage="${labels.common.emptymsg}">
+							<columns>
+								<column label="${labels.common.no}"
+									align="right" width="35px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+
+								<column align="center" width="40px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<checkbox id="chkAll"
+										onCheck="@command('doCheckedall', checked=self.checked)" />
+								</column>
+								<column width="180px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.dlvid)" cols="15"
+										maxlength="20" placeholder="No Manifest"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</column>
+								<column id="colCardno" label="No Kartu"
+									width="200px" align="center" visible="false"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column id="colHp" label="No Hp"
+									width="200px" align="center" visible="false"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column label="Group Produk"
+									width="150px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column label="Tgl Proses"
+									align="center" width="120px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column align="center" width="110px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.branchid)" cols="8"
+										maxlength="10" placeholder="Kode Cabang"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</column>
+								<column width="250px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.branchname)" maxlength="10"
+										placeholder="Nama Cabang"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</column>
+								<column label="Total" align="right"
+									width="100px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column id="colAmount" label="Total Amount" align="right" width="100px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />									
+								<column label="Surat" width="90px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column width="120px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.vendorcode)" cols="8"
+										maxlength="10" placeholder="Expedisi"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</column>
+								<column width="200px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+									<combobox id="status" cols="8"
+										inplace="true" selectedItem="@bind(vm.status)" readonly="true"
+										onChange="@command('doSearch')" value="Status">
+										<comboitem value="D22"
+											label="SIAP KURIR" />
+										<comboitem value="D23"
+											label="DELIVERY" />
+									</combobox>
+								</column>
+								<column label="Tgl Terima" width="90px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column label="Penerima" width="90px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column label="Tanda Terima" width="200px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+								<column label="Action" align="center"
+									width="120px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+							</columns>
+						</grid>
+					</panelchildren>
+				</panel>
+				<separator />
+				<div align="right">
+					<grid width="450px">
+						<columns>
+							<column label="Total Record Selected"
+								align="center"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+							<column label="Total Data Selected"
+								align="center"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						</columns>
+						<rows>
+							<row>
+								<decimalbox width="190px"
+									value="@load(vm.totalselected)" format="#,###" inplace="true"
+									readonly="true" style="text-align:right" />
+								<decimalbox width="190px"
+									value="@load(vm.totaldataselected)" format="#,###"
+									inplace="true" readonly="true" style="text-align:right" />
+							</row>
+						</rows>
+					</grid>
+					<separator />
+					<grid width="450px">
+						<columns>
+							<column label="Action" align="center"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						</columns>
+						<rows>
+							<row>
+								<button width="190px" autodisable="self"
+									label="Cetak Label Surat" image="/images/printer_label.png"
+									sclass="btn-default" onClick="@command('doPrintLabelSurat')"
+									style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+								<button width="190px" autodisable="self"
+									id="btnLetter" label="Cetak Surat"
+									image="/images/printer_data.png" sclass="btn-default"
+									onClick="@command('doPrintLetter')"
+									style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,38 @@
+<?link rel="stylesheet" href="/resources/bootstrap/4.3.1/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/resources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/resources/css/layout.css" ?>
+<?link rel="stylesheet" href="/resources/css/zk-bootstrap.css" ?>
+<zk xmlns:n="native">
+	<div sclass="container-fluid" hflex="1"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MenuTabProsesDerivatifVm')"
+		validationMessages="@id('vmsgs')">
+		<n:div class="row py-1">
+			<n:div class="col-12 p-1">
+				<div id="divProsess">
+					<panel border="normal">
+						<panelchildren>
+							<tabbox width="100%" sclass="nav_tabs">
+								<tabs id="tabProses">
+									<tab label="SCAN"
+										onSelect="@command('doTab', tab='scan')" />
+									<tab label="CROP"
+										onSelect="@command('doTab', tab='crop')" />
+									<tab label="MERGE"
+										onSelect="@command('doTab', tab='merge')" />
+									<tab label="PERSO"
+										onSelect="@command('doTab', tab='perso')" />
+									<tab label="PAKET"
+										onSelect="@command('doTab', tab='paket')" />
+									<tab label="DELIVERY"
+										onSelect="@command('doTab', tab='delivery')" />
+								</tabs>
+							</tabbox>
+							<separator />
+							<div id="tabPage" />
+						</panelchildren>
+					</panel>
+				</div>
+			</n:div>
+		</n:div>
+	</div>
+</zk>

@@ -1,0 +1,159 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPlanEntry"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.SwitchingEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<div>
+					<n:h4>
+						<n:b>Entry Switching</n:b>
+					</n:h4>
+					<label value="@load(vm.productgroup)"
+						style="font-size: 16px" />
+				</div>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d"
+					form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave')">
+					<caption label="Form Switching" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row id="row">
+								<label value="No Registrasi" />
+								<textbox value="Auto Generated"
+									cols="35" readonly="true" />
+							</row>
+							<row>
+								<label value="Tanggal Request" />
+								<textbox
+									value="@bind(e.inserttime) @converter('formatedDate', format='dd, MMM yyyy')"
+									readonly="true" cols="30" />
+							</row>
+							<row>
+								<label value="KCP Requestor" />
+								<textbox value="@load(vm.outletreq)"
+									cols="35" readonly="true" />
+							</row>
+							<row>
+								<label value="Cabang Requestor" />
+								<textbox value="@load(vm.cabang)"
+									readonly="true" cols="35" />
+							</row>
+							<row>
+								<label value="Nama Wilayah" />
+								<textbox value="@load(vm.wilayah)"
+									cols="35" readonly="true" />
+							</row>
+							<row>
+								<hlayout>
+									<label value="Jenis Produk" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<textbox
+									value="@load(vm.obj.mproduct.productname)" cols="35"
+									readonly="true" />
+							</row>
+							<row>
+								<hlayout>
+									<label value="Jumlah" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<intbox value="@bind(e.itemqty)" cols="20" format="#,###" />
+									<combobox
+										selectedItem="@bind(vm.unit)" cols="9" disabled="true"
+										buttonVisible="false" inplace="true" autocomplete="true">
+										<comboitem value="04"
+											label="Lembar/Buku" />
+										<comboitem value="02"
+											label="Unit" />
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['itemqty'])" />
+								</hlayout>
+							</row>
+							<row id="rowCabang">
+								<hlayout>
+									<label value="Cabang Tujuan" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<combobox id="cbBranch"
+										onSelect="@command('doSelect')" model="@load(vm.mbranchmodel)"
+										cols="35" selectedItem="@bind(vm.mbranch)">
+										<template name="model"
+											var="mbranch">
+											<comboitem
+												label="@load(mbranch.branchname)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['branchidpool'])" />
+								</hlayout>
+							</row>
+<!-- 							<row id="rowOutlet">
+								<label value="Outlet Tujuan" />
+								<textbox value="@bind(vm.outletpool)" maxlength="2"
+									onChange="@command('doSelect')" cols="35" />
+							</row> -->
+							<row id="rowOutlet1">
+								<label value="Outlet Tujuan" />
+								<combobox id="cbOutlet"
+									model="@load(vm.moutletmodel)" cols="35"
+									selectedItem="@bind(vm.moutlet)"
+									onSelect="@command('doSelect')" >
+									<template name="model" var="moutlet">
+										<comboitem
+											label="@load(moutlet.outletcode)" 
+											description="@load(moutlet.outletname)"/>
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Stock Cabang Tujuan" />
+								<textbox
+									value="@bind(vm.stockbranchpool)" readonly="true" cols="35" />
+							</row>
+							<row>
+								<hlayout>
+									<label value="Alasan Switching" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<textbox value="@bind(vm.memo)"
+										rows="3" cols="35" maxlength="200" />
+									<label style="color:red"
+										value="@load(vmsgs['memo'])" />
+								</hlayout>
+							</row>
+						</rows>
+					</grid>
+					<separator />
+				</groupbox>
+			</div>
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-6">
+								<button id="btnSave" width="120px"
+									autodisable="self" label="Submit"
+									sclass="btn btn-primary btn-sm" onClick="@command('doSave')"
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

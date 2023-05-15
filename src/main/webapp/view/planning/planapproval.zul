@@ -1,0 +1,84 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PlanningApprovalVM')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Approval Inisiasi Pengadaan</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record : "
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="40px">
+							<checkbox
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column label="No Pengadaan" width="180px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah" width="140px" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Anggaran" width="160px" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="No. Memo" width="160px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Lokasi" width="250px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Input Time" width="120px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="center" />
+						<column label="Status" width="280px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+				<separator />
+				<div align="right">
+					<separator />
+					<radiogroup id="rgapproval"
+						selectedItem="@bind(vm.action)">
+						<radio id="rba" label="Approve" value="A"
+							style="font-weight: bold" />
+						<radio id="rbd" label="Decline" value="D"
+							style="font-weight: bold" />
+					</radiogroup>
+					<separator />
+					<label value="Catatan Keputusan"
+						style="font-weight: bold" />
+					<textbox value="@bind(vm.decisiondesc)" cols="30"
+						rows="3" maxlength="100" />
+					<separator />
+					<button width="120px" autodisable="self"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						label="Submit" sclass="btn btn-primary btn-sm"
+						onClick="@command('doSave')" />
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

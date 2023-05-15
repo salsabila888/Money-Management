@@ -1,0 +1,165 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReturnEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card">
+			<div class="card-header">
+				<n:h3>
+					<n:b>Entri Data Return</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d"
+					form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+					<caption label="Form Return" />
+					<grid>
+						<columns>
+							<column width="200px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tanggal Return" />
+								<hlayout>
+									<datebox format="dd-MM-yyyy"
+										value="@bind(e.returndate)" cols="12" maxlength="10" />
+									<label style="color:red"
+										value="@load(vmsgs['returndate'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Jenis Produk" />
+								<hlayout>
+									<combobox id="cbProduct"
+										model="@load(vm.mproduct)" cols="40"
+										selectedItem="@bind(e.mproduct)"
+										onChange="@command('doProductSelected', item=e.mproduct)">
+										<template name="model"
+											var="mproduct">
+											<comboitem
+												label="@load(mproduct.productcode)"
+												description="@load(mproduct.productname)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['mproduct'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="No. Kartu" />
+								<hlayout>
+									<textbox value="@bind(e.cardno)"
+										cols="20" maxlength="20" />
+									<label style="color:red"
+										value="@load(vmsgs['cardno'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Nama" />
+								<hlayout>
+									<textbox id="tbName"
+										value="@bind(e.name)" cols="30" maxlength="40" />
+									<label style="color:red"
+										value="@load(vmsgs['name'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Diproses Oleh" />
+								<radiogroup
+									selectedItem="@bind(e.prodtype)"
+									onCheck="@command('doPersotypeSelected', item=e.prodtype)">
+									<radio label="Internal" value="I" />
+									<separator orient="vertical" />
+									<radio label="External" value="E" />
+								</radiogroup>
+							</row>
+							<row id="rowVendor">
+								<label value="Vendor Perso" />
+								<hlayout>
+									<combobox id="cbPersovendor"
+										model="@load(vm.mpersovendormodel)"
+										selectedItem="@bind(e.mpersovendor)">
+										<template name="model"
+											var="mpersovendor">
+											<comboitem
+												label="@load(mpersovendor.vendorcode)"
+												description="@load(mpersovendor.vendorname)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['mpersovendor'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Keterangan" />
+								<hlayout>
+									<combobox id="cbReturnreason"
+										model="@load(vm.mreturnreasonmodel)"
+										selectedItem="@bind(vm.mreturnreason)">
+										<template name="model"
+											var="mreturnreason">
+											<comboitem
+												label="@load(mreturnreason.returnreason)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['mreturnreason'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Operator" />
+								<combobox id="cbOperator" cols="30"
+									model="@load(vm.musermodel)" selectedItem="@bind(vm.muser)">
+									<template name="model"
+										var="muser">
+										<comboitem
+											label="@load(muser.userid)"
+											description="@load(muser.username)" />
+									</template>
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button id="btnSave" width="90px"
+									autodisable="self" label="Simpan"
+									sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+
+
+				<separator />
+				<grid id="grid" sclass="table table-bordered"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column label="Tgl Return" align="center"
+							width="120px" />
+						<column label="Jenis Produk" />
+						<column label="No. Kartu" align="center"
+							width="120px" />
+						<column label="Nama" />
+						<column label="Diproses Oleh" align="center"
+							width="120px" />
+						<column label="Keterangan" />
+						<column label="Operator" align="center"
+							width="120px" />
+						<column label="Action" align="center"
+							width="120px" />
+					</columns>
+					<rows />
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

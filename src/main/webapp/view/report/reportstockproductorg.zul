@@ -1,0 +1,59 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportStockProductorgVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />		
+		<n:h3><n:b>
+			Laporan Stock
+		</n:b></n:h3>
+		<div class="row">
+			<div class="col-md-6">
+				<label value="Tanggal" style="font-size: 16px; font-weight: bold" />
+				<label value="@load(vm.datereport)" style="font-size: 16px; font-weight: bold" />
+			</div>
+			<div class="col-md-6" align="right">
+				<button sclass="btn btn-default btn-sm"
+				label="Export to Excel" image="/images/excel.png"
+				onClick="@command('doExport')" autodisable="self" />
+			</div>
+		</div>
+		<n:hr/>		
+		<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						align="right" width="40px" />
+					<listheader label="Org" />
+					<listheader label="Total Incoming" align="right" />
+					<listheader label="Total Outgoing" align="right" />
+					<listheader label="Total Stock" align="right" />						
+				</listhead>
+				<listfoot>
+					<listfooter />
+					<listfooter>
+						<label value="TOTAL"
+							style="font-size: 16px; font-weight: bold" />
+					</listfooter>
+					<listfooter>
+						<decimalbox cols="15" value="@load(vm.totalincoming)" format="#,###"
+							inplace="true" readonly="true" style="text-align:right" />
+					</listfooter>
+					<listfooter>
+						<decimalbox cols="15" value="@load(vm.totaloutgoing)" format="#,###"
+							inplace="true" readonly="true" style="text-align:right" />
+					</listfooter>
+					<listfooter>
+						<decimalbox cols="15" value="@load(vm.totalstock)" format="#,###"
+							inplace="true" readonly="true" style="text-align:right" />
+					</listfooter>
+				</listfoot>
+			</listbox>		
+		<separator />
+	</window>
+</zk>

@@ -1,0 +1,260 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersobranchdetail" border="normal"
+		title="${desktop.webApp.appName}" width="95%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PersoBranchDetailVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="Manifest Perso Data Detail" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<groupbox mold="3d">
+			<caption label="Data Order Produk" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipe Produk" />
+						<label
+							value="@load(vm.vorderproduct.producttype)" />
+						<label value="Jumlah Data" />
+						<decimalbox cols="7"
+							value="@load(vm.vorderproduct.total)" format="#,###"
+							readonly="true" style="text-align: right" />
+					</row>
+					<row>
+						<label value="Kode Produk" />
+						<label
+							value="@load(vm.vorderproduct.productcode)" />
+						<label value="Stock" />
+						<decimalbox cols="7"
+							value="@load(vm.vorderproduct.laststock)" format="#,###"
+							readonly="true" style="text-align: right" />
+					</row>
+					<row>
+						<label value="Jenis Produk" />
+						<label
+							value="@load(vm.vorderproduct.productname)" />
+						<label value="Stock Reserved" />
+						<decimalbox cols="7"
+							value="@load(vm.vorderproduct.stockreserved)" format="#,###"
+							readonly="true" style="text-align: right" />
+					</row>
+					<row>
+						<label value="Tanggal Data" />
+						<label
+							value="@load(vm.vorderproduct.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						<label value="Stock Available" />
+						<decimalbox cols="7"
+							value="@load(vm.vorderproduct.stock)" format="#,###"
+							readonly="true" style="text-align: right" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-6">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Nomor Kartu" />
+								<textbox value="@bind(vm.cardno)"
+									cols="20" maxlength="40" onOK="@command('doSearch')" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button
+										sclass="btn btn-default btn-sm" autodisable="self"
+										label="${labels.common.search}" width="100px"
+										onClick="@command('doSearch')" />
+							</footer>
+						</foot>
+					</grid>
+
+				</groupbox>
+			</div>
+			<div class="col-md-6">
+				<groupbox mold="3d">
+					<caption label="Upload Data" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="File" />
+								<hlayout>
+									<button id="btnBrowse"
+										label="Browse File..." upload="true, maxsize=500000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowseProduct', upEvent=event)" />
+									<separator orient="vertical" />
+									<label value="@load(vm.filename)" />
+								</hlayout>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button
+									sclass="btn btn-default btn-sm" autodisable="self"
+									label="Upload" width="100px"
+									onClick="@command('doUpload')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</div>
+		</div>
+
+
+		<separator />
+		<div class="row">
+			<div class="col-md-8">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-4" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="No. Kartu" width="170px" />
+				<column label="Nama" />
+				<column label="Kode Produk" align="center"
+					width="120px" />
+				<column label="Jenis Produk" />
+				<column label="Tanggal Data" align="center"
+					width="120px" />
+				<column label="Kode Cabang" align="center"
+					width="120px" />
+				<column label="Nama Cabang" />
+				<column label="Action" align="center" width="80px" />
+			</columns>
+		</grid>
+
+		<separator />
+
+		<groupbox mold="3d">
+			<caption label="Daftar Data Manifest" />
+			<grid id="gridSelected"
+				emptyMessage="${labels.common.emptymsg}">
+				<columns>
+					<column label="${labels.common.no}" align="right"
+						width="40px" />
+					<column label="No. Kartu" width="170px" />
+					<column label="Nama" />
+					<column label="Kode Produk" align="center"
+						width="120px" />
+					<column label="Jenis Produk" />
+					<column label="Tanggal Data" align="center"
+						width="120px" />
+					<column label="Kode Cabang" align="center"
+						width="120px" />
+					<column label="Nama Cabang" />
+					<column label="Action" align="center" width="80px" />
+				</columns>
+				<rows />
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox mold="3d">
+			<caption label="Form Manifest Perso" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" width="150px" />
+						<textbox
+							value="@load(e.processtime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Tipe Proses" />
+						<radiogroup
+							selectedItem="@bind(e.processtype)">
+							<radio label="Regular" value="R" />
+							<separator orient="vertical" />
+							<radio label="Urgent" value="U" />
+						</radiogroup>
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.totaldata)" />
+					</row>
+					<row>
+						<label value="Diproses Oleh" />
+						<radiogroup selectedItem="@bind(e.persotype)"
+							onCheck="@command('doPersotypeSelected', item=e.persotype)">
+							<radio label="Internal" value="I" />
+							<separator orient="vertical" />
+							<radio label="External" value="E" />
+						</radiogroup>
+					</row>
+					<row id="rowVendor">
+						<label value="Vendor Perso" />
+						<hlayout>
+							<combobox id="cbPersovendor"
+								model="@load(vm.mpersovendormodel)"
+								selectedItem="@bind(e.mpersovendor)">
+								<template name="model"
+									var="mpersovendor">
+									<comboitem
+										label="@load(mpersovendor.vendorcode)"
+										description="@load(mpersovendor.vendorname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mpersovendor'])" />
+						</hlayout>
+					</row>
+					<row>
+						<label value="Memo" />
+						<textbox value="@bind(e.memo)" cols="40"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Submit" width="100px"
+							onClick="@command('doSave')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm"
+				image="/images/close.png" tooltiptext="Close" autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

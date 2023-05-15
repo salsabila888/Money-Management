@@ -1,0 +1,111 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winBranchGetData"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.CardSwitchingVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<caption />
+		<n:h5>
+			<n:b>Get Data Switching Cabang</n:b>
+		</n:h5>
+		<n:hr />
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Jenis Produk" />
+						<label value="@bind(vm.obj.mproduct.productname)"  />
+					</row>
+					<row>
+						<label value="Jumlah Data Order" />
+						<label value="@bind(vm.obj.itemqty)"  />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<div id="divManual" class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column align="center" width="60px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+					<checkbox
+						onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column align="center" width="200px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.cardno)" cols="20" maxlength="20"
+						placeholder="No.Kartu" style="text-align:center"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Kode Produk" width="120px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Jenis Produk" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+			</columns>
+			<rows />
+			<foot>
+				<footer span="5" align="center">
+					<button sclass="btn btn-primary btn-sm"
+						width="200px" label="Save" onClick="@command('doSave')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</footer>
+			</foot>
+		</grid>
+		<n:hr />
+		<n:h5>Daftar Get Data</n:h5>
+		<separator />
+		<div align="right">
+			<label value="Total Record :" style="font-weight: bold" />
+			<label value="@load(vm.totaldata)"
+				style="font-weight: bold" />
+		</div>
+		<grid id="gridGetdata" mold="paging" pageSize="20"
+			pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column align="center" label="No.Kartu" width="200px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Kode Produk" align="center" width="120px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Jenis Produk" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Action" align="center" width="120px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+			</columns>
+			<rows />
+			<foot>
+				<footer span="5" align="center">
+					<button autodisable="self" width="200px"
+						id="btnSubmit" label="Submit" sclass="btn btn-primary btn-sm"
+						onClick="@command('doSubmit')" 
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

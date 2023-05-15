@@ -1,0 +1,77 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOperators" border="normal"
+		title="${desktop.webApp.appName}" width="700px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PersoManifestGenerateVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="Operator Produksi" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<groupbox mold="3d">
+			<caption label="Form Manifest Perso" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave')">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" width="150px" />
+						<textbox
+							value="@load(e.persostarttime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Total Record" />
+						<label id="totalRecord" value="@load(vm.totalselected)" />
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label id="totalData" value="@load(vm.totaldata)" />
+					</row>
+					<row>
+						<label value="Diproses Oleh" />
+						<radiogroup id="sv1" onCheck="@command('doPersotypeSelected')" >
+							<radio id="rbInternal" label="Internal" radiogroup="sv1" checked="true"/>
+							<separator orient="vertical" />
+							<radio id="rbExternal" label="External" radiogroup="sv1"/>
+						</radiogroup>
+					</row>
+					<row id="rowVendor">
+						<label value="Vendor Perso" />
+						<hlayout>
+							<combobox id="cbPersovendor"
+								model="@load(vm.mpersovendormodel)"
+								selectedItem="@bind(e.mpersovendor)">
+								<template name="model" var="mpersovendor">
+									<comboitem
+										label="@load(mpersovendor.vendorcode)" description="@load(mpersovendor.vendorname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mpersovendor'])" />
+						</hlayout>						
+					</row>
+					<row>
+						<label value="Memo" />
+						<textbox value="@bind(e.memo)" cols="40"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Submit" width="100px"
+							onClick="@command('doSave')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+	</window>
+</zk>

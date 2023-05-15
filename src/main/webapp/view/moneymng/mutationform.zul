@@ -1,0 +1,180 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MutationFormVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" />
+		<div id="divRoot">
+			<div class="card" style="border-radius:15px;">
+				<div class="card-header"
+					style="background-color: #002459; color: #ffffff;
+				border-top-left-radius:15px; border-top-right-radius:15px;">
+					<div>
+						<n:h4>
+							<n:b>Input Transaksi</n:b>
+						</n:h4>
+					</div>
+				</div>
+				<div class="card-body">
+					<groupbox mold="3d"
+						form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+						<!-- <tabbox width="100%" sclass="nav_tabs">
+							<tabs id="tabs">
+								<tab label="Pemasukan"
+									onSelect="@command('doTab', tab='1')" />
+								<tab label="Pengeluaran"
+									onSelect="@command('doTab', tab='2')" />
+							</tabs>
+						</tabbox> -->
+						<div id="tabPage" />
+						<grid>
+							<columns>
+								<column width="200px" />
+								<column />
+							</columns>
+							<rows>
+								<row id="row">
+									<label value="No Transaksi" />
+									<textbox value="Auto Generated"
+										cols="30" readonly="true" />
+								</row>
+								<row>
+									<label value="Tanggal Transaksi" />
+									<textbox
+										value="@bind(e.mutationdate) @converter('formatedDate', format='dd, MMM yyyy')"
+										readonly="true" cols="30" />
+								</row>
+								<row>
+									<hlayout>
+										<label value="Jumlah" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<textbox value="Rp."
+											disabled="true" cols="1" inplace="true" />
+										<decimalbox format="#,###"
+											value="@bind(e.mutationamount)" cols="22" maxlength="17" />
+										<label style="color:red"
+											value="@load(vmsgs['mutationamount'])" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Sumber Pemasukan" />
+									<combobox id="cbIncome"
+										placeholder="Pilih Sumber Pemasukan"
+										model="@load(vm.mincomemodel)" cols="26"
+										selectedItem="@bind(vm.mincome)">
+										<template name="model"
+											var="mincome">
+											<comboitem
+												label="@load(mincome.incomesource)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Tujuan Pengeluaran" />
+									<combobox id="cbExpenses"
+										placeholder="Pilih Tujuan Pengeluaran"
+										model="@load(vm.mexpensesmodel)" cols="26"
+										selectedItem="@bind(vm.mexpenses)">
+										<template name="model"
+											var="mexpenses">
+											<comboitem
+												label="@load(mexpenses.expenses)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Metode Pembayaran" />
+									<combobox id="cbPayment"
+										placeholder="Pilih Metode Pembayaran"
+										model="@load(vm.mpaymentmodel)" cols="26"
+										selectedItem="@bind(vm.mpayment)">
+										<template name="model"
+											var="mpayment">
+											<comboitem
+												label="@load(mpayment.paymenttype)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Bank Pilihan" />
+									<combobox id="cbBank"
+										placeholder="Pilih Bank" model="@load(vm.mbankmodel)"
+										cols="26" selectedItem="@bind(vm.mbank)">
+										<template name="model"
+											var="mbank">
+											<comboitem
+												label="@load(mbank.bankname)" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<label value="Peruntukan" />
+									<combobox id="cbPeruntukan"
+										placeholder="Pilih Peruntukan" model="@load(vm.maimmodel)"
+										cols="26" selectedItem="@bind(vm.maim)">
+										<template name="model"
+											var="maim">
+											<comboitem
+												label="@load(maim.aim)" />
+										</template>
+									</combobox>
+								</row>
+								<row id="rowUpload">
+									<label
+										value="Upload Dokumen Pendukung" />
+									<button id="btnBrowse"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										label="Browse File..." upload="true, maxsize=5000000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowseProduct', upEvent=event)" />
+								</row>
+								<row id="rowDoc">
+									<label
+										value="Daftar Dokumen Pendukung" />
+									<groupbox>
+										<grid id="gridDoc" mold="paging"
+											pagingPosition="top" pageSize="10"
+											emptyMessage="${labels.common.emptymsg}">
+											<columns>
+												<column
+													label="${labels.common.no}" align="right" width="50px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="Document Name"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="${labels.common.action}" align="center"
+													width="100px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+											</columns>
+											<rows />
+										</grid>
+									</groupbox>
+								</row>
+							</rows>
+						</grid>
+						<separator />
+					</groupbox>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-12" align="right">
+									<button id="btnSave" width="120px"
+										autodisable="self" label="Submit"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

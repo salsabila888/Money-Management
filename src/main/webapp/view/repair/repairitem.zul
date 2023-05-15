@@ -1,0 +1,86 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winRepairItem" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.RepairitemVm')">
+		<caption />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card-header" id="divRoot"
+			style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+			<n:h3>
+				<n:b>Detail Repair</n:b>
+			</n:h3>
+			<label value="@load(vm.productgroup)"
+				style="font-size: 16px" />
+		</div>
+		<grid
+			style="border-bottom-left-radius:15px; border-bottom-right-radius:15px;">
+			<columns>
+				<column width="200px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<label value="Nama Product" />
+					<label value="@load(vm.obj.mproduct.productname)" />
+				</row>
+				<row>
+					<label value="Repair ID" />
+					<label value="@load(vm.obj.regid)" />
+				</row>
+				<row>
+					<label value="Entry By" />
+					<label value="@load(vm.obj.insertedby) " />
+				</row>
+				<row>
+					<label value="Tanggal Entri" />
+					<label value="@load(vm.obj.inserttime)" />
+				</row>
+				<row>
+					<label value="Pemutus" />
+					<label value="@load(vm.obj.decisionby)" />
+				</row>
+			</rows>
+		</grid>
+		<separator />
+		<div align="right">
+			<button
+				style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+				sclass="btn btn-default btn-sm" label="Export to Excel"
+				image="/images/excel.png" onClick="@command('doExport')"
+				autodisable="self" />
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Nomor Seri" align="center"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="TID" align="center" width="120px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="MID" align="center" width="120px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Tipe Pinpad" align="center" width="120px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Resolution" align="center" width="250px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

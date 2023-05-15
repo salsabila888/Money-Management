@@ -1,0 +1,79 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.InquiryDerivatifCardVm')">
+		<div class="card">
+			<div class="card-header">
+				<n:h3>
+					<n:b>Inquiry Data Kartu Non Regular</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Nomor Kartu" />
+								<textbox value="@bind(vm.cardno)"
+									cols="20" maxlength="40" onOK="@command('doSearch')" />
+							</row>
+							<!-- <row>
+								<label value="Nama" />
+								<textbox value="@bind(vm.nameonid)"
+									cols="40" maxlength="40" onOK="@command('doSearch')" />
+							</row> -->
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<n:div class="btn-group" role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid" pagingPosition="top"
+						emptyMessage="${labels.common.emptymsg}" mold="paging"
+						pageSize="10">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column label="No. Kartu" align="center"
+							width="150px" />
+						<column label="Nama" />
+						<column label="Tanggal Data" align="center"
+							width="120px" />
+						<column label="Cabang" />
+						<column label="Jenis Kartu" />
+						<column label="Status" align="center"
+							width="150px" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

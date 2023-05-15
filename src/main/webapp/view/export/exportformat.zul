@@ -1,0 +1,33 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersoPrint" border="normal"
+		title="${desktop.webApp.appName}" width="400px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ExportFormatVm')"
+		validationMessages="@id('vmsgs')">
+		<separator />
+		<radiogroup id="rgOutput" selectedItem="@bind(vm.format)" />
+		<grid>
+			<columns>
+				<column label="@load(vm.title)" />
+			</columns>
+			<rows>
+				<row>
+					<radio value="pdf" radiogroup="rgOutput" image="/images/pdf(2).png" label="PDF" />
+				</row>
+				<row>
+					<radio value="xls" radiogroup="rgOutput" image="/images/excel(2).png" label="Excel" />					
+				</row>
+			</rows>
+			<foot>
+				<footer>
+					<button autodisable="self"
+						label="Generate" sclass="btn btn-primary btn-sm" width="97%"
+						onClick="@command('doSave')" />
+				</footer>
+			</foot>
+		</grid>
+		<separator />
+	</window>
+</zk>

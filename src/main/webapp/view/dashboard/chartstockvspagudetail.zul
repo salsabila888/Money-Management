@@ -1,0 +1,21 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winStockVsPaguDet"
+		title="Detail Prediksi Stock Per Jenis Kartu" width="60%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChartStockvsPaguDetailVm')">
+		<label value="@load(vm.title)" style="font-size: 16px" />
+		<separator />
+		<grid id="grid" sclass="table table-bordered" mold="paging"
+			pageSize="20" pagingPosition="top">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="Jenis Kartu" />
+				<column label="Stock" align="right" />
+				<column label="Pagu" align="right" />
+			</columns>
+			<rows />
+		</grid>
+	</window>
+</zk>

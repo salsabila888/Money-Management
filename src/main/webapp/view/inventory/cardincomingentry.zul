@@ -1,0 +1,134 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.CardIncomingEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;" >
+				<n:h3>
+					<n:b>Entri Incoming Produk Kartu</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<groupbox mold="3d">
+					<caption label="Form Incoming" />
+					<grid>
+						<columns>
+							<column width="200px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Incoming Id" />
+								<textbox value="Auto Generated"
+									readonly="true" cols="30" />
+							</row>
+							<row>
+								<hlayout>
+									<label value="Entri Tipe Produk" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<combobox id="cbTypeProduct"
+										selectedItem="@bind(e.mproducttype)" autodrop="true" cols="26"
+										autocomplete="true" buttonVisible="false" />
+									<label style="color:red"
+										value="@load(vmsgs['mproducttype'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Tipe Produk" />
+								<label
+									value="@load(e.mproducttype.producttype)" />
+							</row>
+							<row>
+								<label value="Pagu Stok" />
+								<decimalbox
+									value="@load(e.mproducttype.stockmin)" format="#,###" cols="30"
+									readonly="true" style="text-align: right" />
+							</row>
+							<row>
+								<label value="Stok" />
+								<decimalbox
+									value="@load(e.mproducttype.laststock)" format="#,###"
+									cols="30" readonly="true" style="text-align: right" />
+							</row>
+							<row>
+								<label value="Tanggal Masuk" />
+								<hlayout>
+									<textbox
+										value="@bind(e.entrytime) @converter('formatedDate', format='dd, MMM yyyy')"
+										readonly="true" cols="30" />
+									<label style="color:red"
+										value="@load(vmsgs['entrytime'])" />
+								</hlayout>
+							</row>
+							<row>
+								<hlayout>
+									<label value="Jumlah" />
+									<label value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<intbox value="@bind(e.itemqty)"
+										cols="30" />
+									<label style="color:red"
+										value="@load(vmsgs['itemqty'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Memo" />
+								<textbox id="txtMemo"
+									value="@bind(e.memo)" cols="31" rows="3" maxlength="100" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button id="btnSave" autodisable="self"
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+									label="Simpan" sclass="btn btn-primary btn-sm"
+									onClick="@command('doSave')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<grid id="grid" sclass="table table-bordered"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column label="Incoming Id" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Org" width="120px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tipe Produk"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tgl Masuk" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Jumlah" width="100px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Memo"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Action" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+					</columns>
+					<rows />
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,95 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">	
+	<window id="winAdjustment" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderPinpadAdjustmentVm')"
+		validationMessages="@id('vmsgs')">
+		<caption />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />		
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">				
+				<n:h3 class="panel-title"><n:b>
+					<n:span class="glyphicon glyphicon-cog" />
+					Pemenuhan Pinpad Sebagian
+				</n:b></n:h3>				
+			</div>
+			<grid style="border-bottom-left-radius:15px; border-bottom-right-radius:15px;">
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Nama Produk" />
+						<label value="@load(vm.obj.mproduct.productname)" />
+					</row>				
+					<row>
+						<label value="No. Pemesanan" />
+						<label
+							value="@load(vm.obj.orderid)" />
+					</row>
+					<row>
+						<label value="Tanggal Pemesanan" />
+						<label
+							value="@load(vm.obj.orderdate) 
+							@converter('formatedDate', format='dd, MMM yyyy') "/>
+					</row>
+					<row>
+						<label value="Tipe Pinpad" />
+					    <vlayout>
+					        <checkbox id="tipeC" label="CS" onCheck="@command('doChecked')"/>
+					        <checkbox id="tipeT" label="TELLER" onCheck="@command('doChecked')"/>
+					    </vlayout>
+					</row>
+					<row id="rowCS">
+						<label value="Jumlah Pinpad CS" />
+						<hlayout>
+							<intbox id="intcs" value="@bind(vm.totalcs)" onChange="@command('doChange')"
+								cols="15" maxlength="20" disabled="true"/>
+							<textbox value="Unit" disabled="true" cols="8"/>
+						</hlayout>
+					</row>	
+					<row id="rowTeller">
+						<label value="Jumlah Pinpad TELLER" />
+						<hlayout>
+							<intbox id="inttel" value="@bind(vm.totalteller)" onChange="@command('doChange')"
+								cols="15" maxlength="20" disabled="true"/>
+							<textbox value="Unit" disabled="true" cols="8"/>
+						</hlayout>
+					</row>	
+					<row>
+						<label value="Jumlah" />
+						<hlayout>
+							<intbox id="inttotal" value="@bind(vm.totalqty)"
+								cols="15" format="#,###" disabled="true"/>
+							<textbox value="Unit" disabled="true" cols="8"/>
+						</hlayout>
+					</row>
+					<row>
+						<label value="Catatan Pemenuhan"/>
+						<textbox value="@bind(vm.decisionmemo)" cols="30"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+			</grid>
+		</div>		
+		<separator />
+		<div class="card-footer">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-6">
+							<button id="btnSave" width="120px"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								autodisable="self" label="Submit"
+								sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

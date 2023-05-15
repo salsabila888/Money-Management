@@ -1,0 +1,47 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportOrderDataVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Pelaporan Data Order</n:b></n:h3>
+		<n:hr />
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row id="daily">
+						<label value="Tanggal Data" />
+						<datebox format="dd-MM-yyyy"
+							placeholder="Tanggal Data" value="@bind(vm.orderdate)" cols="10"
+							maxlength="10" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="row">
+							<div class="col-md-6">
+								<n:div class="btn-group" role="group">
+									<button autodisable="self"
+										sclass="btn btn-success btn-sm"
+										label="Download File"
+										onClick="@command('doDownload')" />
+								</n:div>
+							</div>
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+	</window>
+</zk>

@@ -1,0 +1,76 @@
+<?page title="LIST CUSTOMER" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPinpadFail"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PinpadScanFailVm')"
+		contentStyle="bac" onClose="@command('doClose')">
+		<caption />
+		<div class="card">
+			<div class="card-body pt-1 pb-1 pl-1 pr-1"
+				form="@id('e') @load(vm.obj)">
+				<groupbox mold="3d">
+					<caption label="Daftar Pinpad Gagal Inject" />
+					<grid id="gridFile">
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Order ID" />
+								<label value="@load(vm.obj.orderid)" />
+							</row>
+							<row>
+								<label value="Tanggal Order" />
+								<label
+									value="@load(vm.obj.inserttime) @converter('formatedDate', format='dd-MM-yyyy')" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="col-md-13" align="right">
+									<button
+										sclass="btn btn-default btn-sm" label="Export to Excel"
+										image="/images/excel.png" onClick="@command('doExport')"
+										autodisable="self" 
+										style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+					<separator />
+					<div class="row">
+						<div class="col-md-10"></div>
+						<div class="col-md-2" align="right">
+							<label value="Total Record :"
+								style="font-weight: bold" />
+							<label value="@load(vm.totalfail)"
+								style="font-weight: bold" />
+						</div>
+					</div>
+					<grid id="grid" pagingPosition="top"
+						emptyMessage="${labels.common.emptymsg}" mold="paging"
+						pageSize="10">
+						<columns>
+							<column label="${labels.common.no}"
+								align="right" width="40px" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column align="center" label="Nomor Serial"
+								width="200px" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<column label="Keterangan" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</columns>
+					</grid>
+					<!-- <separator />
+						<div align="right">
+						<button sclass="btn btn-danger btn-sm"
+						image="/images/close.png" tooltiptext="Close" autodisable="self"
+						onClick="@command('doClose')" />
+						</div> -->
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

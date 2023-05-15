@@ -1,0 +1,116 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.InquiryOrderCabangVm')">
+		<div class="card" style="border-radius:15px;"> 
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Inquiry Order</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row id="rowBranch">
+								<label value="Cabang" />
+								<combobox id="cbBranch"
+									model="@load(vm.mbranchmodel)" cols="30"
+									selectedItem="@bind(vm.mbranch)">
+									<template name="model"
+										var="mbranch">
+										<comboitem
+											label="@load(mbranch.branchname)" />
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Tanggal Data" />
+								<datebox format="dd-MM-yyyy"
+									value="@bind(vm.orderdate)" cols="30" maxlength="10" />
+							</row>
+							<row>
+								<label value="No Memo" />
+								<textbox value="@bind(vm.memono)"
+									cols="30" maxlength="40"
+									onOK="@command('doSearch')" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<n:div role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" 
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+									<button
+										sclass="btn btn-default btn-sm" 
+										label="${labels.common.reset}"
+										onClick="@command('doReset')" 
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+								</n:div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column align="center" width="180px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.orderid)" cols="20" maxlength="20"
+								placeholder="Order ID" style="text-align: center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Grup Produk" align="center" width="125px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Nama Produk" align="center" width="125px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Tanggal Order" align="center" width="125px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Jumlah Diorder" align="right" width="100px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Jumlah Diproses" align="right" width="100px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Entry By" align="center" width="180px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Lokasi" align="center" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="No Memo" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Status" align="center" width="260px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,131 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/actionico.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winIncomingResume"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.IncomingEntryResumeVM')">
+		<caption />
+		<div class="card" style="border-radius:15px;" align="center">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h2>
+					<label style="font-size:25px; font-weight:bold;"
+						value="Data Persediaan Berhasil Disimpan" />
+				</n:h2>
+			</div>
+			<div class="card-body">
+				<grid id="grid" mold="paging" pagingPosition="bottom">
+					<columns>
+						<column width="150px" />
+						<column width="5px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="No Persediaan" />
+							<label value=":" />
+							<label value="@load(vm.obj.incomingid)" />
+						</row>
+						<row>
+							<label value="Tanggal Persediaan" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.entrytime) @converter('formatedDate', format='dd-MM-yyyy')" />
+						</row>
+						<row>
+							<label value="Nama Cabang/Divisi" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.mbranch.branchname)" />
+						</row>
+						<row>
+							<label value="Jenis Produk" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.mproducttype.producttype)" />
+						</row>
+						<row>
+							<label value="Jumlah" />
+							<label value=":" />
+							<decimalbox format="#,###"
+								value="@load(vm.obj.itemqty)" readonly="true" />
+						</row>
+						<row>
+							<label value="Harga Satuan" />
+							<label value=":" />
+							<decimalbox format="#,###" readonly="true" 
+								value="@load(vm.obj.harga)" />
+						</row>
+						<row>
+							<label value="No. Kontrak/SPK" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.spkno)" />
+						</row>	
+						<row>
+							<label value="Tanggal Kontrak/SPK" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.spkdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						</row>
+						<row>
+							<label value="No. Surat Vendor" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.vendorletterno)" />
+						</row>		
+						<row>
+							<label value="Tanggal Surat Vendor" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.vendorletterdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						</row>
+						<row>
+							<label value="No. PKS" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.pksno)" />
+						</row>	
+						<row>
+							<label value="Tanggal PKS" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.pksdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						</row>
+						<row>
+							<label value="Tahun Produksi" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.manufacturedate)" />
+						</row>																				
+						<row>
+							<label value="Memo" />
+							<label value=":" />
+							<label value="@load(vm.memo)" />
+						</row>
+
+					</rows>
+					<foot>
+						<footer span="3" align="center">
+							<button id="btnCreate"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Buat Persediaan Baru" class="${labels.button.submit}"
+								onClick="@command('doCreate')" autodisable="self"
+								sclass="btn-default" />
+							<button id="btnCancel"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Lihat Daftar Persediaan" class="${labels.button.cancel}"
+								onClick="@command('doList')" autodisable="self"
+								sclass="btn-default" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,37 @@
+<?link rel="stylesheet" href="/resources/bootstrap/4.3.1/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/resources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/resources/css/layout.css" ?>
+<?link rel="stylesheet" href="/resources/css/zk-bootstrap.css" ?>
+<zk xmlns:n="native">
+	<div sclass="container-fluid" hflex="1"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MenuTabDeliveryRegulerVm')"
+		validationMessages="@id('vmsgs')">
+		<n:div class="row py-1">
+			<n:div class="col-12 p-1">
+				<div id="divExam">
+					<panel border="normal">
+						<panelchildren>
+							<tabbox width="100%" sclass="nav_tabs">
+								<tabs id="tabs">
+									<tab label="Order Paket Kartu Reguler"
+										onSelect="@command('doTab', tab='orderpaket')" />
+									<tab
+										label="Daftar Paket Kartu Reguler"
+										onSelect="@command('doTab', tab='paketlist')" />
+									<tab
+										label="Order Delivery Kartu Reguler"
+										onSelect="@command('doTab', tab='orderdelivery')" />
+									<tab
+										label="Daftar Delivery Kartu Reguler"
+										onSelect="@command('doTab', tab='deliverylist')" />
+								</tabs>
+							</tabbox>
+							<separator />
+							<div id="tabPage" />
+						</panelchildren>
+					</panel>
+				</div>
+			</n:div>
+		</n:div>
+	</div>
+</zk>

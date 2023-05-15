@@ -1,0 +1,132 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window id="winProductreqverify"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ProductreqVerifyVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<caption />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title"><n:b>
+					<n:span class="glyphicon glyphicon-cog" />
+					Form Request Product Verify
+				</n:b></n:h3>
+				<n:hr/>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">Kode Produk</n:td>
+						<n:td>
+							<label value="@load(e.productcode)" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Jenis Produk</n:td>
+						<n:td>
+							<label value="@load(e.productname)" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Instant ?</n:td>
+						<n:td>
+							<label value="@load(vm.instant)" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Berfoto ?</n:td>
+						<n:td>
+							<label value="@load(vm.berfoto)" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Tambah Sebagai</n:td>
+						<n:td>
+							<radiogroup id="sv1"
+								onCheck="@command('doChecked')" />
+							<radio id="rbYes" label="Tipe kartu baru" checked="true"
+								radiogroup="sv1" />
+							<radio id="rbNo" label="Tipe kartu existing"
+								radiogroup="sv1" />
+						</n:td>
+					</n:tr>
+					<x:tr id="org">
+						<n:td>Org</n:td>
+						<n:td>
+							<combobox id="cbOrg"
+								model="@load(vm.morgmodel)" cols="40"
+								selectedItem="@bind(vm.morg)">
+								<template name="model" var="morg">
+									<comboitem
+										label="@load(morg.description)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['morg'])" />
+						</n:td>
+					</x:tr>
+					<n:tr>
+						<n:td>Tipe Kartu</n:td>
+						<n:td>
+							<textbox id="tbProducttype"
+								value="@bind(vm.producttype)" cols="50" maxlength="40" />
+							<label id="label" style="color:red"
+								value="@load(vmsgs['producttype'])" />
+							<combobox id="cbProducttype"
+								model="@load(vm.mproducttypemodel)" cols="40"
+								selectedItem="@bind(vm.mproducttype)">
+								<template name="model"
+									var="mproducttype">
+									<comboitem
+										label="@load(mproducttype.producttype)" />
+								</template>
+							</combobox>
+							<label id="label2" style="color:red"
+								value="@load(vmsgs['mproducttype'])" />
+						</n:td>
+					</n:tr>
+					<x:tr id="stocklst">
+						<n:td>Stock</n:td>
+						<n:td>
+							<intbox value="@bind(vm.laststock)" cols="7"
+								maxlength="7" readonly="true" />
+						</n:td>
+					</x:tr>
+					<x:tr id="stockres">
+						<n:td>Stock Reserved</n:td>
+						<n:td>
+							<intbox value="@bind(vm.stockreserved)"
+								cols="7" maxlength="7" readonly="true" />
+						</n:td>
+					</x:tr>
+					<x:tr id="stockpagu">
+						<n:td>Pagu Stock</n:td>
+						<n:td>
+							<intbox value="@bind(vm.stockmin)" cols="7"
+								maxlength="7" />
+							<label style="color:red"
+								value="@load(vmsgs['stockmin'])" />
+						</n:td>
+					</x:tr>
+					<n:tfoot>
+						<n:tr>
+							<n:td colspan="2">
+								<div align="right">
+									<button
+										sclass="btn btn-primary btn-sm" label="Submit"
+										autodisable="self" onClick="@command('doSave')" />
+								</div>
+							</n:td>
+						</n:tr>
+					</n:tfoot>
+				</n:table>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

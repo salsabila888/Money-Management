@@ -1,0 +1,73 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPaketlabel" border="normal" title="${desktop.webApp.appName}" width="90%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PaketLabelVm')">
+		<caption label="Data Detail Paket" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+
+		<groupbox mold="3d">
+			<caption label="Data Manifest Paket" />
+			<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="No Manifest Paket" />
+						<label value="@load(vm.obj.paketid)" />
+					</row>
+					<row>
+						<label value="Tanggal Proses" />
+						<label value="@load(vm.obj.processtime) @converter('formatedDate', format='dd-MM-yyyy HH:mm')" />
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.obj.totaldata)" />	
+					</row>					
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />		
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="No Paket" align="center" width="120px" />				
+				<column label="Tipe Produk" />
+				<column label="Kode Produk" align="center" width="120px" />
+				<column label="Jenis Produk" />
+				<column label="Cabang" width="120px" />
+				<column label="Tanggal Data" align="center" width="120px" />						
+				<column label="Jumlah" align="center" width="150px"/>
+			</columns>
+			<foot>
+				<footer span="8">
+					<button autodisable="self"
+					label="Cetak Label" sclass="btn btn-primary btn-sm"
+					onClick="@command('doPrintLabel')" />
+				</footer>
+			</foot>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

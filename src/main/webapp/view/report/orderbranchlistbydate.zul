@@ -1,0 +1,108 @@
+
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderdate"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderBranchbydatelistVm')">
+		<caption id="caption" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h6 style="color: #ffffff; padding-top: 9px;">
+					<label style="font-size: 15px; font-weight: bold;"
+						id="cardTitle" />
+				</n:h6>
+			</div>
+			<n:hr />
+			<div class="card-body" visible="false">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						id="captSearch" image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="100px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="12"
+									selectedItem="@bind(vm.month)" />
+							</row>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button id="btnSearch"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button id="btnReset"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</div>
+			<separator />
+			<!-- <div class="row">
+				<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+				</div>
+				<div class="col-md-2" align="right"
+				style="padding: 10px 40px 0px 0px;">
+				<label value="Total Record :"
+				style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+				style="font-weight: bold" />
+				</div>
+				</div> -->
+			<div class="card-body">
+				<grid id="grid" mold="paging" pageSize="10"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="35px" />
+						<column label="Tanggal Order" width="110px"
+							align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clOutlet" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Order" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Direquest" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Diproses" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Item Dikirim" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Outstanding" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Persentase Pemenuhan"
+							align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,107 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ManifestDalkotListVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3>Daftar Manifest Ekspedisi Dalam Kota</n:h3>
+		<n:hr />
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal Proses" />
+						<hlayout>
+							<datebox value="@bind(vm.startdate)"
+								format="dd-MM-yyyy" />
+							<label value="s/d" />
+							<datebox value="@bind(vm.enddate)"
+								format="dd-MM-yyyy" />
+						</hlayout>
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="row">
+							<div class="col-md-6">
+								<n:div class="btn-group" role="group">
+									<button autodisable="self"
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button autodisable="self"
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</div>
+							<div class="col-md-6" align="right">
+								<button sclass="btn btn-default btn-sm" id="excel"
+									label="Export to Excel" image="/images/excel.png"
+									onClick="@command('doExport')" autodisable="self" disabled="true" />
+							</div>
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox mold="3d" id="groupbox" visible="false">
+			<caption label="Summary" style="font-weight: bold"/>
+			<div class="row">
+				<div class="col-md-4">
+					<label value="Total Pengiriman : "
+						style="font-weight: bold" />
+					<label value="@load(vm.totaldata)" />
+					<label value="@load(vm.percentdata)"/>
+				</div>
+				<div class="col-md-4">
+					<label value="Total Diterima : "
+						style="font-weight: bold" />
+					<label value="@load(vm.totalterima)"/>
+					<label value="@load(vm.percentterima)"/>
+				</div>
+				<div class="col-md-4">
+					<label value="Total Belum Diterima : "
+						style="font-weight: bold" />
+					<label value="@load(vm.totalbelumterima)"/>
+					<label value="@load(vm.percentbelumterima)"/>
+				</div>
+			</div>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+					width="40px" />
+				<column label="No. Wakat" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Cabang" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Tanggal Kirim" align="Center" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+					width="130px" />
+				<column label="Status" align="Center" width="120px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Total Data" align="Center" width="100px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

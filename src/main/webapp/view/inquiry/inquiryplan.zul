@@ -1,0 +1,169 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.InquiryPlanningDivisiVm')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Inquiry Inisiasi Pengadaan</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="No Pengadaan" />
+								<textbox value="@bind(vm.planno)"
+									placeholder="No. Planning..." cols="30" maxlength="40"
+									onOK="@command('doSearch')" />
+							</row>
+							<row>
+								<label value="No Persediaan" />
+								<textbox value="@bind(vm.incid)"
+									placeholder="Incoming ID..." cols="30" maxlength="40"
+									onOK="@command('doSearch')" />
+							</row>
+							<row>
+								<label value="No Memo" />
+								<textbox value="@bind(vm.memono)"
+									placeholder="No. Memo..." cols="30" maxlength="40"
+									onOK="@command('doSearch')" />
+							</row>
+							<row id="rowVendor">
+								<label value="Vendor" />
+								<combobox id="cbVendor"
+									placeholder="Vendor Supplier..."
+									model="@load(vm.msuppliermodel)" cols="26"
+									selectedItem="@bind(vm.msupplier)">
+									<template name="model"
+										var="msupplier">
+										<comboitem
+											label="@load(msupplier.suppliername)" />
+									</template>
+								</combobox>
+							</row>
+							<row id='rowStatus'>
+								<label value="Status" />
+								<combobox id="cbStatus" cols="26"
+									selectedItem="@bind(vm.status)" readonly="true"
+									placeholder="Status...">
+									<comboitem value="U1"
+										label="PROSES PERSETUJUAN PEMIMPIN/UNIT" />
+									<comboitem value="U2"
+										label="PROSES PERSETUJUAN OPR" />
+									<comboitem value="U3"
+										label="PROSES PERSETUJUAN PEMIMPIN PFA" />
+									<comboitem value="U4"
+										label="USULAN DISETUJUI" />
+									<comboitem value="U5"
+										label="USULAN DITOLAK" />
+									<comboitem value="U6"
+										label="USULAN DITOLAK OPR" />
+									<comboitem value="U7"
+										label="USULAN DITOLAK PFA" />
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-12">
+										<n:div role="group">
+											<button autodisable="self"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button autodisable="self"
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="No. Pengadaan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="No. Persediaan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="Lokasi" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="Tipe Produk"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="250px" />
+						<column label="Tanggal Pengadaan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Tanggal Persediaan"
+							align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Anggaran" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Jumlah Pengadaan" width="140px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Total Proses" width="140px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Realisasi Anggaran" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Nama Vendor" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="No Memo" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="170px" />
+						<column label="Tanggal Memo" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Input By" width="180px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Status" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Dokumen Pendukung" width="200px" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

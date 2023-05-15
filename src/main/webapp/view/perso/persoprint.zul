@@ -1,0 +1,36 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersoPrint" border="normal"
+		title="${desktop.webApp.appName}" width="400px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PersoPrintVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<separator />
+		<radiogroup id="rgOutput" selectedItem="@bind(vm.format)" />
+		<grid>
+			<columns>
+				<column label="Format Output Bon Kartu" />
+			</columns>
+			<rows>
+				<row>
+					<radio value="pdf" radiogroup="rgOutput" image="/images/pdf(2).png" label="PDF" />
+				</row>
+				<row>
+					<radio value="xls" radiogroup="rgOutput" image="/images/pdf(2).png" label="Excel" />					
+				</row>
+			</rows>
+			<foot>
+				<footer>
+					<button autodisable="self"
+						label="Generate" sclass="btn btn-primary btn-sm" width="97%"
+						onClick="@command('doSave')" />
+				</footer>
+			</foot>
+		</grid>
+		<separator />
+	</window>
+</zk>

@@ -1,0 +1,93 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderdata" border="normal" title="${desktop.webApp.appName}"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderDataVm')">
+		<caption label="Data Detail Order" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<groupbox id="gbBatchInfo" mold="3d">
+			<caption label="Informasi Data Emboss" />
+			<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="No. Order" />
+						<label value="@load(vm.obj.torder.orderid)" />
+					</row>
+					<row>
+						<label value="Waktu Upload File Emboss" />
+						<label
+							value="@load(vm.obj.torder.processtime) @converter('formatedDate', format='dd-MM-yyyy HH:mm')" />
+					</row>
+					<row>
+						<label value="Nama File" />
+						<label value="@load(vm.obj.torder.filename)" />
+					</row>
+					<row>
+						<label value="Memo" />
+						<label value="@load(vm.obj.torder.memo)" />
+					</row>
+					<row>
+						<label value="Cabang" />
+						<label value="@load(vm.obj.mbranch.branchname)" />	
+					</row>
+					<row>
+						<label value="Tipe Kartu" />
+						<label value="@load(vm.obj.mproduct.mproducttype.producttype)" />
+					</row>
+					<row>
+						<label value="Kode Kartu" />
+						<label value="@load(vm.obj.tembossproduct.productcode)" />
+					</row>
+					<row>
+						<label value="Jenis Kartu" />
+						<label value="@load(vm.obj.tembossproduct.mproduct.productname)" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column width="170px" align="center">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.cardno)" cols="20" maxlength="20"
+						placeholder="No Kartu"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Nama" />
+				<column label="Tanggal Data" align="center" width="120px" />
+				<column label="Kode Produk" align="center" width="120px" />
+				<column label="Jenis Produk" />
+				<column label="Kode Cabang" align="center" width="120px" />
+				<column label="Nama Cabang" />		
+				<column label="Action" align="center" width="110px" />		
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

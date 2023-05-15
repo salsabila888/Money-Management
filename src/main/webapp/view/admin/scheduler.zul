@@ -1,0 +1,42 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">	
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.TschedulerVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />		
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">				
+				<n:h3 class="panel-title"><n:b>
+					<n:span class="glyphicon glyphicon-cog" />
+					Form Master Services
+				</n:b></n:h3>				
+			</div>
+			
+			<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+				<columns>
+					<column label="No" align="right" width="40px" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="${labels.scheduler.schedulername}" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="left" width="200px" />
+					<column label="Group" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="left" width="120px" />
+					<column label="${labels.common.description}" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="left" />
+					<column label="${labels.scheduler.schedulerstatus}" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="center" width="180px" />
+					<column style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						label="${labels.scheduler.schedulerrepeattype}" align="center"
+						width="180px" />
+					<column label="Repeat Interval" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="center" width="150px" />
+					<column label="${labels.common.action}" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="center" width="120px" />
+				</columns>
+			</grid>
+		</div>		
+		<separator />
+	</window>
+</zk>

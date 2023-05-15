@@ -1,0 +1,176 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReturProductListVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Data Retur</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)"
+									cols="20" />
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+							<row>
+								<label value="Status" />
+								<combobox id="cbStatus"
+									selectedItem="@bind(vm.status)">
+									<comboitem value="" label="ALL" />
+									<comboitem value="R1"
+										label="ROSES PERSETUJUAN PEMIMPIN/UNIT" />
+									<comboitem value="R2"
+										label="DITOLAK OLEH PEMIMPIN/UNIT" />
+									<comboitem value="R3"
+										label="PROSES PERSETUJUAN WILAYAH" />
+									<comboitem value="R4"
+										label="DITOLAK OLEH WILAYAH" />
+									<comboitem value="R5"
+										label="PROSES PERSETUJUAN PFA" />
+									<comboitem value="R6"
+										label="DISETUJUI PFA" />
+									<comboitem value="R7"
+										label="DITOLAK OLEH PFA" />
+									<comboitem value="R8"
+										label="PROSES PERSETUJUAN OPR" />
+									<comboitem value="R9"
+										label="DISETUJUI OPR" />
+									<comboitem value="R10"
+										label="DITOLAK OLEH OPR" />
+									<comboitem value="R13"
+										label="DIMUSNAHKAN" />
+									<comboitem value="R14"
+										label="DIKEMBALIKAN KE PFA" />
+									<comboitem value="R15"
+										label="DIKEMBALIKAN OLEH PFA" />
+									<comboitem value="R16"
+										label="RETUR DITERIMA" />
+									<comboitem value="R17"
+										label="DIKEMBALIKAN KE OPR" />
+									<comboitem value="R18"
+										label="DIKEMBALIKAN OLEH OPR" />
+									<comboitem value="D21"
+										label="ORDER DELIVERY" />
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}" onClick="@command('doReset')"
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;" />
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self"
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Retur ID" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Dokumen" align="center"
+							width="250px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Nama Cabang" align="center"
+							width="250px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Nama Wilayah" align="center"
+							width="250px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Nama Barang" align="center"
+							width="250px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Kode Barang" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Status" align="center"
+							width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah Unit" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Alasan Pengembalian"
+							align="center" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Direquest oleh" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tanggal Request" align="center"
+							width="125px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Pemutus" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tanggal Keputusan" align="center"
+							width="120px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Action" align="center"
+							width="160px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

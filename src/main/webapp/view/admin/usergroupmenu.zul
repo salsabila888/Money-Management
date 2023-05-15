@@ -1,0 +1,34 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPopup" title="Setup Menu" border="normal"
+		width="600px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MusergroupmenuVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<grid>
+			<columns>
+				<column align="center" label="Kode Grup User"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column align="center" label="Nama Grup User"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+			</columns>
+			<rows>
+				<row>
+					<label value="@load(vm.obj.usergroupcode)" />
+					<label value="@load(vm.obj.usergroupname)" />
+				</row>
+			</rows>
+		</grid>
+		<div id="divListMenu" />
+		<separator />
+		<div align="center">
+			<button id="btnSave" sclass="btn btn-primary btn-sm"
+				style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+				label="${labels.common.save}" onClick="@command('save')"
+				width="120px" />
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,61 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winStockvspagu"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChartStockPaguCardVm')">
+		<n:h6
+			style="font-size 20px; font-weight:bold; padding-left: 13px;">
+			Jumlah Stock VS Pagu Stock Blankcard
+		</n:h6>
+		<div id="divChart" class="card-body"
+			style="border: 1px solid #f4f4f4;">
+			<groupbox>
+				<charts id="chart" type="bar" />
+			</groupbox>
+		</div>
+		<n:h6
+			style="font-size 20px; font-weight:bold; padding-left: 3px;">
+			Tabel Data Jumlah Stock VS Pagu Stock Blankcard
+		</n:h6>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+			mold="paging" pageSize="20" pagingPosition="top"
+			selectedItem="@bind(vm.objForm)">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="35px"
+					style="color: #000000 !important; background-color: #81bf3d !important; border-color: #f1f2f2 !important; font-weight:bold" />
+				<column label="Jenis"
+					style="color: #000000 !important; background-color: #81bf3d !important; border-color: #f1f2f2 !important; font-weight:bold" />
+				<column label="&#62;50%" align="right"
+					style="color: #000000 !important; background-color: #81bf3d !important; border-color: #f1f2f2 !important; font-weight:bold" />
+				<column label="25% s/d 50%" align="right"
+					style="color: #000000 !important; background-color: #81bf3d !important; border-color: #f1f2f2 !important; font-weight:bold" />
+				<column label="&#60;25%" align="right"
+					style="color: #000000 !important; background-color: #81bf3d !important; border-color: #f1f2f2 !important; font-weight:bold" />
+			</columns>
+			<foot>
+				<footer />
+				<footer>
+					<label value="TOTAL"
+						style="font-size: 16px; font-weight: bold" />
+				</footer>
+				<footer>
+					<decimalbox cols="14" value="@load(vm.totalgt50)"
+						format="#,###" inplace="true" readonly="true"
+						style="text-align:right; font-weight:bold" />
+				</footer>
+				<footer>
+					<decimalbox cols="14" value="@load(vm.totalgt25)"
+						format="#,###" inplace="true" readonly="true"
+						style="text-align:right; font-weight:bold" />
+				</footer>
+				<footer>
+					<decimalbox cols="14" value="@load(vm.totallt25)"
+						format="#,###" inplace="true" readonly="true"
+						style="text-align:right; font-weight:bold" />
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>

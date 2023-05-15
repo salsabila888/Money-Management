@@ -1,0 +1,92 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifDeliveryJobVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Order Delivery</n:b></n:h3>
+		<n:hr />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="No" align="right" width="50px" />
+				<column align="center" width="60px">
+					<checkbox id="chkAll"
+						onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column align="center" width="140px">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.branchid)" cols="15" maxlength="5"
+						placeholder="Kode Cabang"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" focus="true" />
+				</column>
+				<column>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.branchname)" cols="30" maxlength="50"
+						placeholder="Nama Cabang"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" focus="true" />
+				</column>
+				<column align="center" width="150px">
+					<datebox inplace="true" class="cheader"
+						format="dd-MM-yyyy" style="text-align: center"
+						value="@bind(vm.orderdate)" cols="7" maxlength="10"
+						placeholder="Tgl Data"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Total" align="right" width="120px" />
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<grid width="400px">
+				<columns>
+					<column label="Total Record Selected"
+						align="center" />
+					<column label="Total Data Selected" align="center" />
+				</columns>
+				<rows>
+					<row>
+						<decimalbox cols="15"
+							value="@load(vm.totalselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+						<decimalbox cols="15"
+							value="@load(vm.totaldataselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+					</row>
+					<row>
+						<button width="180px" autodisable="self"
+							label="Lihat Data" sclass="btn btn-warning btn-sm"
+							onClick="@command('doViewSelected')" />
+						<button width="180px" autodisable="self"
+							label="Reset Data" sclass="btn btn-danger btn-sm"
+							onClick="@command('doResetSelected')" />
+					</row>
+				</rows>
+				<foot>
+					<footer span="2" align="center">
+						<button width="380px" autodisable="self"
+							label="Buat Manifest" sclass="btn btn-primary btn-sm"
+							onClick="@command('doDeliveryGroup')" />
+					</footer>
+				</foot>
+			</grid>
+		</div>
+		<separator />
+	</window>
+</zk>

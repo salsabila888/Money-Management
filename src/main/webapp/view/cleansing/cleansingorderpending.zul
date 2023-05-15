@@ -1,0 +1,86 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.CleansingOrderPendingVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Cleansing Order Pending</n:b></n:h3>		
+		<n:hr/>			
+		<groupbox mold="3d">
+			<caption label="Form Cleansing" />
+			<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Entri Tipe Produk" />
+							<!-- <combobox id="cbTypeProduct"
+							model="@load(vm.mproducttype)" cols="40"
+							selectedItem="@bind(e.mproducttype)">
+							<template name="model" var="mproducttype">
+								<comboitem
+									label="@load(mproducttype.producttype)" />
+							</template>
+						</combobox> -->
+						<combobox id="cbProduct"
+							selectedItem="@bind(vm.mproduct)" autodrop="true" cols="40"
+							autocomplete="true" buttonVisible="false" />									
+					</row>	
+					</rows>				
+				<foot>
+					<footer />
+					<footer>
+						<button id="btnSave"
+							autodisable="self" label="Tampilkan" sclass="btn btn-default btn-sm"
+							onClick="@command('doSearch')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		
+			
+			<separator />
+			<grid id="grid" sclass="table table-bordered"
+				emptyMessage="${labels.common.emptymsg}">
+				<columns>
+					<column width="200px" />				
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipe Produk" />
+						<label value="@load(vm.mproduct1.mproducttype.producttype)" />
+					</row>
+					<row>
+						<label value="Kode Produk" />
+						<label value="@load(vm.mproduct1.productcode)" />
+					</row>
+					<row>
+						<label value="Nama Produk" />
+						<label value="@load(vm.mproduct1.productname)" />
+					</row>
+					<row>
+						<label value="Jumlah Data Pending" />
+						<decimalbox cols="15"
+							value="@load(vm.total)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+					</row>
+				</rows>	
+				<foot>
+					<footer />
+					<footer>
+						<button id="btnDelete" width="90px"
+							autodisable="self" label="Hapus" sclass="btn btn-danger btn-sm"
+							onClick="@command('doDelete')" disabled="true" />
+					</footer>
+				</foot>		
+			</grid>
+			<separator />
+	</window>
+</zk>

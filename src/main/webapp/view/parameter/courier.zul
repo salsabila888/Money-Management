@@ -1,0 +1,157 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.McourierVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-pencil" />
+						Form Master Kurir
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="100px">Expedisi</n:td>
+						<n:td>
+							<combobox id="cbVendor" cols="35"
+								model="@load(vm.mcouriervendor)"
+								selectedItem="@bind(e.mcouriervendor)">
+								<template name="model"
+									var="mcouriervendor">
+									<comboitem
+										label="@load(mcouriervendor.vendorname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mcouriervendor'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td width="200px">Kode Kurir</n:td>
+						<n:td>
+							<textbox value="@bind(e.couriercode)"
+								cols="35" maxlength="10" placeholder="Auto Generated"
+								readonly="true" />
+							<label style="color:red"
+								value="@load(vmsgs['couriercode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama Kurir</n:td>
+						<n:td>
+							<textbox value="@bind(e.couriername)"
+								cols="35" maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['couriername'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>No. HP</n:td>
+						<n:td>
+							<textbox value="@bind(e.courierphone)"
+								cols="35" maxlength="13" />
+							<label style="color:red"
+								value="@load(vmsgs['courierphone'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>E-mail</n:td>
+						<n:td>
+							<textbox value="@bind(e.courieremail)"
+								cols="35" maxlength="100" />
+							<label style="color:red"
+								value="@load(vmsgs['courieremail'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>No. Induk Pegawai</n:td>
+						<n:td>
+							<textbox value="@bind(e.npp)" cols="35"
+								maxlength="20" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Foto</n:td>
+						<n:td>
+							<button sclass="btn btn-default btn-sm"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Browse Image" upload="true,maxsize=10000"
+								onUpload="@command('doUploadImg', upEvent=event)" />
+							<image id="img" width="120px"
+								height="176px" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<n:div role="group">
+						<button id="btnSave"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.save}"
+							onClick="@command('save')" />
+						<button id="btnCancel"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+							onClick="@command('cancel')" />
+						<button id="btnDelete"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.del}"
+							onClick="@command('delete')" />
+					</n:div>
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader label="Expedisi"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						sort="auto(mcouriervendor.vendorname)" />
+					<listheader sort="auto(couriercode)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.couriercode)" cols="15" maxlength="5"
+							placeholder="Kode Kurir"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(couriername)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.couriername)" cols="30" maxlength="50"
+							placeholder="Nama Kurir"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader label="No. HP"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="E-mail"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="NIP"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Action" align="center"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						width="130px" />
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

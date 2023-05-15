@@ -1,0 +1,197 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportProductStockVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<caption id="caption" visible="false" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h5>Laporan Sebaran Stock By Product</n:h5>
+				<div>
+					<label value="@load(vm.productgroup)"
+						style="font-size: 16px; font-weight: bold" />
+				</div>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Kode Produk" />
+								<textbox value="@bind(vm.productcode)"
+									cols="30" />
+							</row>
+							<row id="rowOrg" visible="false">
+								<label value="Org" />
+								<combobox id="cbOrg"
+									model="@load(vm.morgmodel)" cols="30"
+									selectedItem="@bind(vm.morg)">
+									<template name="model" var="morg">
+										<comboitem
+											label="@load(morg.description)" />
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Jenis Produk" />
+								<combobox id="cbProducttype"
+									model="@load(vm.mproducttypemodel)" cols="30"
+									selectedItem="@bind(vm.mproducttype)">
+									<template name="model"
+										var="mproducttype">
+										<comboitem
+											label="@load(mproducttype.producttype)" />
+									</template>
+								</combobox>
+							</row>
+							<row id="rowRegion">
+								<label value="Wilayah" />
+								<combobox id="cbRegion"
+									model="@load(vm.mregionmodel)" cols="30"
+									selectedItem="@bind(vm.mregion)">
+									<template name="model"
+										var="mregion">
+										<comboitem
+											label="@load(mregion.regionname)" />
+									</template>
+								</combobox>
+							</row>
+							<row id="rowBranch">
+								<label value="Cabang" />
+								<combobox id="cbBranch"
+									model="@load(vm.mbranchmodel)" cols="30"
+									selectedItem="@bind(vm.mbranch)">
+									<template name="model"
+										var="mbranch">
+										<comboitem
+											label="@load(mbranch.branchname)" />
+									</template>
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button id="btnSearch"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+											<button id="btnReset"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}" onClick="@command('doReset')"
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;" />
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self"
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;" />
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div id="divRegion" align="center" visible="false">
+					<label value="@load(vm.regionname)"
+						style="font-size: 16px; font-weight: bold" />
+				</div>
+				<div id="divBranch" align="center" visible="false">
+					<label value="@load(vm.branchname)"
+						style="font-size: 16px; font-weight: bold" />
+				</div>
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.totalrecord)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+					mold="paging" pageSize="10" pagingPosition="top">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column label="Kode Produk" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.productname)" cols="20" maxlength="17"
+								placeholder="Nama Produk"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Barang Masuk" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Barang Keluar" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Destroyed" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Stock" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Action" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+					</columns>
+					<foot>
+						<footer />
+						<footer>
+							<label value="TOTAL"
+								style="font-size: 16px; font-weight: bold" />
+						</footer>
+						<footer />
+						<footer align="right">
+							<label
+								value="@load(vm.totalmasuk) @converter('formatedNumber', format='#,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+						<footer align="right">
+							<label
+								value="@load(vm.totalkeluar) @converter('formatedNumber', format='#,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+						<footer align="right">
+							<label
+								value="@load(vm.totaldestroy) @converter('formatedNumber', format='#,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+						<footer align="right">
+							<label
+								value="@load(vm.totalcabang) @converter('formatedNumber', format='#,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

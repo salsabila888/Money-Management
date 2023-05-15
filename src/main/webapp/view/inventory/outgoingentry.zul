@@ -1,0 +1,168 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OutgoingEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<!-- <caption /> -->
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Entri Outgoing</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<groupbox mold="3d">
+					<caption label="Form Outgoing" />
+					<grid>
+						<columns>
+							<column width="200px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Outgoing Id" />
+								<hlayout>
+									<textbox
+										value="@bind(e.outgoingid)" />
+									<label style="color:red"
+										value="@load(vmsgs['outgoingid'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Tanggal Keluar" />
+								<hlayout>
+									<textbox
+										value="@bind(e.entrytime) @converter('formatedDate', format='dd, MMM yyyy')"
+										readonly="true" cols="12" />
+									<label style="color:red"
+										value="@load(vmsgs['entrytime'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Grup Produk" />
+								<combobox id="cbProductgroup" cols="30"
+									selectedItem="@bind(e.productgroup)"
+									onChange="@command('setProductAutocomplete', item=e.productgroup)">
+									<comboitem label="KARTU" value="01" />
+									<comboitem label="TOKEN" value="02" />
+									<comboitem label="PINPAD"
+										value="03" />
+									<comboitem label="DOCUMENT"
+										value="04" />
+									<comboitem label="SUPPLIES"
+										value="05" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Jenis Produk" />
+								<hlayout>
+									<!-- <combobox id="cbProduct"
+										model="@load(vm.mproductmodel)" cols="40"
+										selectedItem="@bind(e.mproduct)">
+										<template name="model" var="mproduct">
+										<comboitem
+										label="@load(mproduct.productcode)" description="@load(mproduct.productname)" />
+										</template>
+										</combobox> -->
+									<combobox id="cbProduct"
+										selectedItem="@bind(e.mproduct)" autodrop="true" cols="40"
+										autocomplete="true" buttonVisible="false" />
+									<label style="color:red"
+										value="@load(vmsgs['mproduct'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Tipe Produk" />
+								<textbox
+									value="@load(e.mproduct.mproducttype.producttype)"
+									readonly="true" />
+							</row>
+							<row>
+								<label value="Unit Produk" />
+								<combobox
+									selectedItem="@load(e.mproduct.mproducttype.productunit)"
+									cols="10" disabled="true" buttonVisible="false" inplace="true"
+									autocomplete="true">
+									<comboitem value="P" label="PCS" />
+									<comboitem value="B" label="BOX" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Jumlah Per Unit" />
+								<intbox id="ibProductunitqty"
+									value="@load(e.mproduct.mproducttype.productunitqty)" cols="12"
+									readonly="true" style="text-align: right" />
+							</row>
+							<row>
+								<label value="Stok" />
+								<decimalbox
+									value="@load(e.mproduct.mproducttype.laststock)" format="#,###"
+									cols="12" readonly="true" style="text-align: right" />
+							</row>
+							<row>
+								<label value="Stok Reserved" />
+								<decimalbox
+									value="@load(e.mproduct.mproducttype.stockreserved)"
+									format="#,###" cols="12" readonly="true"
+									style="text-align: right" />
+							</row>
+							<row>
+								<label value="Jumlah" />
+								<hlayout>
+									<intbox value="@bind(e.itemqty)"
+										format="#,###" maxlength="8" />
+									<label style="color:red"
+										value="@load(vmsgs['itemqty'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Memo" />
+								<textbox id="txtMemo"
+									value="@bind(e.memo)" cols="40" rows="3" maxlength="100" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button id="btnSave" width="90px"
+									autodisable="self" label="Simpan"
+									sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+
+
+				<separator />
+				<grid id="grid" sclass="table table-bordered"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column label="Outgoing Id" align="center"
+							width="120px" />
+						<column label="Tgl Keluar" align="center"
+							width="120px" />
+						<column label="Tipe Produk" />
+						<column label="Kode Produk" width="120px" />
+						<column label="Jenis Produk" />
+						<column label="Jumlah" width="100px"
+							align="right" />
+						<column label="Memo" />
+						<column label="Action" align="center"
+							width="80px" />
+					</columns>
+					<rows />
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

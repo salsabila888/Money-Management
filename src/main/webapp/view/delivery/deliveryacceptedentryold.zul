@@ -1,0 +1,157 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryAcceptedEntryOldVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card">
+			<div class="card-header">
+				<n:h3>
+					<n:b>POD Manual</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body" form="@id('e') @load(vm.obj)">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Cabang" />
+								<combobox id="cbCabang"
+									model="@load(vm.mbranchmodel)" cols="30"
+									selectedItem="@bind(vm.mbranch)">
+									<template name="model"
+										var="mbranch">
+										<comboitem
+											label="@load(mbranch.branchname)" />
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Grup Produk" />
+								<combobox id="cbProduk"
+									selectedItem="@bind(vm.produk)" readonly="true" cols="15">
+									<comboitem label="KARTU REGULER" value="01" />
+									<comboitem label="KARTU BERFOTO" value="09" />
+									<comboitem label="TOKEN" value="02" />
+									<comboitem label="PINPAD"
+										value="03" />
+									<comboitem label="PIN MAILER"
+										value="06" />
+								</combobox>
+							</row>
+							<row id="daily">
+								<label value="Tanggal Proses" />
+								<datebox format="dd-MM-yyyy"
+									placeholder="Tanggal Data" value="@bind(vm.processtime)"
+									cols="10" maxlength="10" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div class="btn-group"
+											role="group">
+											<button id="btnSearch"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<paging id="paging" autohide="true" />
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column align="center" width="60px">
+							<checkbox
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column>
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.dlvid)" cols="15" maxlength="20"
+								placeholder="No Manifest"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Group Produk" align="center"
+							width="120px" />
+						<column label="Tanggal Proses" align="center"
+							width="140px" />
+						<column label="Kode Cabang" width="140px" />
+						<column label="Nama Cabang" />
+						<column label="Total" align="right"
+							width="80px" />
+						<column width="150px">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.vendorcode)" cols="8" maxlength="10"
+								placeholder="Expedisi"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Status" width="170px" />
+					</columns>
+				</grid>
+				<separator />
+				<div align="right">
+					<grid width="400px">
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tanggal Terima" />
+								<datebox id="datebox" cols="15"
+									format="long" />
+							</row>
+							<row>
+								<label value="Penerima" />
+								<textbox id="penerima" cols="20" />
+							</row>
+						</rows>
+						<foot>
+							<footer span="2">
+								<button width="100%" id="btnSave"
+									autodisable="self" label="Submit"
+									sclass="btn btn-primary btn-sm"
+									onClick="@command('doManifest')" />
+							</footer>
+						</foot>
+					</grid>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

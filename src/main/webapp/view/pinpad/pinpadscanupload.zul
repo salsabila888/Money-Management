@@ -1,0 +1,118 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window id="winSerialUpload"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PinpadScanUploadVm')"
+		validationMessages="@id('vmsgs')" sclass="win">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-success panel-sm">
+			<div class="panel-body">
+				<groupbox id="gbOrder" mold="3d"
+					form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doRegister')">
+					<caption label="Form Entri Nomor Serial"></caption>
+					<n:table class="table table-striped table-sm">
+						<x:tr>
+							<n:tr>
+								<n:td width="200px">Order Id</n:td>
+								<n:td>
+									<label
+										value="@load(vm.obj.orderid)" />
+								</n:td>
+							</n:tr>
+							<n:tr>
+								<n:td>Tanggal Order</n:td>
+								<n:td>
+									<label
+										value="@load(vm.obj.entrytime) @converter('formatedDate', format='dd-MM-yyyy')" />
+								</n:td>
+							</n:tr>
+							<n:tr>
+								<n:td>Jumlah</n:td>
+								<n:td>
+									<label
+										value="@load(vm.obj.totaldata)" />
+								</n:td>
+							</n:tr>
+							<n:td>
+								<label value="Upload File" />
+							</n:td>
+							<n:td>
+								<hlayout>
+									<button id="btnBrowse"
+										label="Browse File..." upload="true, maxsize=100000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowse', upEvent=event)" />
+									<separator orient="vertical" />
+									<label value="@load(vm.filename)" />
+								</hlayout>
+							</n:td>
+						</x:tr>
+						<n:tr>
+							<n:td></n:td>
+							<n:td>
+								<div class="row">
+									<div class="col-md-6">
+										<button id="btnRegister"
+											sclass="btn btn-success btn-sm" label="Register Nomor Serial"
+											autodisable="self"
+											onClick="@command('doRegister', isInsert=true)" />
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<label value="Outstanding : "
+											style="font-weight: bold" />
+										<label
+											value="@load(vm.outstanding)" style="font-weight: bold" />
+									</div>
+								</div>
+							</n:td>
+						</n:tr>
+					</n:table>
+				</groupbox>
+				<separator />
+
+				<grid id="grid" mold="paging"
+					emptyMessage="${labels.common.emptymsg}" pageSize="20">
+					<columns>
+						<column label="No" align="right" width="40px" />
+						<column label="Nomor Serial" align="center" />
+						<column label="TID" align="center" />
+						<column label="Tipe" align="center" />
+						<column label="Keterangan" />
+					</columns>
+					<rows />
+					<foot>
+						<footer span="5">
+							<button autodisable="self" id="btnSave"
+								label="Submit Verified" sclass="btn btn-primary btn-sm"
+								onClick="@command('doSave')" />
+						</footer>
+						<footer>
+							<hlayout>
+								<label value="Total Fail Data : " />
+								<a
+									label="@load(vm.totalfail) @converter('formatedNumber', format='###,##0')"
+									onClick="@command('doView')" />
+							</hlayout>
+						</footer>
+					</foot>
+				</grid>
+				<grid id="gridFail">
+					<columns>
+						<column width="150px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+
+						</row>
+					</rows>
+				</grid>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

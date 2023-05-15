@@ -1,0 +1,180 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MuserVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master User
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save') @validator(vm.validator)">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">User Id</n:td>
+						<n:td>
+							<textbox id="tbUserid"
+								value="@bind(e.userid)" cols="35" maxlength="15" />
+							<label style="color:red"
+								value="@load(vmsgs['userid'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Username</n:td>
+						<n:td>
+							<textbox value="@bind(e.username)" cols="35"
+								maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['username'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Password</n:td>
+						<n:td>
+							<textbox id="tbPassword"
+								value="@bind(e.password)" cols="35" maxlength="70"
+								type="password" />
+							<label style="color:red"
+								value="@load(vmsgs['password'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Grup User</n:td>
+						<n:td>
+							<combobox id="cbUsergroup"
+								model="@load(vm.musergroup)" cols="35"
+								selectedItem="@bind(e.musergroup)">
+								<template name="model"
+									var="musergroup">
+									<comboitem
+										label="@load(musergroup.usergroupname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['musergroup'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Cabang</n:td>
+						<n:td>
+							<combobox id="cbCabang"
+								model="@load(vm.mbranch)" cols="35"
+								selectedItem="@bind(e.mbranch)">
+								<template name="model" var="mbranch">
+									<comboitem
+										label="@load(mbranch.branchname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mbranch'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Vendor?</n:td>
+						<n:td>
+							<radiogroup id="rgVendor"
+								selectedItem="@bind(vm.isvendor)"
+								onCheck="@command('doVendor', item=vm.isvendor)">
+								<radio value="Y" label="Ya" />
+								<separator orient="vertical" />
+								<radio value="N" label="Tidak" />
+							</radiogroup>
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td />
+						<n:td>
+							<hlayout>
+								<combobox id="cbPersovendor"
+									visible="false" model="@load(vm.mpersovendormodel)"
+									selectedItem="@bind(e.mpersovendor)">
+									<template name="model"
+										var="mpersovendor">
+										<comboitem
+											label="@load(mpersovendor.vendorcode)"
+											description="@load(mpersovendor.vendorname)" />
+									</template>
+								</combobox>
+								<label style="color:red"
+									value="@load(vmsgs['mpersovendor'])" />
+							</hlayout>
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<n:div role="group">
+						<button id="btnSave"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.save}"
+							onClick="@command('save')" />
+						<button id="btnCancel"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+							onClick="@command('cancel')" />
+						<button id="btnDelete"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.del}"
+							onClick="@command('delete')" />
+					</n:div>
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader sort="auto(userid)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.userid)" cols="15" maxlength="10"
+							placeholder="Kode User"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(username)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.username)" cols="30" maxlength="40"
+							placeholder="Nama User"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(musergroup.usergroupname)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						label="Grup User" />
+					<listheader label="Cabang"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Vendor Perso"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Action" align="center"
+						width="130px"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				</listhead>
+			</listbox>
+		</div>
+		<n:div align="right">
+			<button sclass="btn btn-default btn-sm"
+				label="Export to Excel"
+				style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+				image="/images/excel.png" onClick="@command('doExport')"
+				autodisable="self" />
+		</n:div>
+		<separator />
+	</window>
+</zk>

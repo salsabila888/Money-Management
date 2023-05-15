@@ -1,0 +1,113 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MuserLdapVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master User
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save') @validator(vm.validator)">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">User Id</n:td>
+						<n:td>
+							<textbox id="tbUserid"
+								value="@bind(vm.iduser)" cols="20" maxlength="15"
+								onOK="@command('doSearcByUserID')" />
+							<button sclass="btn btn-default btn-sm"
+								label="Get User" onClick="@command('doSearcByUserID')" />
+							<label style="color:red"
+								value="@load(vmsgs['userid'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Username</n:td>
+						<n:td>
+							<textbox value="@bind(vm.nameuser)"
+								cols="37" maxlength="40" readonly="true" />
+							<label style="color:red"
+								value="@load(vmsgs['username'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Grup User</n:td>
+						<n:td>
+							<textbox value="@bind(vm.usergroup)"
+								cols="37" maxlength="40" readonly="true" />
+							<label style="color:red"
+								value="@load(vmsgs['usergroup'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Cabang</n:td>
+						<n:td>
+							<textbox value="@bind(vm.branchname)"
+								cols="37" maxlength="40" readonly="true" />
+							<label style="color:red"
+								value="@load(vmsgs['branchname'])" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<n:div class="btn-group" role="group">
+						<button id="btnSave"
+							sclass="btn btn-default btn-sm" label="${labels.common.save}"
+							onClick="@command('save')" />
+						<button id="btnCancel"
+							sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+							onClick="@command('cancel')" />
+						<button id="btnDelete"
+							sclass="btn btn-default btn-sm" label="${labels.common.del}"
+							onClick="@command('delete')" />
+					</n:div>
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						align="right" width="40px" />
+					<listheader sort="auto(userid)">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.userid)" cols="15" maxlength="10"
+							placeholder="Kode User"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(username)">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.username)" cols="30" maxlength="40"
+							placeholder="Nama User"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(musergroup.usergroupname)"
+						label="Grup User" />
+					<listheader label="Cabang" />
+				</listhead>
+			</listbox>
+		</div>
+		<button sclass="btn btn-default btn-sm" label="Export to Excel"
+			image="/images/excel.png" onClick="@command('doExport')"
+			autodisable="self" />
+		<separator />
+	</window>
+</zk>

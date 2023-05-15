@@ -1,0 +1,193 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderList"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderRequestListVm')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<label id="lbTitle" style="font-size: 16px" />
+				<label value="@load(vm.title)" style="font-size: 16px" />
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)"
+									cols="20" />
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn-default" label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn-default" label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self" />
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column align="center" width="40px"
+							id="colCheck" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<checkbox id="chkAll"
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column align="center" width="140px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.orderid)" cols="10" maxlength="15"
+								placeholder="No. Pemesanan" style="text-align:center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Tanggal Pemesanan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Jenis Produk"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="300px" />
+						<column label="Status"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="250px" />
+						<column id="colCS" label="Total CS" align="right" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="100px" />
+						<column id="colTeller" label="Total Teller" align="right" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="100px" />						
+						<column label="Total Quantity" align="right" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="100px" />
+						<column label="Jumlah Pemenuhan" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Pemesan"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="Wilayah/Cabang" id="colBranch"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="300px" />
+						<column label="Kode KCP/Cabang" align="center"
+							id="colOutlet"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="100px" />
+						<column align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="200px">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.memono)" cols="20" maxlength="15"
+								placeholder="No. Surat/Memo" style="text-align:center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column id="colDesc" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="Tanggal Keputusan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Alasan Pemesanan/Memo" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="160px" />
+						<column id="action" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							label="Pemenuhan" align="center" width="200px" />
+					</columns>
+				</grid>
+				<separator />
+				<div align="right" id="divAction" visible="false">
+					<grid width="450px">
+						<columns>
+							<column label="Action" align="center"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						</columns>
+						<rows>
+							<row>
+								<button width="190px" autodisable="self"
+									style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+									label="Cetak Bon" image="/images/printer_label.png"
+									sclass="btn btn-info btn-sm" onClick="@command('doBon')" />
+								<button width="190px" autodisable="self"
+									style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+									id="btnManifest" label="Cetak Manifest"
+									image="/images/printer.png" sclass="btn btn-success btn-sm"
+									onClick="@command('doManifestPrint')" />
+							</row>
+							<row id="row">
+								<button width="190px" autodisable="self"
+									label="Reset Data" sclass="btn btn-danger btn-sm"
+									onClick="@command('doResetSelected')"
+									style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;" />
+								<button id="btnPersoDone" width="190px"
+									autodisable="self" disabled="true" label="Update Status Done"
+									image="/images/done.png" sclass="btn btn-primary btn-sm"
+									onClick="@command('doDone')"
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+							</row>
+						</rows>
+						<foot id="foot" visible="false">
+							<footer align="center">
+								<button autodisable="self" width="97%"
+									style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"
+									label="Reset Data" sclass="btn btn-danger btn-sm"
+									onClick="@command('doResetSelected')" />
+							</footer>
+						</foot>
+					</grid>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

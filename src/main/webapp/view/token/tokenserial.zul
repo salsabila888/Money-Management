@@ -1,0 +1,38 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winTokendata" border="normal" title="Data Order Detail"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.TokenSerialVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+					width="40px" />
+				<column label="Nomor Item" align="center"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<!--  		<column label="Tipe Produk" />
+					<column label="Cabang" /> -->
+			</columns>
+		</grid>
+		<button sclass="btn btn-default btn-sm" label="Export to Excel"
+			style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+			image="/images/excel.png" onClick="@command('doExport')"
+			autodisable="self" />
+		<separator />
+	</window>
+</zk>

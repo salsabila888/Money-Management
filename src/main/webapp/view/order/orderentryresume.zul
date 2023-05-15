@@ -1,0 +1,122 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/actionico.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOER"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderEntryresumeVm')">
+		<caption />
+		<div class="card" style="border-radius:15px;" align="center">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h2>
+					<label style="font-size:25px; font-weight:bold;"
+						value="Data Pemesanan Berhasil Disimpan" />
+				</n:h2>
+			</div>
+			<div class="card-body">
+				<grid id="grid" mold="paging" pagingPosition="bottom">
+					<columns>
+						<column width="150px" />
+						<column width="5px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="Order Id" />
+							<label value=":" />
+							<label value="@load(vm.objOrder.orderid)"
+								id="lborderid" />
+						</row>
+						<row>
+							<label value="Order Date" />
+							<label value=":" />
+							<label
+								value="@load(vm.objOrder.inserttime) @converter('formatedDate', format='dd-MM-yyyy')"
+								id="lborderdate" />
+						</row>
+						<row>
+							<label value="Cabang Requestor" />
+							<label value=":" />
+							<label
+								value="@load(vm.objOrder.mbranch.branchname)"
+								id="lborderbranch" />
+						</row>
+						<row id="rowKCPoutlet">
+							<label value="Kode KCP/Cabang" />
+							<label value=":" />
+							<label
+								value="@load(vm.objOrder.orderoutlet)" id="lbkcpoutlet" />
+						</row>
+						<row>
+							<label value="Wilayah" />
+							<label value=":" />
+							<label
+								value="@load(vm.objOrder.mbranch.mregion.regionname)"
+								id="lbwilayah" />
+						</row>
+						<row id="rowJenis" visible="false">
+							<label value="Jenis Produk" />
+							<label value=":" />
+							<label
+								value="@load(vm.objOrder.mproduct.productname)"
+								id="lbjenisproduk" />
+						</row>
+						<row id="rowTipepinpad" visible="false">
+							<label value="Tipe Pinpad" />
+							<label value=":" />
+							<label
+								value="@load(vm.orderpinpadtype)" />
+						</row>
+						<row>
+							<label value="Jumlah" />
+							<label value=":" />
+							<decimalbox format="#,###"
+								value="@load(vm.objOrder.itemqty)" readonly="true"/>
+						</row>
+						<row id="rowTotal" visible="false">
+							<label value="Total Buku/Lembar" />
+							<label value=":" />
+							<decimalbox format="#,###"
+								value="@load(vm.totalqty)" readonly="true"/>
+						</row>
+						<row>
+							<label value="No. Surat/Memo" />
+							<label value=":" />
+							<label value="@load(vm.objOrder.memono)" />
+						</row>
+						<row>
+							<label value="Tanggal No. Surat/Memo" />
+							<label value=":" />
+							<label value="@load(vm.objOrder.memodate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						</row>
+						<row>
+							<label value="Alasan Pemesanan" />
+							<label value=":" />
+							<label value="@load(vm.objMemo.memo)"
+								id="lbalasanorder" />
+						</row>
+					</rows>
+					<foot>
+						<footer span="3" align="center">
+							<button id="btnCreate"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Buat Pemesanan Baru" class="${labels.button.submit}"
+								onClick="@command('doCreate')" autodisable="self"
+								sclass="btn-default" />
+							<button id="btnCancel"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Lihat Daftar Pemesanan" class="${labels.button.cancel}"
+								onClick="@command('doList')" autodisable="self"
+								sclass="btn-default" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

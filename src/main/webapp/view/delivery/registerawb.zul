@@ -1,0 +1,111 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.RegisterAwbVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;" >
+				<n:h3>
+					<n:b>Pendaftaran AWB</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d" closable="false">
+					<caption label="Upload Data Source" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Expedisi" />
+								<hlayout>
+									<combobox id="cbCouriervendor"
+										model="@load(vm.mcouriervendormodel)"
+										selectedItem="@bind(vm.mcouriervendor)">
+										<template name="model"
+											var="mcouriervendor">
+											<comboitem
+												label="@load(mcouriervendor.vendorcode)"
+												description="@load(mcouriervendor.vendorname)" />
+										</template>
+									</combobox>
+								</hlayout>
+							</row>
+							<row>
+								<label value="Upload File" />
+								<hlayout>
+									<button id="btnBrowse"
+										label="Browse File..." upload="true, maxsize=100000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowseProduct', upEvent=event)" 
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+									<separator orient="vertical" />
+									<label value="@load(vm.filename)" />
+								</hlayout>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<button id="btnSave" autodisable="self" label="Submit"
+											sclass="btn btn-primary btn-sm" onClick="@command('doSave')" 
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+									</div>
+									<div class="col-md-6" align="right">
+										<button id="btnDownload" autodisable="self" label="Download Template"
+											sclass="btn btn-default btn-sm" onClick="@command('doTemplate')" 
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<groupbox id="gbResult" mold="3d" closable="false">
+					<caption label="Informasi Hasil Proses Upload" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Expedisi" />
+								<label
+									value="@load(vm.mcouriervendor.vendorname)" />
+							</row>
+							<row>
+								<label value="Nama File" />
+								<label value="@load(vm.filename)" />
+							</row>
+							<row>
+								<label value="Total Data Updated" />
+								<label value="@load(vm.totalupdated)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button sclass="btn btn-primary btn-sm"
+									autodisable="self" label="Upload Data Baru"
+									onClick="@command('doReset')" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

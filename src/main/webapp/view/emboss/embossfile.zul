@@ -1,0 +1,109 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.EmbossFileVm')"
+		validationMessages="@id('vmsgs')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<label value="@load(vm.title)" style="font-size:28px" />
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)" cols="20" />
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" 
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" 
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self" 
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"/>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="File Id" align="center" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column align="center" width="160px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<datebox inplace="true" class="cheader"
+								format="dd-MM-yyyy" style="text-align: center"
+								value="@bind(vm.processdate)" cols="10" maxlength="10"
+								placeholder="Waktu Entri"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.filename)" cols="40" maxlength="40"
+								placeholder="Nama File"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Total Data" align="right" width="100px" 
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						<column label="Memo" style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					</columns>
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

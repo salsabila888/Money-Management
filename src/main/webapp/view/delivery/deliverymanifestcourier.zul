@@ -1,0 +1,147 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryManifestCourierVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Manifest Kurir</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="divHeader" class="row">
+						</div>
+					</div>
+				</div>
+				<separator />
+				<div class="row">
+					<div class="col-md-6">
+						<groupbox mold="3d">
+							<caption label="Check-in Kurir" />
+							<grid>
+								<columns>
+									<column width="150px" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										<label value="Grup Produk" />
+										<combobox id="cbProductgroup"
+											selectedItem="@bind(vm.productgroup)" autodrop="true"
+											cols="20" autocomplete="true" buttonVisible="true" />
+									</row>
+									<row>
+										<label value="Vendor Pengiriman" />
+										<hlayout>
+											<combobox id="cbVendor"
+												model="@load(vm.mcouriervendormodel)" cols="26"
+												selectedItem="@bind(vm.mcouriervendor)"
+												onChange="@command('doCourierLoad', item=vm.mcouriervendor)">
+												<template name="model" var="mcouriervendor">
+													<comboitem
+														label="@load(mcouriervendor.vendorname)"
+														description="@load(mcouriervendor.vendorcode)" />
+												</template>
+											</combobox>
+										</hlayout>
+									</row>
+									<row id="rowCourier" >
+										<label value="Kurir Vendor" />
+										<combobox id="cbCourier" placeholder="Pilih Kurir"
+											model="@load(vm.mcouriermodel)" cols="26"
+											selectedItem="@bind(vm.mcourier)">
+											<template name="model" var="mcourier">
+												<comboitem
+													label="@load(mcourier.couriercode)" 
+													description="@load(mcourier.couriername)"/>
+											</template>
+										</combobox>
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+					</div>
+					<div class="col-md-6">
+						<groupbox mold="3d">
+							<caption label="Informasi Kurir" />
+							<grid>
+								<columns>
+									<column width="150px" />
+									<column />
+								</columns>
+								<rows>
+									<row>
+										<label value="Expedisi" />
+										<textbox id="tbVendor"
+											value="@load(vm.mcouriervendor.vendorname)"
+											cols="33" readonly="true" />
+									</row>
+									<row>
+										<label value="Nama" />
+										<textbox id="tbCourierName"
+											value="@load(vm.mcourier.couriername)" cols="33"
+											readonly="true" />
+									</row>
+									<row>
+									<label/>
+									<button id="btnVerified" autodisable="self"
+										width="200px" label="Verified Courier" sclass="btn btn-primary btn-sm"
+										onClick="@command('doVerified')"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+					</div>
+				</div>
+
+				<separator />
+				<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+					mold="paging" pageSize="20" pagingPosition="top">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column align="center" width="40px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<checkbox
+								onCheck="@command('doCheckedall', checked=self.checked)"
+								checked="true" />
+						</column>
+						<column label="No. Manifest" align="center"
+							width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tanggal Paket" align="center"
+							width="140px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Total" align="right" width="100px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tujuan" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Alamat" width="300px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Kota" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+				<separator />
+				<div align="center">
+					<button id="btnSave" autodisable="self"
+						width="120px" label="Submit" sclass="btn btn-primary btn-sm"
+						onClick="@command('doSave')"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

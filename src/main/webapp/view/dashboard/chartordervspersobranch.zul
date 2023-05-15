@@ -1,0 +1,61 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderPersoBranch"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChartOrderVsPersoBranchVm')">
+		<div class="card">
+			<div class="card-header">
+				<n:h6>
+					Order VS Delivery Prosuksi Harian
+					<div class="pull-right">
+						<button autodisable="self"
+							sclass="btn btn-default btn-sm" label="Kembali"
+							onClick="@command('doBack')" />
+					</div>
+				</n:h6>
+			</div>
+			<div id="divChartOrder" class="card-body">
+				<charts id="chart" type="column" hflex="1" />
+			</div>
+		</div>
+		<separator />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>
+					Tabel Data Jumlah Order VS Produksi Periode Harian
+				</n:h6>
+			</div>
+			<div class="card-body">
+				<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+					mold="paging" pageSize="20" pagingPosition="top" hflex="1">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="60px" />
+						<column label="Wilayah" />
+						<column label="Total Data Order" align="right" />
+						<column label="Total Data Produksi"
+							align="right" />
+					</columns>
+					<foot>
+						<footer />
+						<footer>
+							<label value="TOTAL"
+								style="font-size: 16px; font-weight: bold" />
+						</footer>
+						<footer>
+							<decimalbox cols="14"
+								value="@load(vm.totalorder)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right" />
+						</footer>
+						<footer>
+							<decimalbox cols="14"
+								value="@load(vm.totalprod)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

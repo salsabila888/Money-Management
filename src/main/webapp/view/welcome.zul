@@ -1,0 +1,12 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link href="https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winIndex">
+		<div
+			viewModel="@id('vm') @init('com.sdd.caption.viewmodel.IndexVm')">
+		</div>
+		<div>
+			<label value="Welcome" />
+		</div>
+	</window>
+</zk>

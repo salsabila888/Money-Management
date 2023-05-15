@@ -1,0 +1,91 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderdata" border="normal"
+		title="${desktop.webApp.appName}"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportBranchStockDrvDataDetailVm')">
+		<caption label="Data Detail Emboss" />
+		<groupbox id="gbBatchInfo" mold="3d">
+			<caption label="Branch Stock Data" />
+			<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Org" />
+						<label value="@load(vm.obj.mproduct.mproducttype.productorg)" />
+					</row>
+					<row>
+						<label value="Tipe Kartu" />
+						<label
+							value="@load(vm.obj.mproduct.mproducttype.producttype)" />
+					</row>
+					<row>
+						<label value="Kode Kartu" />
+						<label
+							value="@load(vm.obj.mproduct.productcode)" />
+					</row>
+					<row>
+						<label value="Jenis Kartu" />
+						<label
+							value="@load(vm.obj.mproduct.productname)" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="col-md-13" align="right">
+							<button sclass="btn btn-default btn-sm"
+								label="Export to Excel" image="/images/excel.png"
+								onClick="@command('doExport')" autodisable="self" />
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-10" />
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" pagingPosition="top"
+			emptyMessage="${labels.common.emptymsg}" mold="paging"
+			pageSize="10">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column width="170px" align="center">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.cardno)" cols="20" maxlength="20"
+						placeholder="No Kartu"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Tanggal Data" align="center"
+					width="120px" />
+				<column label="Tipe Produk" align="center"
+					width="120px" />
+				<column label="Kode Produk" align="center"
+					width="120px" />
+				<column label="Jenis Produk" />
+				<column label="Nama Cabang" />
+				<column label="Kode Cabang" align="center"
+					width="120px" />
+				<column label="Kode KCP" align="center" width="110px" />
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm"
+				image="/images/close.png" tooltiptext="Close" autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,38 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPopup" title="Setup Notifikasi"
+		border="normal" width="600px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MusergroupnotifVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<grid id="grid">
+			<columns>				
+				<column label="Notifikasi Menu" />
+			</columns>
+			<rows />
+			<!-- <foot>
+				<footer align="center">
+					<button id="btnSave" sclass="btn btn-primary btn-sm"
+					label="${labels.common.save}" onClick="@command('save')"
+					width="120px" />
+				</footer>
+			</foot> -->
+		</grid>		
+		<separator />	
+		
+		<grid id="gridAlert">
+			<columns>				
+				<column label="Notifikasi Alert" />
+			</columns>
+			<rows />			
+		</grid>		
+		
+		<separator />		
+		<button id="btnSave" sclass="btn btn-primary btn-sm"
+					label="${labels.common.save}" onClick="@command('save')"
+					width="100%" />
+	</window>
+</zk>

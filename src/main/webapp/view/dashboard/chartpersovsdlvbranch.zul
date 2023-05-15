@@ -1,0 +1,61 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersodelivproductcode"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChartPersoVsDlvBranchVm')">
+		<div class="card">
+			<div class="card-header">
+				<n:h6>
+					Perso VS Delivery Periode Harian Berdasarkan Cabang
+					<div class="pull-right">
+						<button autodisable="self"
+							sclass="btn btn-default btn-sm" label="Kembali"
+							onClick="@command('doBack')" />
+					</div>
+				</n:h6>
+			</div>
+			<div class="card-body">
+				<div id="divChart" />
+			</div>
+		</div>
+		<separator />
+		<div class="card">
+			<div class="card-header">
+				<n:h6>
+				Tabel Data Jumlah Perso VS Delivery Periode Harian
+				Berdasarkan Cabang</n:h6>
+			</div>
+			<div class="card-body">
+				<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+					mold="paging" pageSize="20" pagingPosition="top">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column label="Cabang" />
+						<column label="Total Data Perso" align="right" />
+						<column label="Total Data Delivery"
+							align="right" />
+					</columns>
+					<foot>
+						<footer />
+						<footer>
+							<label value="TOTAL"
+								style="font-size: 16px; font-weight: bold" />
+						</footer>
+						<footer>
+							<decimalbox cols="14"
+								value="@load(vm.totalperso)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right" />
+						</footer>
+						<footer>
+							<decimalbox cols="14"
+								value="@load(vm.totaldeliv)" format="#,###" inplace="true"
+								readonly="true" style="text-align:right" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

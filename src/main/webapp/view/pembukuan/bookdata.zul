@@ -1,0 +1,100 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winBookData" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.BookdataVm')">
+		<caption />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+			<div class="card-header" id="divRoot" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Detail Pembukuan</n:b>
+				</n:h3>
+			</div>
+			<grid style="border-bottom-left-radius:15px; border-bottom-right-radius:15px;">
+				<columns>
+					<column width="250px" />
+					<column />
+					<column width="250px"/>
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="ID Delivery" />
+						<label value="@load(vm.obj.tdelivery.dlvid)" />
+						<label value="ID Pembukuan" />
+						<label value="@load(vm.obj.bookid)" />
+					</row>
+					<row>
+						<label value="Tanggal Pengiriman" />
+						<label value="@load(vm.obj.tdelivery.processtime)" />
+						<label value="Tanggal Pembukuan" />
+						<label value="@load(vm.obj.booktime)" />					
+					</row>	
+					<row>
+					
+						<label value="Diproses oleh" />
+						<label value="@load(vm.obj.tdelivery.processedby)" />
+						<label value="Pembukuan oleh" />
+						<label value="@load(vm.obj.bookedby)" />					
+					</row>	
+					<row>
+					<label value="Nama Ekspedisi" />
+						<label value="@load(vm.obj.tdelivery.mcouriervendor.vendorname)" />		
+						<label value="Total Data" />
+						<decimalbox format="#,###"
+							value="@load(vm.obj.totaldata)" readonly="true" />
+					</row>					
+					<row>
+						<label value="Penerima" />
+						<label value="@load(vm.obj.tdelivery.penerima)" />	
+						<label value="Total Amount" />
+						<decimalbox format=" 'Rp ' ###,##0"
+							readonly="true" value="@load(vm.obj.totalamount)" />	
+					
+					</row>		
+					<row>
+						<label value="Tanggal Terima" />
+						<label value="@load(vm.obj.tdelivery.tglterima)" />
+						<label value="Deskripsi Status" />
+						<label value="@load(vm.obj.statusdesc)" />		
+					</row>	
+				</rows>
+			</grid>
+  		<separator />
+	  	<div id="divRecord" class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div> 
+		</div> 
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Seq Number" align="center" width="200px" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="No. Serial" align="center"
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Quantity" align="right" width="150px" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Total Amount" align="right"
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Status" align="center"
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Kode Error" align="center"
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Deskripsi Error" align="center"
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

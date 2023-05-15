@@ -1,0 +1,119 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PinmailerOrderVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Order Pin mailer</n:b></n:h3>
+		<n:hr />
+		<groupbox mold="3d" closable="false"
+			form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave')">
+			<caption label="Upload File Pin Mailer" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" />
+						<textbox
+							value="@load(e.entrytime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Produk" />
+						<hlayout>
+							<combobox id="cbProduct" readonly="true"
+								model="@load(vm.mproduct)"
+								selectedItem="@bind(e.mproduct)">
+								<template name="model" var="mproduct">
+									<comboitem
+										label="@load(mproduct.productname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+									value="@load(vmsgs['mproduct'])" />
+						</hlayout>						
+					</row>	
+					<row>
+						<label value="File" />
+						<vlayout>
+							<button id="btnBrowse"
+								label="Browse File..."
+								upload="true, maxsize=500000"
+								sclass="btn btn-default btn-sm"
+								onUpload="@command('doBrowseProduct', upEvent=event)" />
+							<label id="fileBrowse"
+								value="@load(vm.filename)" />
+						</vlayout>
+					</row>
+					<row>
+						<label value="Memo" />
+						<textbox cols="40" value="@load(e.memo)"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button id="btnSave" width="90px"
+							autodisable="self" label="Submit" sclass="btn btn-primary btn-sm"
+							onClick="@command('doSave')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox id="gbResult" mold="3d" closable="false">
+			<caption label="Informasi Hasil Proses Upload" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.totaldata)" />
+					</row>
+					<row>
+						<label value="Total Inserted" />
+						<label value="@load(vm.totalinserted)" />
+					</row>
+					<row>
+						<label value="Total Missing Product" />
+						<a label="@load(vm.totalmissingproduct)"
+							onClick="@command('doView', arg='missingproduct')" />
+					</row>
+					<row>
+						<label value="Total Missing Branch" />
+						<a label="@load(vm.totalmissingbranch)"
+							onClick="@command('doView', arg='missingbranch')" />
+					</row>
+					<row>
+						<label value="Total Failed" />
+						<label value="@load(vm.totalfailed)" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Upload Data Baru"
+							onClick="@command('doReset')" />						
+						<button sclass="btn btn-success btn-sm"
+							autodisable="self" label="Lihat Data"
+							onClick="@command('doView', arg='alldata')" />
+						<button sclass="btn btn-danger btn-sm"
+							autodisable="self" label="Delete" onClick="@command('doDelete')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+	</window>
+</zk>

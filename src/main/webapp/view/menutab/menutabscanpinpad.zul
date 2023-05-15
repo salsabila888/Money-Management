@@ -1,0 +1,38 @@
+<?link rel="stylesheet" href="/resources/bootstrap/4.3.1/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/resources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/resources/css/layout.css" ?>
+<?link rel="stylesheet" href="/resources/css/zk-bootstrap.css" ?>
+<zk xmlns:n="native">
+	<window id="winTabPinpad"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MenuTabScanPinpadVm')">
+		<caption sclass="wincaption">
+			<div align="center">
+				<label value="Entri Produksi Nomor Serial"
+					style="font-size: 16px" />
+			</div>
+		</caption>
+		<div sclass="container-fluid" hflex="1">
+			<n:div class="row py-1">
+				<n:div class="col-12 p-1">
+					<div id="divPinpad">
+						<panel border="normal">
+							<panelchildren>
+								<tabbox width="100%"
+									sclass="nav_tabs">
+									<tabs id="tabPinpad">
+										<tab label="Scan Inject Manual"
+											onSelect="@command('doTab', tab='manual')" />
+										<tab
+											label="Scan Inject Upload File"
+											onSelect="@command('doTab', tab='upload')" />
+									</tabs>
+								</tabbox>
+								<div id="tabPagePinpad" />
+							</panelchildren>
+						</panel>
+					</div>
+				</n:div>
+			</n:div>
+		</div>
+	</window>
+</zk>

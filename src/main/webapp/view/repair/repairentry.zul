@@ -1,0 +1,221 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.RepairEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" visible="false" />
+		<div id="divRoot">
+			<div class="card" style="border-radius:15px;">
+				<div class="card-header"
+					style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+					<div>
+						<n:h4>
+							<n:b>Input Repair Pinpad</n:b>
+						</n:h4>
+					</div>
+				</div>
+				<div class="card-body">
+					<groupbox id="gbOrder" mold="3d"
+						form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+						<caption label="Form Input Repair Pinpad"></caption>
+						<grid>
+							<columns>
+								<column width="200px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<label value="Repair Id" />
+									<textbox value="Auto Generated"
+										cols="30" readonly="true" />
+								</row>
+								<row>
+									<label value="Nama Cabang/Divisi" />
+									<textbox
+										value="@load(e.mbranch.branchname)" cols="30" readonly="true" />
+								</row>
+								<row>
+									<label value="Nama Wilayah" />
+									<textbox
+										value="@load(e.mbranch.mregion.regionname)" cols="30"
+										readonly="true" />
+								</row>
+								<row>
+									<label value="Nama Produk" />
+									<hlayout>
+										<combobox id="cbProduct"
+											model="@load(vm.mproductmodel)" cols="26"
+											selectedItem="@bind(vm.mproduct)">
+											<template name="model"
+												var="mproduct">
+												<comboitem
+													label="@load(mproduct.productcode)"
+													description="@load(mproduct.productname)" />
+											</template>
+										</combobox>
+										<label style="color:red"
+											value="@load(vmsgs['mproduct'])" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Kode Produk" />
+									<textbox
+										value="@load(vm.mproduct.productcode)" cols="30"
+										readonly="true" />
+								</row>
+								<row>
+									<label value="Jumlah" />
+									<hlayout>
+										<intbox
+											value="@bind(vm.totaldata)" readonly="true" cols="15"
+											format="#,###" />
+										<combobox
+											selectedItem="@bind(vm.unit)" cols="9" disabled="true"
+											buttonVisible="false" inplace="true" autocomplete="true">
+											<comboitem value="04"
+												label="Lembar/Buku" />
+											<comboitem value="02"
+												label="Unit" />
+										</combobox>
+									</hlayout>
+								</row>
+								<!-- <row>
+									<label value="Dokumen Pendukung" />
+									<hlayout>
+										<button id="btnBrowse"
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+											label="Browse File..." upload="true, maxsize=5000000"
+											sclass="btn btn-default btn-sm"
+											onUpload="@command('doBrowse', upEvent=event)" />
+										<label id="fileBrowse"
+											value="@load(vm.filename)" />
+										<label style="color:red"
+											value="@load(vmsgs['filename'])" />
+									</hlayout>
+								</row> -->
+								<row>
+									<label value="Alasan Perbaikan" />
+									<hlayout>
+										<combobox id="cbReason"
+											cols="26" model="@load(vm.mrepairreasonmodel)"
+											selectedItem="@bind(vm.mrepairreason)">
+											<template name="model"
+												var="mrepairreason">
+												<comboitem
+													label="@load(mrepairreason.repairreason)" />
+											</template>
+										</combobox>
+										<label style="color:red"
+											value="@load(vmsgs['mreturnreason'])" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Catatan Perbaikan" />
+									<hlayout>
+										<textbox value="@bind(vm.memo)"
+											rows="3" cols="30" maxlength="200" />
+										<label style="color:red"
+											value="@load(vmsgs['memo'])" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Upload File" />
+									<hlayout>
+										<checkbox id="chkbox" checked="false"
+											mold="switch" onCheck="@command('doChecked')" />
+									</hlayout>
+								</row>
+								<row id="rowUpload" visible="false">
+									<label value="" />
+									<hlayout>
+										<button
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+											label="Browse File..." upload="true, maxsize=500000"
+											sclass="btn btn-default btn-sm"
+											onUpload="@command('doBrowse', upEvent=event)" />
+										<label
+											value="@load(vm.filename)" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Serial Number" />
+									<hlayout>
+										<textbox id="tbItem"
+											value="@bind(vm.itemno)" cols="20" maxlength="40"
+											onOK="@command('doRegister')"
+											placeholder="Entri Nomor Serial" />
+										<button id="btnRegister"
+											sclass="btn btn-success btn-sm" label="Register"
+											autodisable="self" onClick="@command('doRegister')"
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Upload Dokumen Pendukung"/>
+									<hlayout>
+										<button id="btnBrowseDoc"
+											style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+											label="Browse File..." upload="true, maxsize=5000000"
+											sclass="btn btn-default btn-sm"
+											onUpload="@command('doBrowseDoc', upEvent=event)" />
+										<label id="lbFileBrowse"
+											value="@load(vm.docfile)" />
+									</hlayout>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+					<separator />
+					<n:table>
+						<n:tr>
+							<n:td colspan="2">
+								<grid id="grid" mold="paging"
+									pageSize="20" pagingPosition="top"
+									emptyMessage="${labels.common.emptymsg}">
+									<columns>
+										<column label="No" align="right"
+											width="40px"
+											style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+										<column label="Nomor Item"
+											align="left"
+											style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+										<column label="TID"
+											align="center"
+											style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+										<column label="MID"
+											align="center"
+											style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+										<column label="Tipe Pinpad"
+											align="center"
+											style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+									</columns>
+									<rows />
+								</grid>
+							</n:td>
+						</n:tr>
+					</n:table>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-6">
+									<button id="btnSave"
+										sclass="btn btn-primary btn-sm" autodisable="self"
+										label="Submit" onClick="@command('doSave')"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<separator />
+	</window>
+</zk>

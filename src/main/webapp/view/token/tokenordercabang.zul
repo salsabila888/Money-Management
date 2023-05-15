@@ -1,0 +1,142 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.TokenOrderCabangVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;" >
+				<n:h3>
+					<n:b>Entri Order Cabang</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d"
+					form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validatorData)">
+					<caption label="Form Order" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="No Surat" />
+								<textbox value="Auto Generated"
+									readonly="true" cols="30"/>
+							</row>
+							<row>
+								<label value="Tanggal Data" />
+								<textbox
+									value="@bind(e.inserttime) @converter('formatedDate', format='dd, MMM yyyy')"
+									readonly="true" cols="30" />
+							</row>
+				<!--  			<row>
+								<label value="Memo" />
+								<textbox value="@bind(e.memo)" cols="30"
+									rows="3" maxlength="100" />
+							</row> -->
+							<row>
+								<hlayout>
+								<label value="Cabang" />
+								<label
+									value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<combobox id="cbBranch"
+										model="@load(vm.mbranchmodel)" cols="30"
+										selectedItem="@bind(e.mbranch)">
+										<template name="model"
+											var="mbranch">
+											<comboitem
+												label="@load(mbranch.branchname)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['mbranch'])" />
+								</hlayout>
+							</row>
+							<row id="outlet" visible="false">
+								<label value="Kode KCP" />
+								<hlayout>
+									<textbox
+										value="@bind(e.orderoutlet)" maxlength="2" cols="30" />
+									<label style="color:red"
+										value="@load(vmsgs['orderoutlet'])" />
+								</hlayout>
+
+							</row>
+							<row>
+								<hlayout>
+								<label value="Jenis Product" />
+								<label
+									value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<combobox id="cbTypeProduct"
+										model="@load(vm.mproductmodel)" cols="30"
+										selectedItem="@bind(e.mproduct)">
+										<template name="model"
+											var="mproduct">
+											<comboitem
+												label="@load(mproduct.productcode)"
+												description="@load(mproduct.productname)" />
+										</template>
+									</combobox>
+									<label style="color:red"
+										value="@load(vmsgs['mproduct'])" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Unit Produk" />
+								<combobox
+									selectedItem="@load(e.mproduct.mproducttype.productunit)"
+									cols="31" disabled="true" buttonVisible="false" inplace="true"
+									autocomplete="true">
+									<comboitem value="P" label="PCS" />
+									<comboitem value="B" label="BOX" />
+								</combobox>
+							</row>
+							<row>
+								<label value="Jumlah Per Unit" />
+								<intbox id="ibProductunitqty"
+									value="@load(e.mproduct.mproducttype.productunitqty)" cols="30"
+									maxlength="5" readonly="true" />
+							</row>
+							<row>
+								<label value="Stok Injected" />
+								<label
+									value="@load(e.mproduct.mproducttype.stockinjected)" />
+							</row>
+							<row>
+								<hlayout>
+								<label value="Jumlah" />
+								<label
+									value="*" style="color:red" />
+								</hlayout>
+								<hlayout>
+									<intbox value="@bind(e.itemqty)" cols="30"/>
+									<label style="color:red"
+										value="@load(vmsgs['itemqty'])" />
+								</hlayout>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<button id="btnSave" width="120px"
+									autodisable="self" label="Submit"
+									sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,144 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPlanningbranch"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PlanningBranchlistVm')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h6 style="color: #ffffff; padding-top: 9px;">
+					<label style="font-size: 15px; font-weight: bold;"
+						id="cardTitle" />
+				</n:h6>
+			</div>
+			<n:hr />
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						id="captSearch" image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="100px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Memo No." />
+								<textbox value="@bind(vm.memono)"
+									cols="30" />
+							</row>
+							<row>
+								<label value="SPK No." />
+								<textbox value="@bind(vm.spkno)"
+									cols="30" />
+							</row>
+							<row>
+								<label value="Status Incoming" />
+								<combobox id="cbIncomingstat" cols="26"
+									selectedItem="@bind(vm.incstatus)">
+									<comboitem value="" label="ALL"></comboitem>
+									<comboitem value="1"
+										label="Telah Di Incoming">
+									</comboitem>
+									<comboitem value="2"
+										label="Belum Di Incoming">
+									</comboitem>
+								</combobox>
+							</row>
+							<!-- <row id="rowColof">
+								<label value="Filter Kolom" />
+								<groupbox mold="3d" id="gbColof"
+								title="Filter Kolom">
+								<div class="row">
+								<div class="col-md-12">
+								<div id="divColist"
+								class="row" />
+								</div>
+								</div>
+								</groupbox>
+								</row> -->
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button id="btnSearch"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button id="btnReset"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+			</div>
+			<separator />
+			<div class="card-body">
+				<grid id="grid" mold="paging" pageSize="10"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}" width="40px"
+							align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clmemono" width="160px"
+							align="center" label="Memo No."
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clmemodate" width="140px"
+							align="center" label="Tanggal Memo"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clproducttype" label="Tipe Produk"
+							width="300px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clanggaran" width="120px"
+							align="right" label="Anggaran"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="cltotalitem" width="160px"
+							align="right" label="Total Item"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="cltotalproses" width="120px"
+							align="right" label="Total Proses"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clstatus" width="200px"
+							label="Status"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clspkno" width="160px"
+							align="center" label="SPK No."
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clspkdate" width="140px"
+							align="center" label="Tanggal SPK"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clbranch" width="300px"
+							label="Cabang"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clharga" width="160px" label="Harga"
+							align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clprefix" width="80px"
+							label="Prefix"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clitemstartno" width="100px"
+							align="right" label="Item Start No."
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clsupplier" width="150px"
+							label="Supplier"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="clincomingstatus" width="160px"
+							label="Incoming Status"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

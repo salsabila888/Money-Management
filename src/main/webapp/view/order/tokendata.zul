@@ -1,0 +1,47 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window border="normal" 
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.TokenDataVm')">
+		<caption />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card-header" id="divRoot"
+			style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+			<n:h3>
+				<n:b>Detail Pemesanan Token</n:b>
+			</n:h3>
+		</div>
+		<div align="right">
+			<button
+				style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+				sclass="btn btn-default btn-sm" label="Export to Excel"
+				image="/images/excel.png" onClick="@command('doExport')"
+				autodisable="self" />
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="No Seri" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Status" 
+				style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>					
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

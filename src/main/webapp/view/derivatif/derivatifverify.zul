@@ -1,0 +1,87 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winVerify" border="normal" title="${desktop.webApp.appName}" width="800px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifVerifyVm')" validationMessages="@id('vmsgs')">
+		<groupbox mold="3d" form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+			<caption label="Verifikasi Foto" />
+			<grid>
+				<columns>
+					<column width="170px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="No. Order" />
+						<label value="@load(e.orderno)" />
+					</row>
+					<row>
+						<label value="Cabang" />
+						<label value="@load(e.mbranch.branchname)" />	
+					</row>
+					<row>
+						<label value="Tanggal Order Cabang" />
+						<label
+							value="@load(e.orderdate) @converter('formatedDate', format='dd-MM-yyyy HH:mm')" />
+					</row>
+					<row>
+						<label value="Memo" />
+						<label value="@load(e.memo)" />
+					</row>
+					<row>
+						<label value="Jumlah Data" />
+						<label value="@load(e.totaldata)" />
+					</row>
+					<row>
+						<label value="Status Verifikasi" />
+						<grid>
+							<columns>
+								<column label="Status" width="100px" 
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+								<column label="Tanggal Proses" 
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							</columns>
+							<rows>
+								<row>
+									<checkbox id="chkScan" label="Scan" />
+									<hlayout>
+										<datebox id="dateScan" value="@bind(e.scandate)" format="dd-MM-yyyy" />
+										<label style="color:red"
+											value="@load(vmsgs['scandate'])" />
+									</hlayout>									
+								</row>
+								<row>
+									<checkbox id="chkCrop" label="Crop" />
+									<hlayout>
+										<datebox id="dateCrop" value="@bind(e.cropdate)" format="dd-MM-yyyy" />
+										<label style="color:red"
+											value="@load(vmsgs['cropdate'])" />
+									</hlayout>
+								</row>
+								<row>
+									<checkbox id="chkMerge" label="Merge" />
+									<hlayout>
+										<datebox id="dateMerge" value="@bind(e.mergedate)" format="dd-MM-yyyy" />
+										<label style="color:red"
+											value="@load(vmsgs['mergedate'])" />
+									</hlayout>									
+								</row>
+							</rows>
+						</grid>
+					</row>			
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button id="btnSave" label="Submit"
+							onClick="@command('doSave')" autodisable="self"
+							sclass="btn btn-primary btn-sm" width="150px" 
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />		
+	</window>
+</zk>

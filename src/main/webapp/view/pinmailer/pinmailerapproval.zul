@@ -1,0 +1,54 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PinmailerApprovalVm')"
+		validationMessages="@id('vmsgs')">		
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3><n:b>Daftar Perso Approval</n:b></n:h3>		
+		<n:hr/>
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column align="center" width="60px">
+					<checkbox onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column label="No Manifest" align="center" />
+				<column label="Waktu Manifest" align="center" />
+				<column label="Kode Produk" align="center" width="120px" />
+				<column label="Jenis Produk" />
+				<column label="Tanggal Data" align="center" width="120px" />
+				<column label="Total Data" align="right" width="100px"/>
+				<column label="Operator" width="100px" />				
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<label value="Action" style="font-weight: bold" />
+			<combobox selectedItem="@bind(vm.action)" readonly="true" cols="7">
+				<comboitem label="Approve" value="203" />
+				<comboitem label="Decline" value="202" />
+			</combobox>
+			<separator />
+			<label value="Memo" style="font-weight: bold" />
+			<textbox value="@bind(vm.decisionmemo)" cols="30" rows="3" maxlength="100" />
+			<separator />
+			<button width="120px"
+				autodisable="self" label="Submit" sclass="btn btn-primary btn-sm"
+				onClick="@command('doSave')" />
+		</div>
+		<separator />
+	</window>
+</zk>

@@ -1,0 +1,178 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.McouriervendorVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master Expedisi
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">Kode Vendor</n:td>
+						<n:td>
+							<textbox value="@bind(e.vendorcode)"
+								cols="35" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['vendorcode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama Vendor</n:td>
+						<n:td>
+							<textbox value="@bind(e.vendorname)"
+								cols="35" maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['vendorname'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Is Tracking</n:td>
+						<n:td>
+							<radiogroup id="sv1"
+								onCheck="@command('doChecked')" />
+							<radio id="rbYes" label="Ya"
+								radiogroup="sv1" />
+							<radio id="rbNo" checked="true"
+								label="Tidak" radiogroup="sv1" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Is InterCity</n:td>
+						<n:td>
+							<radiogroup id="sv2"
+								onCheck="@command('doChecked')" />
+							<radio id="rbYesIC" label="Ya"
+								radiogroup="sv2" />
+							<radio id="rbNoIC" label="Tidak"
+								radiogroup="sv2" />
+						</n:td>
+					</n:tr>
+					<x:tr id="urltkn">
+						<n:td>Url Token</n:td>
+						<n:td>
+							<textbox value="@bind(e.urltoken)" cols="35"
+								rows="2" maxlength="200" />
+							<label style="color:red"
+								value="@load(vmsgs['urltoken'])" />
+						</n:td>
+					</x:tr>
+					<x:tr id="urltrack">
+						<n:td>Url Tracking</n:td>
+						<n:td>
+							<textbox value="@bind(e.urltracking)"
+								cols="35" rows="2" maxlength="200" />
+							<label style="color:red"
+								value="@load(vmsgs['urltracking'])" />
+						</n:td>
+					</x:tr>
+					<x:tr id="costumer">
+						<n:td>Costumer Auth</n:td>
+						<n:td>
+							<textbox value="@bind(e.costumerauth)"
+								cols="35" rows="2" maxlength="200" />
+							<label style="color:red"
+								value="@load(vmsgs['costumerauth'])" />
+						</n:td>
+					</x:tr>
+					<n:tr>
+						<n:td>Nama PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.vendorpicname)"
+								cols="35" maxlength="70" />
+							<label style="color:red"
+								value="@load(vmsgs['vendorpicname'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>No Telepon PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.vendorpicphone)"
+								cols="35" maxlength="13" />
+							<label style="color:red"
+								value="@load(vmsgs['vendorpicphone'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>E-mail PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.vendorpicemail)"
+								cols="35" maxlength="70" />
+							<label style="color:red"
+								value="@load(vmsgs['vendorpicemail'])" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div role="group">
+					<button id="btnSave" sclass="btn btn-default btn-sm"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						label="${labels.common.save}" onClick="@command('save')" />
+					<button id="btnCancel"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+						onClick="@command('cancel')" />
+					<button id="btnDelete"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.del}"
+						onClick="@command('delete')" />
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader sort="auto(vendorcode)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.vendorcode)" cols="15" maxlength="5"
+							placeholder="Kode Vendor"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(vendorname)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.vendorname)" cols="30" maxlength="50"
+							placeholder="Nama Vendor"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader label="Nama PIC"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="No Telp. PIC"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="E-Mail PIC"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Is Tracking" width="120px"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="center" />
+					<listheader label="Is InterCity" width="120px"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="center" />
+					<!-- <listheader label="Action" align="center" width="100px" /> -->
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

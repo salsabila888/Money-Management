@@ -1,0 +1,105 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersodata" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PersoDataVm')">
+		<caption/>
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+			<div class="card-header" id="divRoot" 
+			style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Data Manifest Perso</n:b>
+				</n:h3>
+			</div>
+			<grid style="border-bottom-left-radius:15px; border-bottom-right-radius:15px;">
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="No. Manifest Perso" />
+						<label value="@load(vm.obj.persoid)" />	
+					</row>
+					<row>
+						<label value="Tanggal Manifest Perso" />
+						<label value="@load(vm.obj.persostarttime) @converter('formatedDate', format='dd-MM-yyyy HH:mm')" />
+					</row>
+					<row>
+						<label value="Kode Kartu" />
+						<label value="@load(vm.obj.mproduct.productcode)" />	
+					</row>
+					<row>
+						<label value="Jenis Kartu" />
+						<label value="@load(vm.obj.mproduct.productname)" />	
+					</row>		
+					<row>
+						<label value="Tanggal Data" />
+						<label value="@load(vm.obj.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+					</row>			
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.obj.totaldata)" />		
+					</row>
+					<row>
+						<label value="Memo" />
+						<label value="@load(vm.obj.memo)" />		
+					</row>	
+					<row>
+						<label value="Memo Checker" />
+						<label value="@load(vm.obj.decisionmemo)" />		
+					</row>
+					<!-- <row>
+						<label value="Memo Inventory" />
+						<label value="@load(vm.obj.toutgoing.decisionmemo)" />		
+					</row> -->									
+				</rows>				
+			</grid>
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Tipe Produk" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Kode Produk" align="center" width="130px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Jenis Produk" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.branchname)" cols="40" maxlength="40"
+						placeholder="Nama Cabang"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column >				
+				<column label="Tanggal Data" align="center" width="120px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Jumlah" align="right" width="100px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Action" align="center" width="110px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+			</div>
+	</window>
+</zk>

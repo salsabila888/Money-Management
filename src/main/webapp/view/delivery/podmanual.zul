@@ -1,0 +1,194 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PodManualVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card">
+			<div class="card-header">
+				<n:h3>
+					<n:b>POD Manual</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body" form="@id('e') @load(vm.obj)">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Cabang" />
+								<combobox id="cbCabang"
+									model="@load(vm.mbranchmodel)" cols="30"
+									selectedItem="@bind(vm.mbranch)">
+									<template name="model"
+										var="mbranch">
+										<comboitem
+											label="@load(mbranch.branchname)" />
+									</template>
+								</combobox>
+							</row>
+							<row>
+								<label value="Grup Produk" />
+								<combobox id="cbProduk"
+									selectedItem="@bind(vm.produk)" readonly="true" cols="15">
+									<comboitem label="KARTU REGULER"
+										value="01" />
+									<comboitem label="KARTU NON REGULER"
+										value="09" />
+									<comboitem label="PIN MAILER"
+										value="06" />
+								</combobox>
+							</row>
+							<row id="daily">
+								<label value="Tanggal Proses" />
+								<datebox format="dd-MM-yyyy"
+									placeholder="Tanggal Data" value="@bind(vm.processtime)"
+									cols="10" maxlength="10" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div class="btn-group"
+											role="group">
+											<button id="btnSearch"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<paging id="paging" autohide="true" />
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column align="center" width="60px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<checkbox id="chkAll"
+								onCheck="@command('doCheckedall', checked=self.checked)" />
+						</column>
+						<column
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.dlvid)" cols="15" maxlength="20"
+								placeholder="No Manifest"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Group Produk" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Tanggal Proses" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="140px" />
+						<column label="Kode Cabang" width="140px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Nama Cabang"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Total" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="80px" />
+						<column width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.vendorcode)" cols="8" maxlength="10"
+								placeholder="Expedisi"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Status" width="170px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+				<separator />
+				<div align="right">
+					<grid width="450px">
+						<columns>
+							<column label="Total Record Selected"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								align="center" />
+							<column label="Total Data Selected"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								align="center" />
+						</columns>
+						<rows>
+							<row>
+								<decimalbox width="190px"
+									value="@load(vm.totalselected)" format="#,###" inplace="true"
+									readonly="true" style="text-align:right" />
+								<decimalbox width="190px"
+									value="@load(vm.totaldataselected)" format="#,###"
+									inplace="true" readonly="true" style="text-align:right" />
+							</row>
+						</rows>
+					</grid>
+					<separator />
+					<grid width="450px">
+						<columns>
+							<column label="Tanggl Terima"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								align="center" />
+							<column label="Nama Penerima"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								align="center" />
+						</columns>
+						<rows>
+							<row>
+								<datebox cols="15"
+									value="@bind(vm.tglterima)" format="long" />
+								<textbox cols="20" maxlength="40"
+									value="@bind(vm.penerima)" />
+							</row>
+						</rows>
+						<foot>
+							<footer span="2">
+								<button width="97%" autodisable="self"
+									style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"
+									label="Reset Data Selected" sclass="btn btn-success btn-sm"
+									onClick="@command('doResetSelected')" />
+								<n:hr />
+								<button width="97%" id="btnSave"
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+									autodisable="self" label="Submit"
+									sclass="btn btn-primary btn-sm"
+									onClick="@command('doManifest')" />
+							</footer>
+						</foot>
+					</grid>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

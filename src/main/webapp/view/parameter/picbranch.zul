@@ -1,0 +1,121 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPicbranch" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MpicbranchVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="PIC Cabang" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title"><n:b>
+					<n:span class="glyphicon glyphicon-cog" />
+					Form Master PIC Branch
+				</n:b></n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<!-- <n:tr>
+						<n:td width="150px">Grup Produk</n:td>
+						<n:td>
+							<combobox id="cbProductgroup" cols="30" readonly="true"
+								selectedItem="@bind(e.productgroup)">
+								<comboitem label="KARTU"
+									value="01" />
+								<comboitem label="TOKEN"
+									value="02" />
+								<comboitem label="PINPAD"
+									value="03" />
+								<comboitem label="DOCUMENT"
+									value="04" />
+								<comboitem label="SUPPLIES"
+									value="05" />								
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['productgroupcode'])" />
+						</n:td>
+					</n:tr> -->
+					<n:tr>
+						<n:td>Cabang</n:td>
+						<n:td>
+							<textbox value="@load(vm.obj.branchname)" cols="30"
+								maxlength="40" disabled="true" />
+							<!-- <label style="color:red"
+								value="@load(vmsgs['mbranch'])" /> -->
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.picname)" cols="30"
+								maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['picname'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>No. HP PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.picphone)"
+								cols="20" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['picphone'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>E-mail PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.picemail)"
+								cols="40" maxlength="100" />
+							<label style="color:red"
+								value="@load(vmsgs['picemail'])" />
+						</n:td>
+					</n:tr>					
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<button id="btnSave" sclass="btn btn-default btn-sm"
+						label="${labels.common.save}" onClick="@command('save')"
+						width="70px" />
+					<button id="btnCancel"
+						sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+						onClick="@command('cancel')" width="70px" />
+					<button id="btnDelete"
+						sclass="btn btn-default btn-sm" label="${labels.common.del}"
+						onClick="@command('delete')" width="70px" />
+				</n:div>
+			</div>
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						align="right" width="40px" />
+					<listheader label="Cabang" />	
+					<listheader sort="auto(picname)">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.picname)" cols="30" maxlength="40"
+							placeholder="Nama PIC"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader label="No. HP PIC" />						
+					<listheader label="E-mail PIC" />							
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

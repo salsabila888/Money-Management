@@ -1,0 +1,214 @@
+<?page title="MODUL MENU" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MmenuVm')"
+		validationMessages="@id('vmsgs')" contentStyle="bac">
+		<n:h3>Menu Setup</n:h3>
+		<n:hr />
+		<div class="card">
+			<div class="card-body">
+				<groupbox title="${labels.menu.formsetup}" mold="3d">
+					<div class="panel panel-default">
+						<div class="panel-heading" align="right">
+							<div class="panel-body">
+								<grid
+									form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+									<columns>
+										<column width="50px" />
+										<column width="110px" />
+										<column />
+										<column width="110px" />
+										<column />
+									</columns>
+									<rows>
+										<row>
+											<label />
+											<label
+												value="${labels.menu.orderno}" />
+											<vlayout>
+												<label style="color:red"
+													value="@load(vmsgs['menuorderno'])" />
+												<intbox cols="10"
+													maxlength="10" value="@bind(e.menuorderno)" />
+											</vlayout>
+											<label
+												value="${labels.menu.name}" />
+											<textbox id="mname"
+												cols="30" maxlength="30" value="@bind(e.menuname)" />
+										</row>
+										<row>
+											<label />
+											<label
+												value="${labels.menu.group}" />
+											<vlayout>
+												<label style="color:red"
+													value="@load(vmsgs['menugroup'])" />
+												<textbox id="mgroup"
+													cols="30" maxlength="30" value="@bind(e.menugroup)" />
+											</vlayout>
+											<label
+												value="${labels.menu.icon}" />
+											<hlayout>
+												<vlayout>
+													<button
+														id="btnSelectMI" label="${labels.menu.select}"
+														sclass="btn btn-light btn-sm"
+														onClick="@command('doLoadIcon', arg='MI')" width="125px" />
+												</vlayout>
+												<image id="picsMI"
+													width="40px" height="40px" />
+												<button id="btnDelMI"
+													iconSclass="z-icon-trash-o text-dark"
+													style="background-color:white"
+													onClick="@command('delIcon', arg='delMI')" />
+											</hlayout>
+										</row>
+										<row>
+											<label />
+											<label
+												value="${labels.menu.groupicon}" />
+											<hlayout>
+												<vlayout>
+													<button
+														id="btnSelectGI" label="${labels.menu.select}"
+														sclass="btn btn-light btn-sm"
+														onClick="@command('doLoadIcon', arg='GI')" width="125px" />
+												</vlayout>
+												<image id="picsGI"
+													width="40px" height="40px" />
+												<button id="btnDelGI"
+													iconSclass="z-icon-trash-o text-dark"
+													style="background-color:white"
+													onClick="@command('delIcon', arg='delGI')" />
+											</hlayout>
+											<label
+												value="${labels.menu.path}" />
+											<vlayout>
+												<label style="color:red"
+													value="@load(vmsgs['menupath'])" />
+												<textbox id="mpath"
+													cols="30" maxlength="30" value="@bind(e.menupath)" />
+											</vlayout>
+										</row>
+										<row>
+											<label />
+											<label
+												value="${labels.menu.subgroup}" />
+											<textbox id="msubgroup"
+												cols="30" maxlength="30" value="@bind(e.menusubgroup)" />
+											<label
+												value="${labels.menu.paramname}" />
+											<textbox id="mparamname"
+												cols="30" maxlength="30" value="@bind(e.menuparamname)" />
+										</row>
+										<row>
+											<label />
+											<label
+												value="${labels.menu.subgroupicon}" />
+											<hlayout>
+												<vlayout>
+													<button
+														id="btnSelectSI" label="${labels.menu.select}"
+														sclass="btn btn-light btn-sm"
+														onClick="@command('doLoadIcon', arg='SI')" width="125px" />
+												</vlayout>
+												<image id="picsSI"
+													width="40px" height="40px" />
+												<button id="btnDelSI"
+													iconSclass="z-icon-trash-o text-dark"
+													style="background-color:white"
+													onClick="@command('delIcon', arg='delSI')" />
+											</hlayout>
+											<label
+												value="${labels.menu.paramvalue}" />
+											<textbox id="mparamvalue"
+												cols="30" maxlength="30" value="@bind(e.menuparamvalue)" />
+										</row>
+									</rows>
+									<foot>
+										<footer />
+										<footer span="4">
+											<div class="row">
+												<div
+													class="btn-group btn-sm">
+													<button id="btSave"
+														label="${labels.common.save}"
+														class="${labels.button.submit}"
+														onClick="@command('doSave')" width="110px" />
+													<button
+														id="btCancel" label="${labels.common.cancel}"
+														class="${labels.button.cancel}"
+														onClick="@command('doCancel')" width="110px" />
+													<button
+														id="btDelete" label="${labels.common.del}"
+														class="${labels.button.delete}"
+														onClick="@command('doDelete')" width="110px" />
+												</div>
+											</div>
+										</footer>
+									</foot>
+								</grid>
+								<separator />
+								<separator />
+								<separator />
+							</div>
+						</div>
+					</div>
+					<separator />
+
+					<paging id="paging" autohide="true" />
+					<div class="panel-body">
+						<listbox id="listbox"
+							emptyMessage="${labels.common.emptymsg}"
+							selectedItem="@bind(vm.obj)">
+							<listhead menupopup="auto">
+								<listheader label="${labels.common.no}"
+									align="right" width="40px" visible="false" />
+								<listheader
+									label="${labels.menu.orderno}" align="right" width="90px" />
+								<listheader>
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.menugroup)" cols="20"
+										maxlength="50" placeholder="${labels.menu.group}"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</listheader>
+								<listheader
+									label="${labels.menu.groupicon}" align="center" />
+								<listheader
+									label="${labels.menu.subgroup}" />
+								<listheader
+									label="${labels.menu.subgroupicon}" align="center" />
+								<listheader>
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.menuname)" cols="20"
+										maxlength="50" placeholder="${labels.menu.name}"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</listheader>
+								<listheader label="${labels.menu.icon}"
+									align="center" />
+								<listheader label="${labels.menu.path}"
+									visible="false" />
+								<listheader
+									label="${labels.menu.paramname}" visible="false" />
+								<listheader
+									label="${labels.menu.paramvalue}" visible="false" />
+							</listhead>
+						</listbox>
+						<separator />
+						<separator />
+						<separator />
+					</div>
+
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

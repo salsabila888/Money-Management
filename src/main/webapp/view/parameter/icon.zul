@@ -1,0 +1,117 @@
+<?page title="IMAGE SETUP" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winParameterIcon"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MiconVm')"
+		validationMessages="@id('vmsgs')" contentStyle="bac">
+		<caption />
+		<div class="card">
+			<div class="card-header">
+				<n:h6><n:b>
+					<n:i class="fas fa-lg fa-cogs"></n:i>
+					${labels.icon.title}
+				</n:b></n:h6>
+			</div>
+			<div class="card-body">
+				<groupbox title="FORM UPLOAD ICON" mold="3d"
+					style="font-size:20px">
+					<div class="panel-body">
+						<grid id="grid"
+							form="@id('e') @load(vm.objIcon) @save(vm.objIcon, before='doSave') @validator(vm.validator)">
+							<columns>
+								<column width="150px" />
+								<column />
+							</columns>
+							<rows>
+								<row>
+									<label value="${labels.icon.iconname}" />
+									<vlayout>
+										<label style="color:red"
+											value="@load(vmsgs['iconname'])" />
+										<textbox id="textbox" cols="30"
+											maxlength="30" value="@bind(e.iconname)">
+										</textbox>
+									</vlayout>
+								</row>
+								<row>
+									<label value="${labels.icon.iconupload}" />
+									<hlayout>
+										<label style="color:red"
+											value="@load(vmsgs['iconpath'])" />
+										<button id="btnBrowse"
+											label="Browse Icon"
+											upload="true, maxsize=100000" sclass="btn btn-light btn-sm"
+											onUpload="@command('doBrowse', upEvent=event)">
+										</button>
+									</hlayout>
+								</row>
+								<row>
+									<label />
+									<image id="pics" />
+								</row>
+							</rows>
+							<foot>
+								<footer />
+								<footer>
+									<div class="btn-group btn-sm">
+										<button id="btSave"
+											label="${labels.common.save}"
+											onClick="@command('doSave')" class="${labels.button.submit}"
+											width="110px" />
+										<button id="btCancel"
+											class="${labels.button.cancel}"
+											label="${labels.common.cancel}"
+											onClick="@command('doCancel')" width="110px" />
+										<button id="btDelete"
+											 label="${labels.common.del}"
+											onClick="@command('doDelete')"
+											class="${labels.button.delete}" width="110px" />
+									</div>
+								</footer>
+							</foot>
+						</grid>
+						<separator />
+						<separator />
+						<separator />
+					</div>
+					<separator />
+					<paging id="paging" autohide="true" />
+					<div class="panel-body">
+						<listbox id="listbox"
+							emptyMessage="${labels.common.emptymsg}"
+							selectedItem="@bind(vm.objIcon)">
+							<listhead>
+								<listheader label="${labels.common.no}" align="right"
+									width="40px"  />
+								<listheader>
+									<textbox inplace="true"
+										class="cheader" value="@bind(vm.iconname)" cols="20"
+										maxlength="50" placeholder="${labels.icon.iconname}"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+								</listheader>
+								<listheader
+									label="${labels.icon.filename}"/>
+								<listheader label="URL" align="right"
+									visible="false" width="150px" />
+								<listheader label="${labels.icon.icon}"
+									align="center" width="150px"/>
+								<listheader id="headerAction"
+									label="Action" align="center" 
+									visible="false" width="150px" />
+							</listhead>
+						</listbox>
+						<separator />
+						<separator />
+						<separator />
+					</div>
+				</groupbox>
+			</div>
+		</div>
+	</window>
+</zk>

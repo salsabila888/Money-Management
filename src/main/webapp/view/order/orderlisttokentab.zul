@@ -1,0 +1,17 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOrderListToken"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderListTokenTabVm')">
+		<tabbox width="100%" sclass="nav_tabs">
+			<tabs id="tabs">
+				<tab label="Daftar Order Token Produksi"
+					onSelect="@command('doTab', tab='1')" />
+				<tab label="Daftar Order Token Cabang"
+					onSelect="@command('doTab', tab='2')" />
+			</tabs>
+		</tabbox>
+		<div id="tabPage" />
+	</window>
+</zk>

@@ -1,0 +1,40 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winOperators" border="normal"
+		title="${desktop.webApp.appName}" width="700px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryManifestPrintVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="Delivery Manifest Expedisi" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<separator />
+		<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipe Delivery" />
+						<radiogroup id="rgIsurgent" selectedItem="@bind(vm.isurgent)" >
+							<radio id="rdUrgent" label="URGENT" value="Y" />
+							<separator orient="vertical" />
+							<radio id="rdRegular" label="REGULAR" value="N" />
+						</radiogroup>
+					</row>
+				</rows>
+				<foot>
+					<footer span="3" align="center">
+						<button width="120px" autodisable="self"
+							label="Submit" sclass="btn btn-primary btn-sm"
+							onClick="@command('doSave')" 
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+					</footer>
+				</foot>
+			</grid>
+		<separator />
+	</window>
+</zk>

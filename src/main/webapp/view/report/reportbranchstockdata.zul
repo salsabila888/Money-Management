@@ -1,0 +1,81 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winReportbranchstockdata" border="normal"
+		title="${desktop.webApp.appName}"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportBranchStockDataVm')">
+		<caption label="Data Detail Emboss" />
+		<groupbox id="gbBatchInfo" mold="3d">
+			<caption label="Branch Stock Data" />
+			<grid>
+				<columns>
+					<column width="200px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Cabang" />
+						<label value="@load(vm.obj.branchname)" />
+					</row>
+					<row>
+						<label value="Group Produk" />
+						<label value="@bind(vm.productgroup)" />
+					</row>
+					<row>
+						<label value="Tipe" />
+						<label value="@bind(vm.type)" />
+					</row>
+					<row>
+						<label value="Jumlah" />
+						<label value="@load(vm.totaldata)" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div align="right">
+							<button sclass="btn btn-default btn-sm"
+								label="Export to Excel" image="/images/excel.png"
+								onClick="@command('doExport')" autodisable="self" />
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="Org" />
+				<column label="Tipe Produk" />
+				<column width="170px" align="center">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productcode)" cols="15" maxlength="20"
+						placeholder="Kode Produk" style="text-align:center"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Jenis Produk" />
+				<column label="Jumlah" align="right" width="200px" />
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm"
+				image="/images/close.png" tooltiptext="Close" autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

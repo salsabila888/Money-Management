@@ -1,0 +1,48 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winArea"
+		border="none" width="600px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.McouriervendorbranchVm')" sclass="win">
+		<caption sclass="wincaption">
+			<div align="center">
+				<label value="Setup Area Expedisi" style="font-size: 16px" />
+			</div>
+		</caption>
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:table class="table table-striped table-sm">
+			<n:tr>
+				<n:td width="120px">Kode Vendor</n:td>
+				<n:td>
+					<label value="@load(vm.obj.vendorcode)" />
+				</n:td>
+			</n:tr>
+			<n:tr>
+				<n:td>Nama Vendor</n:td>
+				<n:td>
+					<label value="@load(vm.obj.vendorname)" />
+				</n:td>
+			</n:tr>
+		</n:table>
+		<separator />
+		<grid id="grid" mold="paging" pageSize="40">
+			<columns>
+				<column label="No" align="right" width="40px" />
+				<column label="Wilayah" />
+				<column label="Cabang" />
+				<column label="Pilih" align="right" width="60px">
+					<checkbox onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+			</columns>
+		</grid>
+		<separator />
+		<div align="center">
+			<button id="btnSave" sclass="btn btn-primary btn-sm"
+				label="${labels.common.save}" onClick="@command('save')"
+				width="120px" />
+		</div>		
+	</window>
+</zk>

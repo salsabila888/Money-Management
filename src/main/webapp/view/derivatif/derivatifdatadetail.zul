@@ -1,0 +1,102 @@
+<?page title="LIST CUSTOMER" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifDataDetailVm')"
+		contentStyle="bac">
+		<caption />
+		<n:h3><n:b>Detail Data Order Cabang</n:b></n:h3>
+		<n:hr />
+		<div class="card">
+			<div class="card-body pt-1 pb-1 pl-1 pr-1">
+
+				<div class="panel-body">
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="No Surat" />
+								<hlayout>
+									<label value=" : " />
+									<label id="lblfilename"
+										value="@load(vm.obj.orderno)" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Cabang" />
+								<hlayout>
+									<label value=" : " />
+									<label id="lblbranch"
+										value="@load(vm.obj.tderivatif.mbranch.branchname)" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Tanggal Order" />
+								<hlayout>
+									<label value=" : " />
+									<label value="@load(vm.obj.tderivatif.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+								</hlayout>
+							</row>
+							<row>
+								<label value="Total Data" />
+								<hlayout>
+									<label value=" : " />
+									<label id="lblTotaldata"
+										value="@load(vm.obj.totaldata)" />
+								</hlayout>
+							</row>
+						</rows>
+					</grid>
+				</div>
+				<separator />
+				<n:hr />
+				<separator />
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<paging id="paging" autohide="true" />
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="40px" />
+						<column align="center">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.cardno)" cols="18" maxlength="18"
+								placeholder="No Kartu" style="text-align:center"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Nama" />
+						<column label="Kode Produk" align="center"
+							width="120px" />
+						<column label="Jenis Produk" />
+						<column label="Tanggal Data" align="center"
+							width="130px" />
+						<column label="Kode Cabang" align="center"
+							width="120px" />
+						<column label="Nama Cabang" /> 
+					</columns>
+				</grid>
+				<separator />
+				<separator />
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,128 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPlan"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MutationListVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="captIncoming" visible="false" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Mutasi</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d" id="gbSearch">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="120px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)"
+									cols="20" />
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button autodisable="self"
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button autodisable="self"
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+<!-- 									<div class="col-md-6"
+										align="right">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self" />
+									</div> -->
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<div align="left">
+					<button sclass="btn btn-primary btn-sm"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						label="Tambah Usulan Pengadaan" onClick="@command('doAdd')"
+						autodisable="self" />
+				</div>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="40px" />
+						<column label="Tanggal Mutasi" align="center" width="120px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="No Mutasi" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="135px" />
+						<column label="Sumber Pendapatan"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="300px" />
+						<column label="Tujuan Pengeluaran"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="300px" />
+						<column label="Peruntukan"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="250px" />
+						<column label="Metode Pembayaran" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Bank" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Jumlah" width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Action" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="250px" />
+					</columns>
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

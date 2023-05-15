@@ -1,0 +1,109 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MregionVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master Wilayah
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">Id Wilayah</n:td>
+						<n:td>
+							<textbox value="@bind(e.regionid)" cols="35"
+								maxlength="5" />
+							<label style="color:red"
+								value="@load(vmsgs['regionid'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Kode Wilayah</n:td>
+						<n:td>
+							<textbox value="@bind(e.regioncode)"
+								cols="35" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['regioncode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama Wilayah</n:td>
+						<n:td>
+							<textbox value="@bind(e.regionname)"
+								cols="35" maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['regionname'])" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<n:div role="group">
+						<button id="btnSave"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.save}"
+							onClick="@command('save')" />
+						<button id="btnCancel"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+							onClick="@command('cancel')" />
+						<button id="btnDelete"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.del}"
+							onClick="@command('delete')" />
+					</n:div>
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader sort="auto(regionid)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.regionid)" cols="15" maxlength="5"
+							placeholder="Id Wilayah"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(regioncode)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.regioncode)" cols="15" maxlength="5"
+							placeholder="Kode Wilayah"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(regionname)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.regionname)" cols="30" maxlength="50"
+							placeholder="Nama Wilayah"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

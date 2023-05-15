@@ -1,0 +1,229 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.IncomingListVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="captIncoming" visible="false" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Data Persediaan</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d" id="gbSearch">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="130px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tahun" />
+								<intbox value="@bind(vm.year)"
+									cols="20" />
+							</row>
+							<row>
+								<label value="Bulan" />
+								<combobox id="cbMonth" cols="20"
+									selectedItem="@bind(vm.month)" />
+							</row>
+							<row>
+								<label value="Status" />
+								<combobox id="cbStatus"
+									selectedItem="@bind(vm.status)">
+									<comboitem value="" label="ALL" />
+									<comboitem
+										label="PROSES PERSETUJUAN PERSEDIAAN" value="I11" />
+									<comboitem
+										label="PERSEDIAAN DISETUJUI" value="I19" />
+									<comboitem
+										label="PERSEDIAAN DITOLAK" value="I12" />
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<div class="row">
+									<div class="col-md-6">
+										<n:div role="group">
+											<button
+												style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.search}"
+												onClick="@command('doSearch')" />
+											<button
+												style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"
+												sclass="btn btn-default btn-sm"
+												label="${labels.common.reset}"
+												onClick="@command('doReset')" />
+										</n:div>
+									</div>
+									<div class="col-md-6"
+										align="right">
+										<button
+											sclass="btn btn-default btn-sm" label="Export to Excel"
+											style="border-radius: 8px; background-color: #81bf3d !important; color: #ffffff !important;"
+											image="/images/excel.png" onClick="@command('doExport')"
+											autodisable="self" />
+									</div>
+								</div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<separator />
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns menupopup="auto">
+						<column label="${labels.common.no}"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" width="35px" />
+						<column label="No Persediaan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column align="left" width="300px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.producttype)" cols="15" maxlength="70"
+								placeholder="Jenis Produk" style="text-align:left"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column id="colPrefix" label="Prefix"
+							width="80px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column id="colNum" label="Nomerator Awal"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column id="colEndno" label="Nomerator Akhir" align="right"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Jumlah" width="80px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							align="right" />
+						<column label="Harga Satuan" align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="200px" />
+						<column label="Realisasi Pengadaan"
+							align="right"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="200px" />
+						<column label="Waktu Entri" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Status"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="250px" />
+						<column label="Diinput Oleh" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="120px" />
+						<column label="Pemutus" width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Waktu Keputusan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Catatan Keputusan"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="300px" />
+						<column label="No SPK" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Tanggal SPK" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="No Surat Vendor" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Tanggal Surat Vendor"
+							align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="No PKS" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="Tanggal PKS" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Memo" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />	
+						<column label="Tahun Produksi" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="150px" />
+						<column label="No Memo Pengadaan"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="180px" />
+						<column label="Pengadaan" align="center"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+						<column label="Action" align="center"
+							id="colAction" visible="false"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+							width="130px" />
+					</columns>
+					<foot>
+						<footer />
+						<footer>
+							<label value="TOTAL"
+								style="font-size: 16px; font-weight: bold" />
+						</footer>
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer align="right">
+							<label
+								value="@load(vm.totaldata) @converter('formatedNumber', format='#,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+						<footer />
+						<footer align="right">
+							<label
+								value="@load(vm.totalamountrealisasi) @converter('formatedNumber', format='Rp #,###')"
+								style="font-weight: bold; text-align: right" />
+						</footer>
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+						<footer />
+					</foot>
+				</grid>
+				<separator />
+			</div>
+		</div>
+	</window>
+</zk>

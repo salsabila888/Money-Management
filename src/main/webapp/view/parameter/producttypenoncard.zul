@@ -1,0 +1,166 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MproducttypeNonCardVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master Pinpad
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save') @validator(vm.validator)">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td>Grup Produk</n:td>
+						<n:td>
+							<textbox value="Pinpad" disabled="true"
+								cols="35" maxlength="40" />
+							<label />
+						</n:td>
+					</n:tr>
+<!-- 					<n:tr>
+						<n:td>Kode Jenis Produk</n:td>
+						<n:td>
+							<textbox value="@bind(e.productcode)"
+								id="tbJenisproduct" cols="35" maxlength="10" />
+							<label style="color:red"
+								value="@load(vmsgs['productcode'])" />
+						</n:td>
+					</n:tr> -->
+					<n:tr>
+						<n:td>Jenis Produk</n:td>
+						<n:td>
+							<textbox value="@bind(e.producttype)"
+								cols="35" maxlength="70" />
+							<label />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Unit Produk</n:td>
+						<n:td>
+							<textbox value="PCS" disabled="true"
+								cols="35" />
+							<label />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Jumlah Per Unit</n:td>
+						<n:td>
+							<intbox value="1" cols="35" 
+								disabled="true"/>
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Stock Inventory</n:td>
+						<n:td>
+							<intbox
+								value="@bind(e.laststock)" cols="35" maxlength="7"
+								readonly="true" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Pagu Stock</n:td>
+						<n:td>
+							<intbox
+								value="@bind(e.stockmin)" cols="35" maxlength="7" />
+						</n:td>
+					</n:tr>
+					<n:tr id="m">
+						<n:td>Tipe Perhitungan SLA</n:td>
+						<n:td>
+							<radiogroup
+								selectedItem="@bind(e.slacountertype)">
+								<radio value="D"
+									label="Berdasarkan Tanggal Data" />
+								<separator orient="vertical" />
+								<radio value="P"
+									label="Berdasarkan Tanggal Produksi" />
+								<separator orient="vertical" />
+								<radio value="N" label="Tidak Dihitung" />
+							</radiogroup>
+						</n:td>
+					</n:tr>	
+					<n:tr>
+						<n:td>Product Owner</n:td>
+						<n:td>
+							<combobox id="cbPrdOwner" cols="35"
+								model="@load(vm.mproductowners)"
+								selectedItem="@bind(e.mproductowner)">
+								<template name="model" var="mproductowner">
+									<comboitem
+										label="@load(mproductowner.mbranch.branchname)"/>
+								</template>
+							</combobox>
+						</n:td>
+					</n:tr>			
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div role="group">
+					<button id="btnSave" sclass="btn btn-default btn-sm"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						label="${labels.common.save}" onClick="@command('save')" />
+					<button id="btnCancel"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+						onClick="@command('cancel')" />
+					<button id="btnDelete"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.del}"
+						onClick="@command('delete')" />
+				</n:div>
+			</div>
+			<separator />
+			<div class="row">
+				<div class="col-md-10">
+					<paging id="paging" autohide="true" />
+				</div>
+				<div class="col-md-2" align="right">
+					<label value="Total Record :"
+						style="font-weight: bold" />
+					<label value="@load(vm.pageTotalSize)"
+						style="font-weight: bold" />
+				</div>
+			</div>
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader label="Grup Produk"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader sort="auto(producttype)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.producttype)" cols="30" maxlength="50"
+							placeholder="Jenis Produk"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader label="Stock Inventory" align="right"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" 
+						width="150px"/>
+					<listheader label="Stock Produksi" align="right"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						width="150px" />
+					<listheader label="Pagu Stock" align="right"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						width="150px" />
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

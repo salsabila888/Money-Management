@@ -1,0 +1,39 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPrintlabel" border="normal"
+		title="${desktop.webApp.appName}" width="400px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryPrintLabelVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="Cetak Label Delivery" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<separator />
+		<grid>
+				<columns>
+					<column align="center" label="Tipe Generate Label" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				</columns>
+				<rows>
+					<row>
+						<radiogroup id="rgIsurgent" selectedItem="@bind(vm.isauto)" >
+							<radio id="rdAuto" label="Auto Generate" value="Y" />
+							<separator orient="vertical" />
+							<radio id="rdGenerate" label="Manual Generate" value="N" />
+						</radiogroup>
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button width="100%" autodisable="self"
+							label="Generate" sclass="btn btn-primary btn-sm"
+							onClick="@command('doSave')" 
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+					</footer>
+				</foot>
+			</grid>
+		<separator />
+	</window>
+</zk>

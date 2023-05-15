@@ -1,0 +1,126 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<div
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.HeaderVm')">
+		<script src="/bootstrap/v3/bootstrap/js/bootstrap.js" />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<zscript>
+	com.sdd.caption.domain.Muser oUser = (com.sdd.caption.domain.Muser) session.getAttribute("oUser");
+	if (oUser == null)
+		Executions.sendRedirect("/timeout.zul");
+</zscript>
+		<n:header>
+			<n:nav class="navbar fixed-top navbar-expand-lg "
+				style="padding: 0px">
+				<n:table id="Table_01" width="100%" border="0"
+					cellpadding="0" cellspacing="0" background="${pageContext.request.contextPath}/images/gradasi_purple.jpg">
+					<n:tr>
+						<n:td>
+							<n:img src="${pageContext.request.contextPath}/images/assets.png" width="80px" 
+								 height="30px"/>
+						</n:td>
+						<n:td width="100%">
+							<n:div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<!-- Right -->
+								<n:ul
+									class="navbar-nav ml-auto nav-flex-icons"
+									style="padding-right: 20px">
+									<!-- <n:li class="nav-item">
+										<n:div class="dropdown">
+										Trigger
+										<x:button id="btnNotif"
+										style="border-radius: 8px;" type="button"
+										onClick="myFunction()">
+										<n:i
+										class="fas fa-bell" />
+										<label id="lblNotif"
+										value="@bind(vm.totalnotif)" />
+										<n:span class="caret"></n:span>
+										</x:button>
+										<script
+										type="text/javascript">
+										function myFunction() {
+										document.getElementById("divNotif").classList.toggle("show");
+										}
+										</script>
+										Menu
+										<n:div id="divNotif"
+										disabled="true" class="dropdown-menu dropdown-menu-right">
+										<n:div
+										style="padding-left: 10px;">
+										<label
+										value="@bind(vm.label)" style="font-weight: bold" />
+										</n:div>
+										<separator />
+										<grid id="grid"
+										mold="paging" pageSize="10" pagingPosition="top"
+										emptyMessage="${labels.common.emptymsg}">
+										<columns>
+										<column
+										align="right"
+										style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+										label="No" width="40px" />
+										<column
+										style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+										width="250px">
+										<textbox
+										inplace="true" class="cheader"
+										value="@bind(vm.producttype)" cols="25" maxlength="28"
+										placeholder="Tipe Produk"
+										tooltiptext="${labels.common.searchonheader}"
+										onOK="@command('doSearch')" />
+										</column>
+										<column
+										align="right"
+										style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+										width="150px" label="Stok Terakhir" />
+										</columns>
+										</grid>
+										</n:div>
+										</n:div>
+										</n:li> -->
+									<n:li class="nav-item">
+										<n:div class="dropdown">
+											<!--Trigger-->
+											<n:button type="button"
+												style="background-color: #937DC2 !important; border-radius: 8px;"
+												class="btn btn-info btn-sm dropdown-toggle"
+												data-toggle="dropdown" aria-expanded="false">
+												<n:i
+													class="fas fa-user-tie" />
+												<label id="lblUser"
+													value="@load(vm.user)" />
+												<n:span class="caret"></n:span>
+											</n:button>
+											<!--Menu-->
+											<n:div
+												class="dropdown-menu dropdown-menu-right dropdown-default">
+												<a class="dropdown-item"
+													style="font-size: 12px" onClick="@command('doCheck')">
+													Informasi Akun
+												</a>
+												<a class="dropdown-item"
+													style="font-size: 12px" onClick="@command('doLogout')">
+													Log Out
+												</a>
+											</n:div>
+										</n:div>
+									</n:li>
+								</n:ul>
+							</n:div>
+						</n:td>
+						<n:td>
+							<n:img width="80px" height="30px"
+								src="${pageContext.request.contextPath}/images/monthly.png"
+								alt="" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</n:nav>
+		</n:header>
+	</div>
+</zk>

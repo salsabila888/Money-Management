@@ -1,0 +1,9 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.TestVm')"
+		title="new page title" border="normal">
+		<label value="@bind(vm.value)"></label>
+		<button onClick="@command('doCount')">Process</button>
+	</window>
+</zk>

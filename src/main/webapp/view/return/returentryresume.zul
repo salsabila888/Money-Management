@@ -1,0 +1,77 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/actionico.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winReturResume"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReturEntryResumeVM')">
+		<caption />
+		<div class="card" style="border-radius:15px;" align="center">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h2>
+					<label style="font-size:25px; font-weight:bold;"
+						value="Data Retur Berhasil Disimpan" />
+				</n:h2>
+			</div>
+			<div class="card-body">
+				<grid id="grid" mold="paging" pagingPosition="bottom">
+					<columns>
+						<column width="150px" />
+						<column width="5px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="Retur ID" />
+							<label value=":" />
+							<label value="@load(vm.obj.regid)"/>
+						</row>
+						<row>
+							<label value="Tanggal Retur" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.inserttime) @converter('formatedDate', format='dd-MM-yyyy')"/>
+						</row>
+						<row>
+							<label value="Nama Cabang/Divisi" />
+							<label value=":" />
+							<label
+								value="@load(vm.obj.mbranch.branchname)"/>
+						</row>
+						<row>
+							<label value="Nama Produk"/>
+							<label value=":" />
+							<label
+								value="@load(vm.obj.mproduct.productname)"/>
+						</row>
+						<row>
+							<label value="Alasan Pengembalian"/>
+							<label value=":" />
+							<label
+								value="@load(vm.obj.mreturnreason.returnreason)"/>
+						</row>
+					</rows>
+					<foot>
+						<footer span="3" align="center">
+							<button id="btnCreate"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Buat Retur Baru" class="${labels.button.submit}"
+								onClick="@command('doCreate')" autodisable="self"
+								sclass="btn-default" />
+							<button id="btnCancel"
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+								label="Lihat Daftar Retur" class="${labels.button.cancel}"
+								onClick="@command('doList')" autodisable="self"
+								sclass="btn-default" />
+						</footer>
+					</foot>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

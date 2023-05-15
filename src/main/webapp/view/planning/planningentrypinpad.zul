@@ -1,0 +1,216 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PlanningEntryPinpadVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" visible="false" />
+		<div id="divRoot">
+			<div class="card" style="border-radius:15px;">
+				<div class="card-header"
+					style="background-color: #002459; color: #ffffff;
+				border-top-left-radius:15px; border-top-right-radius:15px;">
+					<div>
+						<n:h4>
+							<n:b>Input Inisiasi Pengadaan</n:b>
+						</n:h4>
+						<label value="@load(vm.productgroup)"
+							style="font-size: 16px" />
+					</div>
+				</div>
+				<div class="card-body">
+					<groupbox mold="3d"
+						form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+						<caption label="Form Input Inisiasi Pengadaan" />
+						<grid>
+							<columns>
+								<column width="150px" />
+								<column />
+							</columns>
+							<rows>
+								<row id="row">
+									<label value="No Pengadaan" />
+									<textbox value="Auto Generated"
+										cols="50" readonly="true" />
+								</row>
+								<row>
+									<label value="Nama Cabang/Divisi" />
+									<textbox value="@load(vm.cabang)"
+										cols="50" readonly="true" />
+								</row>
+								<row>
+									<label value="Tanggal Pengadaan" />
+									<textbox
+										value="@bind(e.inputtime) @converter('formatedDate', format='dd, MMM yyyy')"
+										readonly="true" cols="50" />
+								</row>
+								<row>
+									<label value="Grup Produk" />
+									<textbox
+										value="@bind(vm.productgroup)" readonly="true" cols="50" />
+								</row>
+								<row>
+									<hlayout>
+										<label value="Anggaran" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<textbox value="Rp."
+											disabled="true" cols="1" inplace="true" />
+										<decimalbox format="#,###"
+											value="@bind(e.anggaran)" cols="42" maxlength="17" />
+										<label style="color:red"
+											value="@load(vmsgs['anggaran'])" />
+									</hlayout>
+								</row>
+								<row>
+									<label value="Total Quantity" />
+									<hlayout>
+										<intbox value="@bind(e.totalqty)"
+											cols="35" maxlength="20" format="#,###" />
+										<textbox value="Unit" disabled="true" cols="8"/>
+									</hlayout>
+								</row>
+								<row>
+									<hlayout>
+										<label value="No Memo" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<textbox value="@bind(e.memono)"
+											cols="50" maxlength="20" />
+										<label style="color:red"
+											value="@load(vmsgs['memono'])" />
+									</hlayout>
+								</row>
+								<row>
+									<hlayout>
+										<label value="Tanggal Memo" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<datebox
+											value="@bind(vm.memodate)" format="dd MMMM yyyy" cols="46" />
+										<label style="color:red"
+											value="@load(vmsgs['memodate'])" />
+									</hlayout>
+								</row>
+								<row id="rowUpload">
+									<label value="Upload Dokumen Pendukung" />
+									<button id="btnBrowse"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										label="Browse File..." upload="true, maxsize=5000000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowseProduct', upEvent=event)" />
+								</row>
+								<row id="rowDoc">
+									<label value="Daftar Dokumen Pendukung" />
+									<groupbox>
+										<grid id="gridDoc" mold="paging"
+											pagingPosition="top" pageSize="10"
+											emptyMessage="${labels.common.emptymsg}">
+											<columns>
+												<column
+													label="${labels.common.no}" align="right" width="50px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="Document Name"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="${labels.common.action}" align="center"
+													width="100px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+											</columns>
+											<rows />
+										</grid>
+									</groupbox>
+								</row>
+								<!-- <row id="rowDocument">
+									<label value="Daftar Dokumen" />
+									<groupbox>
+									<div class="row">
+									<div class="col-md-8">
+									<paging id="paging" autohide="true" />
+									</div>
+									<div class="col-md-4" align="right">
+									<label value="Total Record :"
+									style="font-weight: bold" />
+									<label value="@load(vm.pageTotalSize)"
+									style="font-weight: bold" />
+									</div>
+									</div>
+									<grid id="gridDocument"
+									emptyMessage="${labels.common.emptymsg}">
+									<columns>
+									<column label="${labels.common.no}"
+									align="right" width="50px"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+									<column label="Document Name"
+									style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+									</columns>
+									<rows />
+									</grid>
+									</groupbox>
+									</row> -->
+							</rows>
+						</grid>
+						<separator />
+					</groupbox>
+<!-- 					<grid id="grid" pagingPosition="top"
+						emptyMessage="${labels.common.emptymsg}" mold="paging"
+						pageSize="10">
+						<columns>
+							<column label="${labels.common.no}"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								align="right" width="40px" />
+							<column label="Pilih" align="center"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								width="80px" />
+							<column
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+								<textbox inplace="true" class="cheader"
+									value="@bind(vm.producttype)" cols="70" maxlength="50"
+									placeholder="Tipe Produk"
+									tooltiptext="${labels.common.searchonheader}"
+									onOK="@command('doSearch')" />
+							</column>
+							<column label="Quantity" align="right"
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+								width="300px" />
+						</columns>
+						<foot>
+							<footer />
+							<footer>
+								<label value="TOTAL"
+									style="font-size: 16px; font-weight: bold" />
+							</footer>
+							<footer />
+							<footer align="right">
+								<label
+									value="@load(vm.totaldata) @converter('formatedNumber', format='#,###')"
+									style="font-weight: bold; text-align: right" />
+							</footer>
+						</foot>
+					</grid> -->
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-12" align="right">
+									<button id="btnSave" width="120px"
+										autodisable="self" label="Submit"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

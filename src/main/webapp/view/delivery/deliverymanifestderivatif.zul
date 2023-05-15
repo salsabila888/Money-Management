@@ -1,0 +1,109 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winDeliverymanifests" border="normal"
+		title="${desktop.webApp.appName}" width="800px"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryManifestDerivatifVm')"
+		validationMessages="@id('vmsgs')">
+		<groupbox mold="3d">
+			<caption label="Form Manifest Delivery" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Generate Surat" />
+						<hlayout>
+							<radiogroup selectedItem="@bind(vm.type)" onCheck="@command('doLetterNoType', type=vm.type)">
+								<radio value="A" label="Auto"/>
+								<separator orient="vertical" />
+								<radio value="M" label="Manual" />
+							</radiogroup>
+						</hlayout>
+					</row>
+					<row id="rowcbLetter">
+						<label value="Prefix Surat" />
+						<hlayout>
+							<combobox id="cbLetter" readonly="true"
+								model="@load(vm.mletterModel)"
+								selectedItem="@bind(vm.mletter)" disabled="false">
+								<template name="model"
+									var="mletter">
+									<comboitem
+										label="@load(mletter.letterprefix)"
+										description="@load(mletter.description)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mletter'])" />
+						</hlayout>						
+					</row>
+					<row id="rowtbLetter" visible="false">
+						<label value="Nomor Surat" />
+						<hlayout>
+							<textbox id="tbLetter" value="@bind(e.dlvid)" cols="20" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['dlvid'])" />
+							
+						</hlayout>						
+					</row>
+					<row>
+						<label value="Jenis Surat" />
+						<hlayout>
+							<combobox id="cbLettertype" readonly="true"
+								model="@load(vm.mlettertypeModel)"
+								selectedItem="@bind(vm.mlettertype)">
+								<template name="model"
+									var="mlettertype">
+									<comboitem
+										label="@load(mlettertype.lettertype)"
+										description="@load(mlettertype.description)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mlettertype'])" />
+						</hlayout>
+					</row>
+					<row>
+						<label value="Generate Ekspedisi" />
+						<hlayout>
+							<radiogroup selectedItem="@bind(vm.kurir)" onCheck="@command('doEkspedisitypeSelected', kurir=vm.kurir)">
+								<radio value="D" label="Default"/>
+								<separator orient="vertical" />
+								<radio value="M" label="Manual" />
+							</radiogroup>
+						</hlayout>
+					</row>
+					<row id="rowcbEkpedisi" visible="false">
+						<label value="Ekspedisi" />
+						<hlayout>
+							<combobox id="cbCouriervendor" readonly="true"
+								model="@load(vm.mcouriervendorModel)"
+								selectedItem="@bind(e.mcouriervendor)">
+								<template name="model"
+									var="mcouriervendor">
+									<comboitem
+										label="@load(mcouriervendor.vendorcode)"
+										description="@load(mcouriervendor.vendorname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mcouriervendor'])" />
+						</hlayout>						
+					</row>					
+				</rows>
+				<foot>
+					<footer span="2">
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Submit" width="98%"
+							onClick="@command('doSave')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+	</window>
+</zk>

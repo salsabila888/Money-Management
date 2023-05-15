@@ -1,0 +1,81 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winReturnItem" border="normal"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.RepairHistoryVm')">
+		<caption />
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card-header" id="divRoot"
+			style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+			<n:h5>
+				<n:b>Histori Pemenuhan Repair</n:b>
+			</n:h5>
+		</div>
+		<grid
+			style="border-bottom-left-radius:15px; border-bottom-right-radius:15px;">
+			<columns>
+				<column width="150px" />
+				<column />
+			</columns>
+			<rows>
+				<row>
+					<label value="No. Reg" />
+					<label value="@load(vm.obj.regid) " />
+				</row>
+				<row>
+					<label value="Nama Cabang" />
+					<label value="@load(vm.obj.mbranch.branchname) " />
+				</row>
+				<row>
+					<label value="Jenis Produk" />
+					<label value="@load(vm.obj.mproduct) " />
+				</row>
+				<row>
+					<label value="Total Kirim" />
+					<label value="@load(vm.obj.totalproses) " />
+				</row>
+				<row>
+					<label value="Alasan Perbaikan" />
+					<label
+						value="@load(vm.obj.mrepairreason.repairreason)" />
+				</row>
+			</rows>
+		</grid>
+		<separator />
+		<div class="row">
+			<div class="col-md-9">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-3" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="35px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="No. Batch" align="center" width="200px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Sukses Perbaikan" align="right" width="150px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Gagal Perbaikan" align="right" width="150px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Status" align="center"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Diproses oleh"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				<column label="Tgl Pemenuhan" align="center"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

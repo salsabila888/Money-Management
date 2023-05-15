@@ -1,0 +1,189 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winDeliverybranch" border="normal" title="${desktop.webApp.appName}" width="80%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PaketBranchVm')"
+		validationMessages="@id('vmsgs')">
+		<caption label="Manifest Paket" />	
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<groupbox mold="3d">
+			<caption label="Data Order Produk" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipe Produk" />
+						<label value="@load(vm.obj.mproduct.mproducttype.producttype)" />
+						<label value="Tanggal Data" />
+						<label value="@load(vm.obj.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+					</row>
+					<row>
+						<label value="Kode Produk" />
+						<label value="@load(vm.obj.mproduct.productcode)" />
+						<label value="Jumlah" />
+						<label value="@load(vm.obj.totaldata)" />
+					</row>
+					<row>
+						<label value="Jenis Produk" />
+						<label value="@load(vm.obj.mproduct.productname)" />
+						<!-- <label value="Grup Produk" />
+						<combobox id="cbProductgroup" cols="30" readonly="true" buttonVisible="false" autocomplete="true" inplace="true"
+								selectedItem="@load(vm.obj.productgroup)">
+								<comboitem label="KARTU"
+									value="01" />
+								<comboitem label="TOKEN"
+									value="02" />
+								<comboitem label="PINPAD"
+									value="03" />
+								<comboitem label="DOCUMENT"
+									value="04" />
+								<comboitem label="SUPPLIES"
+									value="05" />								
+							</combobox> -->
+					</row>					
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+
+		<groupbox mold="3d" open="false">
+			<caption label="Filter" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Cabang" />
+						<hlayout>
+							<combobox id="cbBranch"
+							model="@load(vm.mbranchmodel)" 
+							selectedItem="@bind(vm.mbranch)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchid)" description="@load(mbranch.branchname)" />
+							</template>
+						</combobox>
+						<label value="S/D" />
+						<combobox id="cbBranch2"
+							model="@load(vm.mbranchmodel)" 
+							selectedItem="@bind(vm.mbranch2)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchid)" description="@load(mbranch.branchname)" />
+							</template>
+						</combobox>
+						</hlayout>						
+					</row>					
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<n:div class="btn-group" role="group">
+							<button sclass="btn btn-default btn-sm"
+								label="${labels.common.search}" onClick="@command('doSearch')" />
+							<button sclass="btn btn-default btn-sm"
+								label="${labels.common.reset}" onClick="@command('doReset')" />
+						</n:div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}" mold="paging" pageSize="20" pagingPosition="top">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column align="center" width="50px">
+					<checkbox
+						onCheck="@command('doCheckedall', checked=self.checked)"
+						checked="true" />
+				</column>
+				<column label="Cabang" />
+				<column label="Tgl Data" align="center"
+					width="120px" />
+				<column label="Tgl Produksi" align="center"
+					width="120px" />
+				<column label="Jumlah" align="right" width="80px" />				
+				<column label="Action" align="center" width="110px" />
+			</columns>
+			<foot>
+				<footer />
+				<footer />
+				<footer>
+					<label value="TOTAL"
+						style="font-size: 16px; font-weight: bold" />
+				</footer>
+				<footer />
+				<footer />
+				<footer>
+					<label value="@load(vm.totaldata)"
+						style="font-weight: bold; text-align: right" />
+				</footer>				
+				<footer />
+			</foot>
+		</grid>
+		<separator />
+		<groupbox mold="3d">
+			<caption label="Form Manifest Paket" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Grup Produk" />
+						<combobox id="cbGroupProduct" cols="30" readonly="true" buttonVisible="false" autocomplete="true" inplace="true"
+								selectedItem="@load(vm.obj.tembossproduct.mproduct.productgroup)">
+								<comboitem label="KARTU"
+									value="01" />
+								<comboitem label="TOKEN"
+									value="02" />
+								<comboitem label="PINPAD"
+									value="03" />
+								<comboitem label="DOCUMENT"
+									value="04" />
+								<comboitem label="SUPPLIES"
+									value="05" />								
+							</combobox>
+					</row>
+					<row>
+						<label value="Tanggal" />
+						<textbox
+							value="@load(e.processtime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.totaldata)" />
+					</row>					
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Buat Manifest Paket"
+							onClick="@command('doSave')" />
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,162 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifPaketListVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3>Daftar Manifest Paket</n:h3>
+		<n:hr />
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" />
+						<hbox>
+							<datebox value="@bind(vm.processtime)"
+								format="dd-MM-yyyy" />
+							<radiogroup selectedItem="@bind(vm.type)">
+								<radio value="P" label="Tanggal Proses" />
+								<separator orient="vertical" />
+								<radio value="O" label="Tanggal Data" />
+							</radiogroup>
+						</hbox>
+					</row>
+					<row>
+						<label value="Status" />
+						<combobox id="statusPaket" cols="22"
+							selectedItem="@bind(vm.status)" readonly="true">
+							<comboitem value="" label="ALL" />
+							<comboitem value="PP" label="PROSES PAKET" />
+							<comboitem value="OD" label="ORDER DELIVERY" />
+						</combobox>
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="row">
+							<div class="col-md-6">
+								<n:div class="
+									btn-group "
+									role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</div>
+							<div class="col-md-6" align="right">
+								<button sclass="btn btn-default btn-sm"
+									label="Export to Excel" image="/images/excel.png"
+									onClick="@command('doExport')" autodisable="self" />
+							</div>
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="60px" />
+				<column align="center" width="60px">
+					<checkbox id="chkAll"
+						onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column align="center" width="140px">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.paketid)" cols="8" maxlength="10"
+						placeholder="No Manifest"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Grup Produk" align="center"
+					width="140px" />
+				<column align="center" width="130px">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productcode)" cols="10" maxlength="10"
+						placeholder="Kode Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productname)" cols="20" maxlength="40"
+						placeholder="Jenis Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Tanggal Data" align="center"
+					width="125px" />
+				<column label="Tanggal Produksi" align="center"
+					width="150px" />
+				<column label="Total" align="right" width="100px" />
+				<column label="Status" align="center" width="160px" />
+			</columns>
+		</grid>
+		<separator />
+		<div align="right">
+			<grid width="400px">
+				<columns>
+					<column label="Total Record Selected" align="center" />
+					<column label="Total Data Selected" align="center" />
+				</columns>
+				<rows>
+					<row>
+						<decimalbox cols="15"
+							value="@load(vm.totalselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+						<decimalbox cols="15"
+							value="@load(vm.totaldataselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+					</row>
+					<row>
+						<button width="160px" autodisable="self"
+							label="Cetak Label" image="/images/printer_label.png"
+							sclass="btn btn-primary btn-sm"
+							onClick="@command('doPrintLabel')" />
+						<button width="160px" autodisable="self"
+							label="Cetak Output" image="/images/printer_data.png"
+							sclass="btn btn-info btn-sm" onClick="@command('doPrintOutput')" />
+					</row>
+				</rows>
+				<foot>
+					<footer align="center">
+						<button width="160px" autodisable="self"
+							label="Reset Data" sclass="btn btn-danger btn-sm"
+							onClick="@command('doResetSelected')" />
+					</footer>
+					<footer align="center">
+						<button width="160px" autodisable="self"
+							label="Paket Done" sclass="btn btn-primary btn-sm"
+							onClick="@command('doDoneSorting')" />
+					</footer>
+				</foot>
+			</grid>
+		</div>
+		<separator />
+	</window>
+</zk>

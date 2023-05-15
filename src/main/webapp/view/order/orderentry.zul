@@ -1,0 +1,244 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.OrderEntryVm')"
+		validationMessages="@id('vmsgs')">
+		<caption id="caption" visible="false" />
+		<div id="divRoot">
+			<div class="card" style="border-radius:15px;">
+				<div class="card-header"
+					style="background-color: #002459; color: #ffffff; border-top-left-radius:15px; border-top-right-radius:15px;">
+					<div>
+						<n:h4>
+							<n:b>Input Pemesanan</n:b>
+						</n:h4>
+						<label value="@load(vm.productgroup)"
+							style="font-size: 16px" />
+					</div>
+				</div>
+				<div class="card-body">
+					<groupbox mold="3d"
+						form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+						<caption label="Form Input Pemesanan" />
+						<grid>
+							<columns>
+								<column width="150px" />
+								<column />
+							</columns>
+							<rows>
+								<row id="row">
+									<label value="No Registrasi" />
+									<textbox value="Auto Generated"
+										cols="30" readonly="true" />
+								</row>
+								<row>
+									<label value="Tanggal Input" />
+									<textbox
+										value="@bind(e.inserttime) @converter('formatedDate', format='dd, MMM yyyy')"
+										readonly="true" cols="30" />
+								</row>
+								<row>
+									<label value="Nama Wilayah" />
+									<textbox value="@load(vm.wilayah)"
+										cols="30" readonly="true" />
+								</row>								
+								<row>
+									<label value="Nama Cabang" />
+									<hlayout>
+										<combobox id="cbBranch" placeholder="Pilih Cabang"
+											model="@load(vm.mbranchmodel)" cols="26"
+											selectedItem="@bind(vm.mbranch)">
+											<template name="model" var="mbranch">
+												<comboitem
+													label="@load(mbranch.branchname)" 
+													description="@load(mbranch.branchaddress)"/>
+											</template>
+										</combobox>									
+	 									<textbox id="tbBranch" value="@load(vm.cabang)" visible="false"
+											cols="30" readonly="true" /> 
+									</hlayout>
+								</row>
+<!-- 								<row id="outlet" visible="false">
+									<label value="Kode KCP/Cabang" />
+									<hlayout>
+										<textbox id="tbOutlet"
+											readonly="true" value="@bind(e.orderoutlet)" maxlength="2"
+											cols="30" />
+										<label style="color:red"
+											value="@load(vmsgs['orderoutlet'])" />
+									</hlayout>
+								</row> -->
+								<row id="rowOutlet" visible="false">
+									<label value="Kode KCP/Cabang" />
+									<combobox id="cbOutlet" placeholder="Pilih Outlet"
+										model="@load(vm.moutletmodel)" cols="26"
+										selectedItem="@bind(vm.moutlet)">
+										<template name="model" var="moutlet">
+											<comboitem
+												label="@load(moutlet.outletcode)" 
+												description="@load(moutlet.outletname)"/>
+										</template>
+									</combobox>
+								</row>								
+								<row>
+									<hlayout>
+										<label value="Jenis Produk" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<combobox id="cbProduct"
+											model="@load(vm.mproductmodel)" cols="26"
+											onSelect="@command('doChange')"
+											selectedItem="@bind(vm.mproduct)">
+											<template name="model"
+												var="mproduct">
+												<comboitem
+													label="@load(mproduct.productname)"
+													description="@load(mproduct.productcode)" />
+											</template>
+										</combobox>
+										<label style="color:red"
+											value="@load(vmsgs['mproduct'])" />
+									</hlayout>
+								</row>
+								<row visible="false">
+									<label value="Quantity per Unit" />
+									<intbox readonly="true"
+										value="@load(vm.mproduct.mproducttype.productunitqty)" />
+								</row>
+								<row>
+									<hlayout>
+										<label id="lbJumlah"/>
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<intbox
+											value="@bind(vm.itemqty)" onChange="@command('doChange')"
+											cols="15" format="#,###" />
+										<combobox
+											selectedItem="@bind(vm.unit)" cols="9" disabled="true"
+											buttonVisible="false" inplace="true" autocomplete="true">
+											<comboitem value="04"
+												label="Lembar/Buku" />
+											<comboitem value="02"
+												label="Unit" />
+										</combobox>
+										<label style="color:red"
+											value="@load(vmsgs['itemqty'])" />
+									</hlayout>
+								</row>
+								<row id="rowTotal" visible="false">
+									<label id="lbTotal"/>
+									<hlayout>
+										<intbox
+											value="@load(vm.totalqty)" readonly="true" />
+										<combobox
+											selectedItem="@bind(vm.unit)" cols="9" disabled="true"
+											buttonVisible="false" inplace="true" autocomplete="true">
+											<comboitem value="04"
+												label="Lembar" />
+											<comboitem value="02"
+												label="Unit" />
+										</combobox>
+									</hlayout>
+								</row>
+								<row>
+									<hlayout>
+										<label value="No. Surat/Memo" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<textbox
+											value="@bind(vm.memono)" cols="30" maxlength="20" />
+										<label style="color:red"
+											value="@load(vmsgs['memono'])" />
+									</hlayout>
+								</row>
+								<row>
+									<hlayout>
+										<label
+											value="Tanggal No. Surat/Memo" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<datebox
+											value="@bind(vm.memodate)" format="dd MMMM yyyy" cols="26" />
+										<label style="color:red"
+											value="@load(vmsgs['memodate'])" />
+									</hlayout>
+								</row>
+								<row>
+									<hlayout>
+										<label value="Alasan Pemesanan" />
+										<label value="*"
+											style="color:red" />
+									</hlayout>
+									<hlayout>
+										<textbox value="@bind(vm.memo)"
+											rows="3" cols="31" maxlength="200" />
+										<label style="color:red"
+											value="@load(vmsgs['memo'])" />
+									</hlayout>
+								</row>
+								<row id="rowUpload">
+									<label value="Upload Dokumen Pendukung" />
+									<button id="btnBrowse"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										label="Browse File..." upload="true, maxsize=5000000"
+										sclass="btn btn-default btn-sm"
+										onUpload="@command('doBrowseProduct', upEvent=event)" />
+								</row>
+								<row id="rowDoc">
+									<label value="Daftar Dokumen" />
+									<groupbox>
+										<grid id="gridDoc"
+											emptyMessage="${labels.common.emptymsg}">
+											<columns>
+												<column
+													label="${labels.common.no}" align="right" width="50px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="Document Name"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+												<column
+													label="${labels.common.action}" align="center"
+													width="100px"
+													style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+											</columns>
+											<rows />
+										</grid>
+									</groupbox>
+								</row>
+							</rows>
+						</grid>
+						<separator />
+					</groupbox>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-6">
+									<button id="btnSave" width="120px"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+										autodisable="self" label="Submit"
+										sclass="btn btn-primary btn-sm" onClick="@command('doSave')" />
+								</div>
+								<!-- <div class="col-md-6" align="right">
+									<image src="/images/back.png" style="cursor:hand;cursor:pointer"
+									tooltiptext="Back" width="80px" height="50px"
+									onClick="@command('doClose')" />
+									</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

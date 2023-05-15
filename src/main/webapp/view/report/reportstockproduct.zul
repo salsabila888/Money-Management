@@ -1,0 +1,78 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winReportstockproduct" width="95%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportStockProductVm')"
+		validationMessages="@id('vmsgs')" sclass="win">
+		<caption sclass="wincaption">
+			<div align="center">
+				<label value="Laporan Stock Produk"
+					style="font-size: 16px" />
+			</div>
+		</caption>
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="row">
+			<div class="col-md-6">
+				<label value="Tanggal"
+					style="font-size: 16px; font-weight: bold" />
+				<label value="@load(vm.datereport)"
+					style="font-size: 16px; font-weight: bold" />
+			</div>
+			<div class="col-md-6" align="right">
+				<button sclass="btn btn-default btn-sm"
+					label="Export to Excel" image="/images/excel.png"
+					onClick="@command('doExport')" autodisable="self" />
+			</div>
+		</div>
+		<separator />
+		<listbox id="listbox" emptyMessage="${labels.common.emptymsg}"
+			mold="paging" pageSize="20" pagingPosition="top"
+			selectedItem="@bind(vm.objForm)">
+			<listhead>
+				<listheader label="${labels.common.no}" align="right"
+					width="40px" />
+				<listheader>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.producttype)" cols="20" maxlength="30"
+						placeholder="Tipe Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</listheader>
+				<listheader label="Total Incoming" align="right" />
+				<listheader label="Total Outgoing" align="right" />
+				<listheader label="Total Stock" align="right" />
+			</listhead>
+			<listfoot>
+				<listfooter />
+				<listfooter>
+					<label value="TOTAL"
+						style="font-size: 16px; font-weight: bold" />
+				</listfooter>
+				<listfooter>
+					<decimalbox cols="15"
+						value="@load(vm.objtotal.totalincoming)" format="#,###" inplace="true"
+						readonly="true" style="text-align:right" />
+				</listfooter>
+				<listfooter>
+					<decimalbox cols="15"
+						value="@load(vm.objtotal.totaloutgoing)" format="#,###" inplace="true"
+						readonly="true" style="text-align:right" />
+				</listfooter>
+				<listfooter>
+					<decimalbox cols="15" value="@load(vm.objtotal.totalstock)"
+						format="#,###" inplace="true" readonly="true"
+						style="text-align:right" />
+				</listfooter>
+			</listfoot>
+		</listbox>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm"
+				image="/images/close.png" tooltiptext="Close" autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

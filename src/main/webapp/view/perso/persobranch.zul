@@ -1,0 +1,196 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersobranch" border="normal" width="80%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PersoBranchVm')" validationMessages="@id('vmsgs')">	
+		<caption label="Manifest Perso" />	
+		<groupbox mold="3d">
+			<caption label="Data Order Produk -">
+				<label value="Nama File :" />
+				<label value="@load(vm.tembossproduct.tembossfile.filename)" />
+			</caption>
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tipe Produk" />
+						<label value="@load(vm.tembossproduct.mproduct.mproducttype.producttype)" />
+						<label value="Jumlah Data Order" />
+						<decimalbox cols="7" value="@load(vm.tembossproduct.orderos)" format="#,###" readonly="true" style="text-align: right" />
+					</row>
+					<row>
+						<label value="Kode Produk" />
+						<label value="@load(vm.tembossproduct.productcode)" />
+						<label value="Stock" />
+						<decimalbox cols="7" value="@load(vm.tembossproduct.mproduct.mproducttype.laststock)" format="#,###" readonly="true" style="text-align: right" />
+					</row>
+					<row>
+						<label value="Jenis Produk" />
+						<label value="@load(vm.tembossproduct.mproduct.productname)" />
+						<label value="Stock Available" />
+						<decimalbox cols="7" value="@load(vm.stockavailable)" format="#,###" readonly="true" style="text-align: right" />
+						
+					</row>
+					<row>
+						<label value="Tanggal Data" />
+						<label
+							value="@load(vm.tembossproduct.orderdate) @converter('formatedDate', format='dd-MM-yyyy')" />
+						<label value="Stock Reserved" />
+						<decimalbox cols="7" value="@load(vm.stockreserved)" format="#,###" readonly="true" style="text-align: right" />
+					</row>					
+				</rows>
+			</grid>
+		</groupbox>
+		<separator />
+		
+		<groupbox mold="3d" open="false">
+			<caption label="Filter" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Cabang" />
+						<hlayout>
+							<combobox id="cbBranch"
+							model="@load(vm.mbranchmodel)" 
+							selectedItem="@bind(vm.mbranch)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchid)" description="@load(mbranch.branchname)" />
+							</template>
+						</combobox>
+						<label value="S/D" />
+						<combobox id="cbBranch2"
+							model="@load(vm.mbranchmodel)" 
+							selectedItem="@bind(vm.mbranch2)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchid)" description="@load(mbranch.branchname)" />
+							</template>
+						</combobox>
+						</hlayout>						
+					</row>					
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<n:div role="group">
+							<button sclass="btn btn-default btn-sm"
+								label="${labels.common.search}" onClick="@command('doSearch')" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+							<button sclass="btn btn-default btn-sm"
+								label="${labels.common.reset}" onClick="@command('doReset')" 
+								style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+						</n:div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<grid id="grid" mold="paging" pageSize="20" pagingPosition="top"
+			emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right" width="40px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>			
+				<column align="center" width="50px"
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+					<checkbox onCheck="@command('doCheckedall', checked=self.checked)" checked="true" />
+				</column>	
+				<column label="Kode Cabang" align="center" width="100px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Nama Cabang" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Tanggal Data" align="center" width="130px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				<column label="Jumlah" align="right" width="100px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>				
+				<column label="Action" align="center" width="110px" 
+					style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+			</columns>
+			<foot>
+				<footer span="5" align="left">
+					<label value="TOTAL" style="font-size: 16px; font-weight: bold" />
+				</footer>
+				<footer align="right">
+					<label value="@load(vm.totaldata)" style="font-weight: bold; text-align: right" />
+				</footer>				
+				<footer />
+			</foot>
+		</grid>
+		<separator />
+		<groupbox mold="3d">
+			<caption label="Form Manifest Perso" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave') @validator(vm.validator)">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" width="150px" />
+						<textbox
+							value="@load(e.persostarttime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.totaldata)" />
+					</row>
+					<row>
+						<label value="Diproses Oleh" />
+						<radiogroup selectedItem="@bind(vm.persotype)" onCheck="@command('doPersotypeSelected', item=vm.persotype)" >
+							<radio label="Internal" value="I" />
+							<separator orient="vertical" />
+							<radio label="External" value="E" />
+						</radiogroup>
+					</row>
+					<row id="rowVendor">
+						<label value="Vendor Perso" />
+						<hlayout>
+							<combobox id="cbPersovendor" readonly="true"
+								model="@load(vm.mpersovendormodel)"
+								selectedItem="@bind(e.mpersovendor)">
+								<template name="model" var="mpersovendor">
+									<comboitem
+										label="@load(mpersovendor.vendorcode)" description="@load(mpersovendor.vendorname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mpersovendor'])" />
+						</hlayout>						
+					</row>
+					<row>
+						<label value="Memo" />
+						<textbox value="@bind(e.memo)" cols="40"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Submit" width="100px"
+							onClick="@command('doSave')" 
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+	</window>
+</zk>

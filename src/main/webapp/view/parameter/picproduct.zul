@@ -1,0 +1,128 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MpicproductVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master PIC
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="150px">Grup Produk</n:td>
+						<n:td>
+							<combobox id="cbProductgroup" cols="35"
+								readonly="true" selectedItem="@bind(e.productgroup)">
+								<comboitem label="KARTU" value="01" />
+								<comboitem label="TOKEN" value="02" />
+								<comboitem label="PINPAD" value="03" />
+								<comboitem label="SURAT BERHARGA"
+									value="04" />
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['productgroupcode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.picname)" cols="35"
+								maxlength="40" />
+							<label style="color:red"
+								value="@load(vmsgs['picname'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>No. HP PIC</n:td>
+						<n:td>
+							<intbox value="@bind(e.pichp)" cols="35"
+								maxlength="13" />
+							<label style="color:red"
+								value="@load(vmsgs['pichp'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>E-mail PIC</n:td>
+						<n:td>
+							<textbox value="@bind(e.picemail)" cols="35"
+								maxlength="100" />
+							<label style="color:red"
+								value="@load(vmsgs['picemail'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Cabang</n:td>
+						<n:td>
+							<combobox id="cbCabang"
+								model="@load(vm.mbranch)" cols="35"
+								selectedItem="@bind(e.mbranch)">
+								<template name="model" var="mbranch">
+									<comboitem
+										label="@load(mbranch.branchname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mbranch'])" />
+						</n:td>
+					</n:tr>					
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div role="group">
+					<button id="btnSave" sclass="btn btn-default btn-sm"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						label="${labels.common.save}" onClick="@command('save')" />
+					<button id="btnCancel"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+						onClick="@command('cancel')" />
+					<button id="btnDelete"
+						style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+						sclass="btn btn-default btn-sm" label="${labels.common.del}"
+						onClick="@command('delete')" />
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader label="Grup Produk"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader sort="auto(picname)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.picname)" cols="30" maxlength="40"
+							placeholder="Nama PIC"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader label="No. HP PIC"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="E-mail PIC"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Cabang"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

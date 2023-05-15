@@ -1,0 +1,42 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window title="Daftar Data Paket" width="90%"
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.PaketProductSelectedVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />			
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}" mold="paging" pageSize="20" pagingPosition="top">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="Grup Produk" />					
+				<column label="Tipe Produk" />
+				<column label="Kode Produk" align="center" width="130px" />
+				<column label="Jenis Produk" />					
+				<column label="Tanggal Data" align="center" width="160px" />	
+				<column label="Tanggal Produksi" align="center" width="160px" />				
+				<column label="Jumlah" align="right" width="100px" />
+			</columns>
+			<foot>
+				<footer />
+				<footer>
+					<label value="TOTAL" style="font-size: 16px; font-weight: bold" />
+				</footer>				
+				<footer span="6" align="right">
+					<decimalbox cols="15" value="@load(vm.totaldataselected)"
+						format="#,###" inplace="true" readonly="true"
+						style="text-align:right" />
+				</footer>
+			</foot>
+		</grid>
+		<separator />
+		<div align="right">
+			<button sclass="btn btn-danger btn-sm" image="/images/close.png" tooltiptext="Close"
+				autodisable="self"
+				onClick="@command('doClose')" />
+		</div>
+		<separator />		
+	</window>
+</zk>

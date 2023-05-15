@@ -1,0 +1,179 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportMonthlyVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3>
+			Laporan Bulanan
+		</n:h3>
+		<n:hr/>
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Periode" />
+						<hlayout>
+							<intbox value="@bind(vm.year)" placeholder="Tahun" maxlength="4" cols="5" />
+							<combobox id="cbMonth" cols="10" placeholder="Bulan"
+								selectedItem="@bind(vm.month)" />							
+						</hlayout>						
+					</row>
+					<!-- <row>
+						<label value="Grup Produk" />
+						<combobox id="cbProductgroup" placeholder="All" cols="30" selectedItem="@bind(vm.productgroup)">		
+							<comboitem label="KARTU" value="01" />
+							<comboitem label="TOKEN" value="02" />
+							<comboitem label="PINPAD" value="03" />
+							<comboitem label="DOCUMENT" value="04" />
+							<comboitem label="SUPPLIES" value="05" />
+						</combobox>
+					</row> -->
+					<row>
+						<label value="Org" />
+						<combobox id="cbProductorg"
+								model="@load(vm.morgmodel)" cols="40"
+								selectedItem="@bind(vm.morg)">
+								<template name="model"
+									var="morg">
+									<comboitem
+										label="@load(morg.description)" />
+								</template>
+							</combobox>			
+					</row>					
+					<row>
+						<label value="Wilayah" />
+						<combobox id="cbRegion" placeholder="All"
+							model="@load(vm.mregionmodel)" cols="30"
+							selectedItem="@bind(vm.mregion)" onChange="@command('doBranchLoad', item=vm.mregion)">
+							<template name="model" var="mregion">
+								<comboitem
+									label="@load(mregion.regionname)" />
+							</template>
+						</combobox>						
+					</row>				
+					<row>
+						<label value="Cabang" />
+						<combobox id="cbBranch" placeholder="All"
+							model="@load(vm.mbranchmodel)" cols="30"
+							selectedItem="@bind(vm.mbranch)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchname)" />
+							</template>
+						</combobox>						
+					</row>					
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="row">
+							<div class="col-md-6">
+								<n:div class="btn-group" role="group">
+									<button autodisable="self"
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button autodisable="self"
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</div>
+							<div class="col-md-6" align="right">
+								<button sclass="btn btn-default btn-sm"
+									label="Export to Excel" image="/images/excel.png"
+									onClick="@command('doExport')" autodisable="self" />
+							</div>
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="Org" width="120px" />
+				<column>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.producttype)" cols="40" maxlength="40"
+						placeholder="Tipe Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column width="125px" align="center">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productcode)" cols="10" maxlength="10"
+						placeholder="Kode Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productname)" cols="40" maxlength="40"
+						placeholder="Jenis Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>			
+				<column label="Order" align="right" width="80px" />
+				<column label="Produksi" align="right" width="80px" />
+				<column label="Pending" align="right" width="80px" />
+				<column label="Delivery" align="right" width="80px" />
+				<column label="Outstanding" align="right" width="100px" />
+			</columns>
+			<rows />
+			<foot>
+				<footer />
+				<footer>
+					<label value="TOTAL"
+						style="font-size: 16px; font-weight: bold" />
+				</footer>
+				<footer />
+				<footer />
+				<footer />
+				<footer>
+					<label value="@load(vm.totalorder)"
+						style="font-weight: bold; text-align: right" />
+				</footer>				
+				<footer>					
+					<label value="@load(vm.totalprod)"
+						style="font-weight: bold; text-align: right" />
+				</footer>
+				<footer>
+					<label value="@load(vm.totalpending)"
+						style="font-weight: bold; text-align: right" />
+				</footer>
+				<footer>
+					<label value="@load(vm.totaldlv)"
+						style="font-weight: bold; text-align: right" />
+				</footer>
+				<footer>
+					<label value="@load(vm.totalos)"
+						style="font-weight: bold; text-align: right" />
+				</footer>
+			</foot>
+		</grid>
+		<separator />
+	</window>
+</zk>

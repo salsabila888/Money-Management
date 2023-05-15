@@ -1,0 +1,50 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReturnVm')">
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;" >
+				<div id="divEntry" visible="false">
+					<n:h3>
+						<n:b>Input Retur</n:b>
+					</n:h3>
+				</div>
+				<div id="divEntryDes" visible="false">
+					<n:h3>
+						<n:b>Input Destroy</n:b>
+					</n:h3>
+				</div>
+				<div id="divList" visible="false">
+					<n:h3>
+						<n:b>Daftar Retur</n:b>
+					</n:h3>
+				</div>
+				<div id="divApproval" visible="false">
+					<n:h3>
+						<n:b>Approval Retur</n:b>
+					</n:h3>
+				</div>
+				<div id="divDestroy" visible="false">
+					<n:h3>
+						<n:b>Daftar Destroy</n:b>
+					</n:h3>
+				</div>
+				<div id="divPaket" visible="false">
+					<n:h3>
+						<n:b>Daftar Paket Retur</n:b>
+					</n:h3>
+				</div>
+			</div>
+			<div class="card-body" style="background-color:#ffffff">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="divProduct" class="row" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

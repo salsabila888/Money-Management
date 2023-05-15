@@ -1,0 +1,79 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ReportStockCabangVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h5>Laporan Stock Cabang</n:h5>
+		<div>
+			<label value="Tanggal"
+				style="font-size: 16px; font-weight: bold" />
+			<label value="@load(vm.datereport)"
+				style="font-size: 16px; font-weight: bold" />
+		</div>
+		<n:hr />
+		<groupbox mold="3d">
+			<caption label="${labels.common.searching}"
+				image="/images/search.png" />
+			<grid>
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row id="rowBranch">
+						<label value="Cabang" />
+						<combobox id="cbBranch"
+							model="@load(vm.mbranchmodel)" cols="40"
+							selectedItem="@bind(vm.mbranch)">
+							<template name="model" var="mbranch">
+								<comboitem
+									label="@load(mbranch.branchname)" />
+							</template>
+						</combobox>
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<div class="row">
+							<div class="col-md-6">
+								<n:div class="btn-group" role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}"
+										onClick="@command('doSearch')" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')" />
+								</n:div>
+							</div>
+							<div class="col-md-6" align="right">
+								<button sclass="btn btn-default btn-sm"
+									label="Export to Excel" image="/images/excel.png"
+									onClick="@command('doExport')" autodisable="self" />
+							</div>
+						</div>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}"
+			mold="paging" pageSize="20" pagingPosition="top">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column label="Cabang" width="250px" />
+				<column label="Kode Cabang" align="center"
+					width="130px" />
+				<column label="Stock Cabang" align="right"
+					width="200px" />
+			</columns>
+		</grid>
+		<separator />
+	</window>
+</zk>

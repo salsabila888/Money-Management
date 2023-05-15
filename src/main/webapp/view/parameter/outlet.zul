@@ -1,0 +1,148 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MoutletVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="panel panel-default panel-sm">
+			<div class="panel-heading">
+				<n:h3 class="panel-title">
+					<n:b>
+						<n:span class="glyphicon glyphicon-cog" />
+						Form Master Outlet
+					</n:b>
+				</n:h3>
+			</div>
+			<div class="panel-body"
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='save')
+		 @validator(vm.validator) ">
+				<n:table class="table table-striped table-sm">
+					<n:tr>
+						<n:td width="200px">Kode Outlet</n:td>
+						<n:td>
+							<textbox value="@bind(e.outletcode)"
+								cols="35" maxlength="5" />
+							<label style="color:red"
+								value="@load(vmsgs['outletcode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Nama Outlet</n:td>
+						<n:td>
+							<textbox value="@bind(e.outletname)"
+								cols="35" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['outletname'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Alamat</n:td>
+						<n:td>
+							<textbox value="@bind(e.address)" rows="3"
+								cols="40" maxlength="100" />
+							<label style="color:red"
+								value="@load(vmsgs['address'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Kota</n:td>
+						<n:td>
+							<textbox value="@bind(e.outletcity)"
+								cols="35" maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['outletcity'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Kode Pos</n:td>
+						<n:td>
+							<textbox value="@bind(e.zipcode)" cols="35"
+								maxlength="20" />
+							<label style="color:red"
+								value="@load(vmsgs['zipcode'])" />
+						</n:td>
+					</n:tr>
+					<n:tr>
+						<n:td>Cabang</n:td>
+						<n:td>
+							<combobox id="cbCabang"
+								model="@load(vm.mbranch)" cols="35"
+								selectedItem="@bind(e.mbranch)">
+								<template name="model" var="mbranch">
+									<comboitem
+										label="@load(mbranch.branchname)" />
+								</template>
+							</combobox>
+							<label style="color:red"
+								value="@load(vmsgs['mbranch'])" />
+						</n:td>
+					</n:tr>
+				</n:table>
+			</div>
+			<div class="panel-footer">
+				<n:div class="btn-group" role="group">
+					<n:div role="group">
+						<button id="btnSave"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.save}"
+							onClick="@command('save')" />
+						<button id="btnCancel"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.cancel}"
+							onClick="@command('cancel')" />
+						<button id="btnDelete"
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"
+							sclass="btn btn-default btn-sm" label="${labels.common.del}"
+							onClick="@command('delete')" />
+					</n:div>
+				</n:div>
+			</div>
+			<separator />
+			<paging id="paging" autohide="true" />
+			<listbox id="listbox"
+				emptyMessage="${labels.common.emptymsg}"
+				selectedItem="@bind(vm.objForm)">
+				<listhead>
+					<listheader label="${labels.common.no}"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"
+						align="right" width="40px" />
+					<listheader sort="auto(outletcode)" align="center"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.outletcode)" cols="15" maxlength="5"
+							placeholder="Kode Outlet" style="text-align:center"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(outletname)"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.outletname)" cols="30" maxlength="50"
+							placeholder="Nama Outlet"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+					<listheader sort="auto(address)" label="Alamat"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader sort="auto(outletcity)" label="Kota"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader label="Cabang"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					<listheader sort="auto(zipcode)" align="center"
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+						<textbox inplace="true" class="cheader"
+							value="@bind(vm.zipcode)" cols="20" maxlength="50"
+							placeholder="Kode Pos" style="text-align:center"
+							tooltiptext="${labels.common.searchonheader}"
+							onOK="@command('doSearch')" />
+					</listheader>
+				</listhead>
+			</listbox>
+		</div>
+		<separator />
+	</window>
+</zk>

@@ -1,0 +1,187 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPersobranchdetail" 
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.EntryOrderPersoVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header" style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Entri Order Perso</n:b>
+				</n:h3>
+			</div>
+		<div class="card-body">
+			<groupbox mold="3d">
+				<caption label="Upload Data" />
+				<grid>
+					<columns>
+						<column width="150px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="Jenis Produk" />
+							<hlayout>
+								<combobox id="cbTypeProduct"
+									model="@load(vm.mproductmodel)"
+									selectedItem="@bind(vm.mproduct)">
+									<template name="model"
+										var="mproduct">
+										<comboitem
+											label="@load(mproduct.productcode)"
+											description="@load(mproduct.productname)" />
+									</template>
+								</combobox>
+								<label style="color:red"
+									value="@load(vmsgs['mproduct'])" />
+							</hlayout>
+						</row>
+						<row>
+							<label value="File" />
+							<hlayout>
+								<button id="btnBrowse"
+									label="Browse File..." upload="true, maxsize=500000"
+									sclass="btn btn-default btn-sm"
+									onUpload="@command('doBrowseProduct', upEvent=event)" 
+									style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+								<separator orient="vertical" />
+								<label value="@load(vm.filename)" />
+							</hlayout>
+						</row>
+					</rows>
+					<foot>
+						<footer />
+						<footer>
+							<button sclass="btn btn-primary btn-sm"
+								autodisable="self" label="Upload" width="100px"
+								onClick="@command('doUpload')" 
+								style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+		<separator />
+		<groupbox mold="3d">
+			<caption label="List Data Match" />
+			<grid id="gridSelected" mold="paging" pageSize="20"
+				pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+				<columns>
+					<column label="${labels.common.no}" align="right" width="40px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="No. Kartu" width="180px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Nama" width="180px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Kode Produk" align="center" width="120px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Jenis Produk" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Tanggal Data" align="center" width="120px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Kode Cabang" align="center" width="120px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Nama Cabang" width="130px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				</columns>
+				<rows />
+			</grid>
+		</groupbox>
+		<separator />
+		<groupbox mold="3d">
+			<caption label="List Data Unmatch" />
+			<grid id="gridUnmatch" mold="paging" pageSize="20"
+				pagingPosition="top" emptyMessage="${labels.common.emptymsg}">
+				<columns>
+					<column label="${labels.common.no}" align="right" width="40px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="No. Kartu" width="180px" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+					<column label="Keterangan" 
+						style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;"/>
+				</columns>
+				<rows />
+			</grid>
+		</groupbox>
+		<separator />
+		<div class="row">
+			<div class="col-md-8">
+				<paging id="paging" autohide="true" />
+			</div>
+			<!-- <div class="col-md-4" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+				style="font-weight: bold" />
+				</div> -->
+		</div>
+		<groupbox mold="3d">
+			<caption label="Form Manifest Perso" />
+			<grid
+				form="@id('e') @load(vm.objForm) @save(vm.objForm, before='doSave')">
+				<columns>
+					<column width="150px" />
+					<column />
+				</columns>
+				<rows>
+					<row>
+						<label value="Tanggal" width="150px" />
+						<textbox
+							value="@load(vm.persotime) @converter('formatedDate', format='dd, MMM yyyy')"
+							readonly="true" cols="12" />
+					</row>
+					<row>
+						<label value="Total Data" />
+						<label value="@load(vm.totaldata)" />
+					</row>
+					<row>
+						<label value="Diproses Oleh" />
+						<radiogroup id="sv1"
+							onCheck="@command('doPersotypeSelected')">
+							<radio id="rbInternal" label="Internal"
+								radiogroup="sv1" checked="true" />
+							<separator orient="vertical" />
+							<radio id="rbExternal" label="External"
+								radiogroup="sv1" />
+						</radiogroup>
+					</row>
+					<row id="rowVendor">
+						<label value="Vendor Perso" />
+						<hlayout>
+							<combobox id="cbPersovendor"
+								model="@load(vm.mpersovendormodel)"
+								selectedItem="@bind(vm.mpersovendor)">
+								<template name="model"
+									var="mpersovendor">
+									<comboitem
+										label="@load(mpersovendor.vendorcode)"
+										description="@load(mpersovendor.vendorname)" />
+								</template>
+							</combobox>
+						</hlayout>
+					</row>
+					<row>
+						<label value="Memo" />
+						<textbox value="@bind(vm.memo)" cols="40"
+							rows="3" maxlength="100" />
+					</row>
+				</rows>
+				<foot>
+					<footer />
+					<footer>
+						<button sclass="btn btn-primary btn-sm"
+							autodisable="self" label="Submit" width="100px"
+							onClick="@command('doSave')" 
+							style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;"/>
+					</footer>
+				</foot>
+			</grid>
+		</groupbox>
+		<separator />
+		</div>
+		</div>
+	</window>
+</zk>

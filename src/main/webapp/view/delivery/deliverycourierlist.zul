@@ -1,0 +1,134 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DeliveryCourierListVm')"
+		validationMessages="@id('vmsgs')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<div class="card" style="border-radius:15px;">
+			<div class="card-header"
+				style="background-color: #002459; color: #ffffff;
+			border-top-left-radius:15px; border-top-right-radius:15px;">
+				<n:h3>
+					<n:b>Daftar Manifest Kurir</n:b>
+				</n:h3>
+			</div>
+			<div class="card-body">
+				<groupbox mold="3d">
+					<caption label="${labels.common.searching}"
+						image="/images/search.png" />
+					<grid>
+						<columns>
+							<column width="150px" />
+							<column />
+						</columns>
+						<rows>
+							<row>
+								<label value="Tanggal" />
+								<datebox value="@bind(vm.processtime)"
+									format="dd-MM-yyyy" cols="12" maxlength="10" />
+							</row>
+							<row>
+								<label value="Ekspedisi" />
+								<combobox id="cbProducttype"
+									model="@load(vm.mcouriervendormodel)" cols="30"
+									selectedItem="@bind(vm.mcouriervendor)">
+									<template name="model"
+										var="mcouriervendor">
+										<comboitem
+											label="@load(mcouriervendor.vendorname)"
+											description="@load(mcouriervendor.vendorcode)" />
+									</template>
+								</combobox>
+							</row>
+						</rows>
+						<foot>
+							<footer />
+							<footer>
+								<n:div role="group">
+									<button
+										sclass="btn btn-default btn-sm"
+										label="${labels.common.search}" onClick="@command('doSearch')"
+										style="border-radius: 8px; background-color: #002459 !important; color: #ffffff !important;" />
+									<button
+										sclass="btn btn-default btn-sm" label="${labels.common.reset}"
+										onClick="@command('doReset')"
+										style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;" />
+								</n:div>
+							</footer>
+						</foot>
+					</grid>
+				</groupbox>
+				<div class="row">
+					<div class="col-md-10">
+						<paging id="paging" autohide="true" />
+					</div>
+					<div class="col-md-2" align="right">
+						<label value="Total Record :"
+							style="font-weight: bold" />
+						<label value="@load(vm.pageTotalSize)"
+							style="font-weight: bold" />
+					</div>
+				</div>
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}">
+					<columns>
+						<column label="${labels.common.no}"
+							align="right" width="35px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column width="200px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<textbox inplace="true" class="cheader"
+								value="@bind(vm.dlvcourierid)" cols="15" maxlength="18"
+								placeholder="No Manifest"
+								tooltiptext="${labels.common.searchonheader}"
+								onOK="@command('doSearch')" />
+						</column>
+						<column label="Grup Produk" align="center"
+							width="150px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Tanggal Proses" align="center"
+							width="135px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Total Paket" align="right"
+							width="100px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column width="170px" label="Ekspedisi"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<!-- 							<combobox id="cbEkspedisi" cols="8"
+								inplace="true" model="@load(vm.mcouriervendormodel)"
+								value="Ekspedisi" selectedItem="@bind(vm.mcouriervendor)"
+								onChange="@command('doSearch')">
+								<template name="model"
+								var="mcouriervendor">
+								<comboitem
+								label="@load(mcouriervendor.vendorcode)" />
+								</template>
+								</combobox> -->
+						</column>
+						<column label="Kurir" width="130px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column label="Status" align="center"
+							width="130px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+						<column width="170px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;">
+							<combobox id="tipeProses" cols="8"
+								inplace="true" selectedItem="@bind(vm.isurgent)" readonly="true"
+								onChange="@command('doSearch')" value="Tipe Proses">
+								<comboitem value="N" label="REGULAR" />
+								<comboitem value="Y" label="URGENT" />
+							</combobox>
+						</column>
+						<column label="Action" align="center"
+							width="120px"
+							style="background-color: #81bf3d !important; border-color: #f1f2f2 !important;" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</window>
+</zk>

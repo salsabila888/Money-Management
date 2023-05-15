@@ -1,0 +1,61 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/saving.png" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="/mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<borderlayout
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.UserInitialization3Vm')">
+		<north border="none" height="80px">
+			<div>
+				<include src="/view/header.zul" />
+			</div>
+		</north>
+		<west border="none" collapsible="true" width="23%" splittable="true">
+			<div id="divMenu" height="100%"
+				style="background-color: #ECF2FF;">
+				<vlayout height="100%">
+					<tree id="tree" vflex="true"
+						style="background-color: #ECF2FF;">
+						<treecols>
+							<treecol
+								style="background-color: #ECF2FF; color: #000000">
+								<combobox id="cbMenu"
+									placeholder="Search Menu..." selectedItem="@bind(vm.mmenu)"
+									autodrop="true" cols="20" autocomplete="true"
+									buttonVisible="false"
+									onChange="@command('doRedirect', item=vm.mmenu)"
+									style="background-color: #ECF2FF; color: #000000; text-color: #000000" />
+							</treecol>
+						</treecols>
+						<treechildren id="root" />
+					</tree>
+				</vlayout>
+			</div>
+		</west>
+		<center id="center" border="none"
+			style="background-color: #ECF2FF;">
+			<div id="divContent" width="100%" height="100%"
+				style="overflow: auto" />
+		</center>
+		<!-- <south border="none">
+			<div width="100%" align="center">
+			
+			</div>
+			</south> -->
+	</borderlayout>
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="/mdb/js/jquery-3.4.1.min.js">
+	</script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="/mdb/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="/mdb/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="/mdb/js/mdb.min.js"></script>
+</zk>

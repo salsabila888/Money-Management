@@ -1,0 +1,94 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/ddp.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
+<zk xmlns:w="client" xmlns:n="native">
+	<window
+		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.DerivatifPaketOrderVm')">
+		<script src="/bootstrap/v3/zk/js/button-bs.js" />
+		<n:h3>Daftar Produk Order Paket</n:h3>
+		<n:hr />
+		<separator />
+		<div class="row">
+			<div class="col-md-10">
+				<paging id="paging" autohide="true" />
+			</div>
+			<div class="col-md-2" align="right">
+				<label value="Total Record :" style="font-weight: bold" />
+				<label value="@load(vm.pageTotalSize)"
+					style="font-weight: bold" />
+			</div>
+		</div>
+		<grid id="grid" emptyMessage="${labels.common.emptymsg}">
+			<columns>
+				<column label="${labels.common.no}" align="right"
+					width="40px" />
+				<column align="center" width="60px">
+					<checkbox id="chkAll"
+						onCheck="@command('doCheckedall', checked=self.checked)" />
+				</column>
+				<column label="Grup Produk" width="120px" />
+				<column align="center" width="130px">
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productcode)" cols="15" maxlength="10"
+						placeholder="Kode Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column>
+					<textbox inplace="true" class="cheader"
+						value="@bind(vm.productname)" cols="40" maxlength="40"
+						placeholder="Jenis Produk"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column align="center" width="130px">
+					<datebox inplace="true" class="cheader" format="dd-MM-yyyy" style="text-align: center"
+						value="@bind(vm.orderdate)" cols="7" maxlength="10"
+						placeholder="Tgl Data"
+						tooltiptext="${labels.common.searchonheader}"
+						onOK="@command('doSearch')" />
+				</column>
+				<column label="Jumlah" align="right" width="100px" />
+			</columns>
+		</grid>
+		<separator />		
+		<div align="right">
+			<grid width="400px">
+				<columns>
+					<column label="Total Record Selected" align="right" />
+					<column label="Total Data Selected" align="right" />
+				</columns>
+				<rows>
+					<row>
+						<decimalbox cols="15"
+							value="@load(vm.totalselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+						<decimalbox cols="15"
+							value="@load(vm.totaldataselected)" format="#,###" inplace="true"
+							readonly="true" style="text-align:right" />
+					</row>
+					<row>
+						<button width="180px" autodisable="self"
+							label="Lihat Data" sclass="btn btn-warning btn-sm"
+							onClick="@command('doViewSelected')" 
+							style="border-radius: 8px; background-color: #eeba0b !important; color: #ffffff !important;"/>
+						<button width="180px" autodisable="self"
+							label="Reset Data" sclass="btn btn-danger btn-sm"
+							onClick="@command('doResetSelected')" 
+							style="border-radius: 8px; background-color: #ce0012 !important; color: #ffffff !important;"/>
+					</row>
+				</rows>
+				<foot>
+					<footer span="2" align="center">
+						<button width="380px" autodisable="self"
+							label="Buat Manifest" sclass="btn btn-primary btn-sm"
+							onClick="@command('doPaketGroup')" />
+					</footer>
+				</foot>
+			</grid>
+		</div>
+		<separator />
+	</window>
+</zk>

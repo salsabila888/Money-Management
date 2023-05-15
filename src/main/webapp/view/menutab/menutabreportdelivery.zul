@@ -1,0 +1,33 @@
+<?link rel="stylesheet" href="/resources/bootstrap/4.3.1/css/bootstrap.min.css"?>
+<?link rel="stylesheet" href="/resources/css/zk-admin-bootstrap-theme.css"?>
+<?link rel="stylesheet" href="/resources/css/layout.css" ?>
+<?link rel="stylesheet" href="/resources/css/zk-bootstrap.css" ?>
+<zk xmlns:n="native">
+	<window viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MenuTabReportDeliveryVm')">
+		<n:h3><n:b>Laporan Pengiriman</n:b></n:h3>
+		<n:hr />
+		<div sclass="container-fluid" hflex="1">
+			<n:div class="row py-1">
+				<n:div class="col-12 p-1">
+					<div id="divReportdlv">
+						<panel border="normal">
+							<panelchildren>
+								<tabbox width="100%"
+									sclass="nav_tabs">
+									<tabs id="tabReportdlv">
+										<tab label="Laporan Harian"
+											onSelect="@command('doTab', tab='daily')" />
+										<tab
+											label="Laporan Periode Bulan"
+											onSelect="@command('doTab', tab='monthly')" />
+									</tabs>
+								</tabbox>
+								<div id="tabPageReportdlv" />
+							</panelchildren>
+						</panel>
+					</div>
+				</n:div>
+			</n:div>
+		</div>
+	</window>
+</zk>
