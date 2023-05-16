@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.ContextParam;

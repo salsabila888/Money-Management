@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +23,10 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Separator;
 
-import com.sdd.caption.dao.MproductgroupDAO;
-import com.sdd.caption.domain.Mproductgroup;
-import com.sdd.caption.domain.Muser;
+import com.sdd.management.dao.MproductgroupDAO;
+import com.sdd.management.domain.Mproductgroup;
+import com.sdd.management.domain.Muser;
+
 
 public class GoalVm {
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();

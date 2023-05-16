@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,14 +53,12 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MuserDAO;
-import com.sdd.caption.domain.Mbranch;
-import com.sdd.caption.domain.Mpersovendor;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Musergroup;
-import com.sdd.caption.model.MuserListModel;
-import com.sdd.caption.utils.AppData;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MuserDAO;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.domain.Musergroup;
+import com.sdd.management.model.MuserListModel;
+import com.sdd.management.utils.AppData;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
@@ -136,11 +134,6 @@ public class MuserVm {
 					item.appendChild(cell);
 					cell = new Listcell(data.getMusergroup().getUsergroupname());
 					item.appendChild(cell);
-					cell = new Listcell(data.getMbranch() != null ? data.getMbranch().getBranchname() : "");
-					item.appendChild(cell);
-					cell = new Listcell(
-							data.getMpersovendor() != null ? data.getMpersovendor().getVendorcode() : "OPR");
-					item.appendChild(cell);
 
 					Button btnResetpassword = new Button(Labels.getLabel("user.resetpassword"));
 					btnResetpassword.setAutodisable("self");
@@ -203,14 +196,7 @@ public class MuserVm {
 
 					cbUsergroup.setValue(
 							objForm.getMusergroup() != null ? objForm.getMusergroup().getUsergroupname() : "");
-					cbCabang.setValue(objForm.getMbranch() != null ? objForm.getMbranch().getBranchname() : "");
-
-					if (objForm.getMpersovendor() != null) {
-						isvendor = "Y";
-						doVendor(isvendor);
-						cbPersovendor.setValue(objForm.getMpersovendor().getVendorcode());
-						BindUtils.postNotifyChange(null, null, MuserVm.this, "isvendor");
-					}
+					
 				}
 			}
 		});
@@ -281,13 +267,9 @@ public class MuserVm {
 						objForm.setPassword(SysUtils.encryptionCommand(objForm.getPassword()));
 						objForm.setUpdatedby(oUser.getUserid());
 						objForm.setLastupdated(new Date());
-						if (isvendor.equals("N"))
-							objForm.setMpersovendor(null);
 					} else {
 						objForm.setUpdatedby(oUser.getUserid());
 						objForm.setLastupdated(new Date());
-						if (isvendor.equals("N"))
-							objForm.setMpersovendor(null);
 					}
 					oDao.save(session, objForm);
 					transaction.commit();
@@ -394,23 +376,13 @@ public class MuserVm {
 				String userid = (String) ctx.getProperties("userid")[0].getValue();
 				String username = (String) ctx.getProperties("username")[0].getValue();
 				String password = (String) ctx.getProperties("password")[0].getValue();
-				Musergroup musergroup = (Musergroup) ctx.getProperties("musergroup")[0].getValue();
-				Mpersovendor mpersovendor = (Mpersovendor) ctx.getProperties("mpersovendor")[0].getValue();
-				Mbranch mbranch = (Mbranch) ctx.getProperties("mbranch")[0].getValue();
 
-				if (mbranch == null)
-					this.addInvalidMessage(ctx, "mbranch", Labels.getLabel("common.validator.empty"));
 				if (userid == null || "".equals(userid.trim()))
 					this.addInvalidMessage(ctx, "userid", Labels.getLabel("common.validator.empty"));
 				if (username == null || "".equals(username.trim()))
 					this.addInvalidMessage(ctx, "username", Labels.getLabel("common.validator.empty"));
 				if (password == null || "".equals(password.trim()))
 					this.addInvalidMessage(ctx, "password", Labels.getLabel("common.validator.empty"));
-				if (musergroup == null)
-					this.addInvalidMessage(ctx, "musergroup", Labels.getLabel("common.validator.empty"));
-				if (isvendor != null && isvendor.equals("Y"))
-					if (mpersovendor == null)
-						this.addInvalidMessage(ctx, "mpersovendor", Labels.getLabel("common.validator.empty"));
 			}
 		};
 	}
@@ -441,8 +413,7 @@ public class MuserVm {
 				for (Muser data : objList) {
 					datamap.put(no,
 							new Object[] { no - 1, data.getUserid(), data.getUsername(),
-									data.getMusergroup().getUsergroupname(),
-									data.getMpersovendor() != null ? data.getMpersovendor().getVendorcode() : "OPR" });
+									data.getMusergroup().getUsergroupname()});
 					no++;
 				}
 				Set<Integer> keyset = datamap.keySet();
@@ -510,26 +481,6 @@ public class MuserVm {
 		ListModelList<Musergroup> lm = null;
 		try {
 			lm = new ListModelList<Musergroup>(AppData.getMusergroup());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
-	}
-
-	public ListModelList<Mbranch> getMbranch() {
-		ListModelList<Mbranch> lm = null;
-		try {
-			lm = new ListModelList<Mbranch>(AppData.getMbranch());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
-	}
-
-	public ListModelList<Mpersovendor> getMpersovendormodel() {
-		ListModelList<Mpersovendor> lm = null;
-		try {
-			lm = new ListModelList<Mpersovendor>(AppData.getMpersovendor());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

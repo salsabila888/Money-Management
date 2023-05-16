@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,10 +37,10 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Spinner;
 
-import com.sdd.caption.dao.TschedulerDAO;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Tscheduler;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.TschedulerDAO;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.domain.Tscheduler;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class TschedulerVm {

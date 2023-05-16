@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Date;
 import java.util.List;
@@ -22,10 +22,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Textbox;
 
-import com.sdd.caption.dao.MsysparamDAO;
-import com.sdd.caption.domain.Msysparam;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MsysparamDAO;
+import com.sdd.management.domain.Msysparam;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class MsysparamVm {

@@ -13,9 +13,9 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.Selectors;
 
-import com.sdd.caption.dao.MuserDAO;
-import com.sdd.caption.domain.Mmenu;
-import com.sdd.caption.domain.Muser;
+import com.sdd.management.dao.MuserDAO;
+import com.sdd.management.domain.Mmenu;
+import com.sdd.management.domain.Muser;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

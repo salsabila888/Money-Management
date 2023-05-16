@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -23,9 +23,10 @@ import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
 import org.zkoss.zul.Window;
 
-import com.sdd.caption.dao.MproducttypeDAO;
-import com.sdd.caption.domain.Mproducttype;
-import com.sdd.caption.domain.Muser;
+import com.sdd.management.dao.MproducttypeDAO;
+import com.sdd.management.domain.Mproducttype;
+import com.sdd.management.domain.Muser;
+
 
 public class HeaderVm {
 

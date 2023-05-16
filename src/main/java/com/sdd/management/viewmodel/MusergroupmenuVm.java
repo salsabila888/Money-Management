@@ -36,11 +36,9 @@ import org.zkoss.zul.Rows;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Window;
 
-import com.sdd.caption.dao.MmenuDAO;
-import com.sdd.caption.dao.MusergroupmenuDAO;
-import com.sdd.caption.domain.Mmenu;
-import com.sdd.caption.domain.Musergroup;
 import com.sdd.caption.domain.Musergroupmenu;
+import com.sdd.management.domain.Mmenu;
+import com.sdd.management.domain.Musergroup;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class MusergroupmenuVm {

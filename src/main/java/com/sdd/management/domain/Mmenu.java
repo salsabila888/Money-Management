@@ -3,6 +3,7 @@ package com.sdd.management.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import org.hibernate.annotations.Type;
+
 import java.util.List;
 
 

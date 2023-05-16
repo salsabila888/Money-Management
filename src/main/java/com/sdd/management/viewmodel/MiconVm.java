@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,11 +48,10 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MiconDAO;
-import com.sdd.caption.domain.Micon;
-import com.sdd.caption.model.MiconListModel;
-import com.sdd.caption.model.MmenuListModel;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MiconDAO;
+import com.sdd.management.domain.Micon;
+import com.sdd.management.model.MiconListModel;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

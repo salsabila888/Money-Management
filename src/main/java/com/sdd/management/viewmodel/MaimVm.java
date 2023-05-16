@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Date;
 
@@ -27,7 +27,6 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;

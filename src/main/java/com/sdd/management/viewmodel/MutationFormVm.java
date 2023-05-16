@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,7 +44,9 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.RowRenderer;
 
+import com.sdd.management.dao.TcounterengineDAO;
 import com.sdd.management.dao.TmutationDAO;
+import com.sdd.management.dao.TmutationdocDAO;
 import com.sdd.management.domain.Maim;
 import com.sdd.management.domain.Mbank;
 import com.sdd.management.domain.Mexpenses;
@@ -54,6 +56,8 @@ import com.sdd.management.domain.Mproduct;
 import com.sdd.management.domain.Muser;
 import com.sdd.management.domain.Tmutation;
 import com.sdd.management.domain.Tmutationdoc;
+import com.sdd.management.utils.AppData;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class MutationFormVm {
@@ -246,28 +250,6 @@ public class MutationFormVm {
 		mapMedia = new HashMap<String, Media>();
 		gridDoc.setModel(new ListModelList<>(docList));
 		doRenderDoc();
-	}
-
-	public Validator getValidator() {
-		return new AbstractValidator() {
-
-			@Override
-			public void validate(ValidationContext ctx) {
-				try {
-					if (oUser.getMbranch().getBranchlevel() == 3) {
-						String orderoutlet = (String) ctx.getProperties("orderoutlet")[0].getValue();
-						if (orderoutlet == null || "".trim().equals(orderoutlet))
-							this.addInvalidMessage(ctx, "orderoutlet", Labels.getLabel("common.validator.empty"));
-					}
-
-					if (mproduct == null)
-						this.addInvalidMessage(ctx, "mproduct", Labels.getLabel("common.validator.empty"));
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
 	}
 
 	public ListModelList<Mproduct> getMproductmodel() {

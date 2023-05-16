@@ -7,10 +7,11 @@ import java.util.List;
 import org.zkoss.zul.event.ListDataEvent;
 import org.zkoss.zul.ext.Sortable;
 
-import com.sdd.management.dao.MexpensesDAO;
-import com.sdd.management.domain.Mexpenses;
+import com.sdd.management.dao.MpaymentDAO;
+import com.sdd.management.domain.Mpayment;
 
-public class MexpensesListModel extends AbstractPagingListModel<Mexpenses> implements Sortable<Mexpenses> {
+
+public class MpaymentListModel extends AbstractPagingListModel<Mpayment> implements Sortable<Mpayment> {
 			
 	/**
 	 * 
@@ -18,15 +19,15 @@ public class MexpensesListModel extends AbstractPagingListModel<Mexpenses> imple
 	private static final long serialVersionUID = 1L;
 	
 	private int _size = -1;
-	List<Mexpenses> oList;  
+	List<Mpayment> oList;  
 
-	public MexpensesListModel(int startPageNumber, int pageSize, String filter, String orderby) {
+	public MpaymentListModel(int startPageNumber, int pageSize, String filter, String orderby) {
 		super(startPageNumber, pageSize, filter, orderby);
 	}
 	
 	@Override
-	protected List<Mexpenses> getPageData(int itemStartNumber, int pageSize, String filter, String orderby) {		
-		MexpensesDAO oDao = new MexpensesDAO();		
+	protected List<Mpayment> getPageData(int itemStartNumber, int pageSize, String filter, String orderby) {		
+		MpaymentDAO oDao = new MpaymentDAO();		
 		try {
 			oList = oDao.listPaging(itemStartNumber, pageSize, filter, orderby);
 		} catch (Exception e) {
@@ -37,7 +38,7 @@ public class MexpensesListModel extends AbstractPagingListModel<Mexpenses> imple
 
 	@Override
 	public int getTotalSize(String filter) {
-		MexpensesDAO oDao = new MexpensesDAO();	
+		MpaymentDAO oDao = new MpaymentDAO();	
 		try {
 			_size = oDao.pageCount(filter);
 		} catch (Exception e) {
@@ -47,14 +48,14 @@ public class MexpensesListModel extends AbstractPagingListModel<Mexpenses> imple
 	}
 
 	@Override
-	public void sort(Comparator<Mexpenses> cmpr, boolean ascending) {		
+	public void sort(Comparator<Mpayment> cmpr, boolean ascending) {		
 		Collections.sort(oList, cmpr);
         fireEvent(ListDataEvent.CONTENTS_CHANGED, -1, -1);	
 		
 	}
 
 	@Override
-	public String getSortDirection(Comparator<Mexpenses> cmpr) {
+	public String getSortDirection(Comparator<Mpayment> cmpr) {
 		return null;
 	}
 }

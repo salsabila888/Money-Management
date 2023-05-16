@@ -40,10 +40,9 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MusergroupDAO;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Musergroup;
-import com.sdd.caption.model.MusergroupListModel;
+import com.sdd.management.dao.MusergroupDAO;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.domain.Musergroup;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

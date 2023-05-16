@@ -37,13 +37,11 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MproducttypeDAO;
-import com.sdd.caption.domain.Morg;
-import com.sdd.caption.domain.Mproducttype;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.model.MproducttypeListModel;
-import com.sdd.caption.utils.AppData;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MproducttypeDAO;
+import com.sdd.management.domain.Mproducttype;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.utils.AppData;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
@@ -65,8 +63,6 @@ public class MproducttypeVm {
 	private boolean isInsert;
 
 	private Mproducttype objForm;
-	private Morg morg;
-	private Morg morgsearch;
 	private String productgroupcode;
 	private String productgroupname;
 	private String productorg;
@@ -96,7 +92,6 @@ public class MproducttypeVm {
 		Selectors.wireComponents(view, this, false);
 
 		productgroupcode = AppUtils.PRODUCTGROUP_CARD;
-		productgroupname = AppData.getProductgroupLabel(AppUtils.PRODUCTGROUP_CARD);
 
 		paging.addEventListener("onPaging", new EventListener<Event>() {
 
@@ -158,8 +153,6 @@ public class MproducttypeVm {
 
 					// cbProductorg.setValue(AppData.getProductorgLabel(objForm.getProductorg()));
 					cbOrg.setValue(mapOrg.get(objForm.getProductorg()));
-					if (objForm.getProductorg() != null && objForm.getProductorg().trim().length() > 0)
-						morg = AppData.getMorgobj(objForm.getProductorg());
 				}
 			}
 		});
@@ -182,11 +175,6 @@ public class MproducttypeVm {
 	@NotifyChange("pageTotalSize")
 	public void doSearch() {
 		filter = "productgroupcode = '" + productgroupcode + "'";
-		if (morgsearch != null) {
-			if (filter.length() > 0)
-				filter += " and ";
-			filter += "productorg = '" + morgsearch.getOrg() + "'";
-		}
 		if (producttype != null && producttype.trim().length() > 0) {
 			if (filter.length() > 0)
 				filter += " and ";
@@ -228,7 +216,6 @@ public class MproducttypeVm {
 						objForm.setStockinjected(0);
 						objForm.setIsalertstockpagu("N");
 					}
-					objForm.setProductorg(morg.getOrg());
 					objForm.setProductgroupcode(productgroupcode);
 					objForm.setProductgroupname(productgroupname);
 					objForm.setLastupdated(new Date());
@@ -307,7 +294,6 @@ public class MproducttypeVm {
 		objForm = new Mproducttype();
 		objForm.setSlacountertype(AppUtils.SLACOUNTERTYPE_DATEORDER);
 		objForm.setIsestcount(AppUtils.ESTIMATESTOCK_COUNTING);
-		morg = null;
 		cbOrg.setValue(null);
 		btnCancel.setDisabled(true);
 		btnDelete.setDisabled(true);
@@ -321,35 +307,16 @@ public class MproducttypeVm {
 
 			@Override
 			public void validate(ValidationContext ctx) {
-				/*
-				 * String productorg = (String) ctx.getProperties("productorg")[0] .getValue();
-				 */
+				
 				String producttype = (String) ctx.getProperties("producttype")[0].getValue();
 				Integer stockmin = (Integer) ctx.getProperties("stockmin")[0].getValue();
 
-				if (morg == null)
-					this.addInvalidMessage(ctx, "morg", Labels.getLabel("common.validator.empty"));
-				/*
-				 * if (productorg == null || "".equals(productorg.trim()))
-				 * this.addInvalidMessage(ctx, "productorg",
-				 * Labels.getLabel("common.validator.empty"));
-				 */
 				if (producttype == null || "".equals(producttype.trim()))
 					this.addInvalidMessage(ctx, "producttype", Labels.getLabel("common.validator.empty"));
 				if (stockmin == null)
 					this.addInvalidMessage(ctx, "stockmin", Labels.getLabel("common.validator.empty"));
 			}
 		};
-	}
-
-	public ListModelList<Morg> getMorgmodel() {
-		ListModelList<Morg> lm = null;
-		try {
-			lm = new ListModelList<Morg>(AppData.getMorg());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
 	}
 
 	public Mproducttype getObjForm() {
@@ -399,21 +366,4 @@ public class MproducttypeVm {
 	public void setPageTotalSize(int pageTotalSize) {
 		this.pageTotalSize = pageTotalSize;
 	}
-
-	public Morg getMorg() {
-		return morg;
-	}
-
-	public void setMorg(Morg morg) {
-		this.morg = morg;
-	}
-
-	public Morg getMorgsearch() {
-		return morgsearch;
-	}
-
-	public void setMorgsearch(Morg morgsearch) {
-		this.morgsearch = morgsearch;
-	}
-
 }

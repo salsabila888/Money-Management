@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Date;
 
@@ -36,9 +36,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.model.MexpensesListModel;
+import com.sdd.management.dao.MexpensesDAO;
 import com.sdd.management.domain.Mexpenses;
 import com.sdd.management.domain.Muser;
+import com.sdd.management.model.MexpensesListModel;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

@@ -5,7 +5,7 @@
 <?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
 <zk xmlns:w="client" xmlns:n="native">
 	<window
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MaimVm')"
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.MaimVm')"
 		validationMessages="@id('vmsgs')">
 		<script src="/bootstrap/v3/zk/js/button-bs.js" />
 		<div class="panel panel-default panel-sm">

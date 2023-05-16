@@ -52,25 +52,12 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MorgDAO;
-import com.sdd.caption.dao.MproductDAO;
-import com.sdd.caption.dao.TembossbranchDAO;
-import com.sdd.caption.dao.TembossproductDAO;
-import com.sdd.caption.dao.TmissingproductDAO;
-import com.sdd.caption.dao.TpinmailerdataDAO;
-import com.sdd.caption.dao.TpinmailerproductDAO;
-import com.sdd.caption.dao.TembossdataDAO;
-import com.sdd.caption.domain.Morg;
-import com.sdd.caption.domain.Mproduct;
-import com.sdd.caption.domain.Mproducttype;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Tembossbranch;
-import com.sdd.caption.domain.Tembossproduct;
-import com.sdd.caption.domain.Tmissingproduct;
-import com.sdd.caption.domain.Tpinmailerproduct;
-import com.sdd.caption.model.MproductListModel;
-import com.sdd.caption.utils.AppData;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MproductDAO;
+import com.sdd.management.domain.Mproduct;
+import com.sdd.management.domain.Mproducttype;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.utils.AppData;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
@@ -83,12 +70,6 @@ public class MproductVm {
 
 	private MproductListModel model;
 	private MproductDAO oDao = new MproductDAO();
-	private TembossdataDAO todDao = new TembossdataDAO();
-	private TmissingproductDAO tmpDao = new TmissingproductDAO();
-	private TembossproductDAO tepDao = new TembossproductDAO();
-	private TembossbranchDAO tebDao = new TembossbranchDAO();
-	private TpinmailerproductDAO tpmpDao = new TpinmailerproductDAO();
-	private TpinmailerdataDAO tpmdDao = new TpinmailerdataDAO();
 
 	private int pageStartNumber;
 	private int pageTotalSize;
@@ -105,7 +86,6 @@ public class MproductVm {
 	private String productname;
 	private String productgroupcode;
 	private String productgroupname;
-	private Morg morgsearch;
 
 	private Mproduct mproduct;
 	private Map<String, String> mapOrg;
@@ -281,61 +261,6 @@ public class MproductVm {
 					objForm.setUpdatedby(oUser.getUserid());
 					oDao.save(session, objForm);
 					transaction.commit();
-					/* CEK TMISSINGPRODUCT */
-					List<Tmissingproduct> tmpList = tmpDao.listByFilter(
-							"productcode = '" + objForm.getProductcode().toUpperCase() + "' and isinstant = '"
-									+ objForm.getIsinstant().toUpperCase() + "'",
-							"productcode");
-					if (tmpList.size() > 0) {
-						transaction = session.beginTransaction();
-						Morg morg = new MorgDAO().findById(objForm.getMproducttype().getProductorg());
-						List<Tembossproduct> tepList = tepDao
-								.listByFilter(
-										"productcode = '" + objForm.getProductcode().toUpperCase()
-												+ "' and isinstant = '" + objForm.getIsinstant().toUpperCase() + "'",
-										"productcode");
-						if (tepList.size() > 0) {
-							for (Tembossproduct data : tepList) {
-								data.setMproduct(objForm);
-								data.setOrg(morg.getOrg());
-								data.setIsneeddoc(morg.getIsneeddoc());
-								List<Tembossbranch> branchList = new TembossbranchDAO()
-										.listByFilter("tembossproductfk = " + data.getTembossproductpk(), "branchid");
-								for (Tembossbranch embossBranch : branchList) {
-									embossBranch.setMproduct(objForm);
-									tebDao.save(session, embossBranch);
-								}
-								/*
-								 * Tembossbranch embossBranch = new TembossbranchDAO()
-								 * .findByFilter("tembossproductfk = " + data.getTembossproductpk());
-								 */
-								tepDao.save(session, data);
-
-							}
-
-							todDao.updateMproductByEmbossProduct(session, objForm);
-
-						}
-
-						List<Tpinmailerproduct> tpmpList = tpmpDao
-								.listByFilter(
-										"productcode = '" + objForm.getProductcode().toUpperCase()
-												+ "' and isinstant = '" + objForm.getIsinstant().toUpperCase() + "'",
-										"productcode");
-						if (tpmpList.size() > 0) {
-							for (Tpinmailerproduct pinProduct : tpmpList) {
-								pinProduct.setMproduct(objForm);
-								pinProduct.setOrg(morg.getOrg());
-								tpmpDao.save(session, pinProduct);
-							}
-
-							tpmdDao.updateMproductByPinmailerBranch(session, objForm);
-						}
-
-						for (Tmissingproduct tmp : tmpList) {
-							tmpDao.delete(session, tmp);
-						}
-						transaction.commit();
 
 					}
 
@@ -352,48 +277,7 @@ public class MproductVm {
 					refreshModel(pageStartNumber);
 					Messagebox.show("Produk duplicate", "Info", Messagebox.OK, Messagebox.INFORMATION);
 				}
-			} else {
-				String newproductcode = objForm.getProductcode() + objForm.getIsinstant();
-
-				if (currentproductcode.equals(newproductcode)) {
-					if (mproduct != null)
-						objForm.setComboref(mproduct.getMproductpk());
-					objForm.setLastupdated(new Date());
-					objForm.setUpdatedby(oUser.getUserid());
-					oDao.save(session, objForm);
-					transaction.commit();
-					Clients.showNotification(Labels.getLabel("common.update.success"), "info", null, "middle_center", 3000);
-				} else {
-					Mproduct productDuplicate = oDao.findByFilter("productcode = '" + objForm.getProductcode().toUpperCase()
-							+ "' and isinstant = '" + objForm.getIsinstant().toUpperCase() + "'");
-					if (productDuplicate == null) {
-						if (mproduct != null)
-							objForm.setComboref(mproduct.getMproductpk());
-						objForm.setLastupdated(new Date());
-						objForm.setUpdatedby(oUser.getUserid());
-						oDao.save(session, objForm);
-						transaction.commit();
-						Clients.showNotification(Labels.getLabel("common.update.success"), "info", null, "middle_center", 3000);
-					} else {
-						filter = "productcode = '" + objForm.getProductcode().toUpperCase() + "' and isinstant = '"
-								+ objForm.getIsinstant().toUpperCase() + "'";
-
-						needsPageUpdate = true;
-						paging.setActivePage(0);
-						pageStartNumber = 0;
-						refreshModel(pageStartNumber);
-						Messagebox.show("Produk duplicate", "Info", Messagebox.OK, Messagebox.INFORMATION);
-					}
-				}
-				/*
-				 * String filterproduct = ""; if (objForm.getIsinstant().equals("Y"))
-				 * filterproduct = "productcode = '" + objForm.getProductcode().toUpperCase() +
-				 * "' and isinstant = 'N'"; else if (objForm.getIsinstant().equals("N"))
-				 * filterproduct = "productcode = '" + objForm.getProductcode().toUpperCase() +
-				 * "' and isinstant = 'Y'"; Mproduct mproduct =
-				 * oDao.findByFilter(filterproduct); if (mproduct != null) {
-				 * mproduct.setIsmm(objForm.getIsmm()); oDao.save(session, mproduct); }
-				 */
+			} 
 			}
 			session.close();
 
@@ -582,16 +466,6 @@ public class MproductVm {
 		}
 	}
 
-	public ListModelList<Morg> getMorgmodel() {
-		ListModelList<Morg> lm = null;
-		try {
-			lm = new ListModelList<Morg>(AppData.getMorg());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
-	}
-
 	public ListModelList<Mproducttype> getMproducttype() {
 		ListModelList<Mproducttype> lm = null;
 		try {
@@ -686,13 +560,5 @@ public class MproductVm {
 
 	public void setMproduct(Mproduct mproduct) {
 		this.mproduct = mproduct;
-	}
-
-	public Morg getMorgsearch() {
-		return morgsearch;
-	}
-
-	public void setMorgsearch(Morg morgsearch) {
-		this.morgsearch = morgsearch;
 	}
 }

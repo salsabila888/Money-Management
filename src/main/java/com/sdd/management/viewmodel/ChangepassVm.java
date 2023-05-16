@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,8 +20,8 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import com.sdd.caption.dao.MuserDAO;
-import com.sdd.caption.domain.Muser;
+import com.sdd.management.dao.MuserDAO;
+import com.sdd.management.domain.Muser;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 
