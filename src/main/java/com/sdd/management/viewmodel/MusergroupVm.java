@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -43,6 +43,7 @@ import org.zkoss.zul.event.PagingEvent;
 import com.sdd.management.dao.MusergroupDAO;
 import com.sdd.management.domain.Muser;
 import com.sdd.management.domain.Musergroup;
+import com.sdd.management.model.MusergroupListModel;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

@@ -5,7 +5,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window
 		border="none" width="500px"
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.ChangepassVm')"
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.ChangepassVm')"
 		validationMessages="@id('vmsgs')" sclass="win">
 		<caption sclass="wincaption">
 			<div align="center">

@@ -21,7 +21,7 @@
 	<div id="bdlogin" class="container-fluid"
 		style="background-image: url('images/pastelbg.jpg'); background-repeat: no-repeat; background-attachment: inherit;
 		background-position: center; background-size: cover;"
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.AuthentificationVm')">
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.AuthentificationVm')">
 		<div class="row animated fadeIn vh-100">
 			<div class="col-md-4 offset-md-1 text-center my-auto">
 				<n:img src="images/piggybank.png" class="img-fluid mb-4"

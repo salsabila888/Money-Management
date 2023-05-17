@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +36,11 @@ import org.zkoss.zul.Rows;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.Window;
 
-import com.sdd.caption.domain.Musergroupmenu;
+import com.sdd.management.dao.MmenuDAO;
+import com.sdd.management.dao.MusergroupmenuDAO;
 import com.sdd.management.domain.Mmenu;
 import com.sdd.management.domain.Musergroup;
+import com.sdd.management.domain.Musergroupmenu;
 import com.sdd.utils.db.StoreHibernateUtil;
 
 public class MusergroupmenuVm {

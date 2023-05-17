@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +39,11 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
-import com.sdd.caption.dao.MmenuDAO;
-import com.sdd.caption.domain.Micon;
-import com.sdd.caption.domain.Mmenu;
-import com.sdd.caption.model.MmenuListModel;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MmenuDAO;
+import com.sdd.management.domain.Micon;
+import com.sdd.management.domain.Mmenu;
+import com.sdd.management.model.MmenuListModel;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
 import com.sdd.utils.db.StoreHibernateUtil;
 

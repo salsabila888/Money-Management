@@ -56,6 +56,7 @@ import com.sdd.management.dao.MproductDAO;
 import com.sdd.management.domain.Mproduct;
 import com.sdd.management.domain.Mproducttype;
 import com.sdd.management.domain.Muser;
+import com.sdd.management.model.MproductListModel;
 import com.sdd.management.utils.AppData;
 import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.SysUtils;
