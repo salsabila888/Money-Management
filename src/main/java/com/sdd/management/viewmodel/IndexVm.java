@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,15 +16,12 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import com.sdd.caption.dao.DashboardDAO;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.domain.Muser;
 
 public class IndexVm {
 
 	private org.zkoss.zk.ui.Session zkSession = Sessions.getCurrent();
 	private Muser oUser;
-	private DashboardDAO oDao = new DashboardDAO();
 
 	private int branchlevel;
 

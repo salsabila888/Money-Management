@@ -3,7 +3,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winOrderPerso"
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MutationTabVm')">
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.MutationTabVm')">
 		<tabbox width="100%" sclass="nav_tabs">
 			<tabs id="tabs">
 				<tab label="Pemasukan"

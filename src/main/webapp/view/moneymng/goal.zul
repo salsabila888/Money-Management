@@ -3,7 +3,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
 <zk xmlns:w="client" xmlns:n="native">
 	<window
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.GoalVm')">
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.GoalVm')">
 		<div class="card" style="border-radius:15px;">
 			<div class="card-header" style="background-color: #845EC2; color:#ECF2FF;;
 			border-top-left-radius:15px; border-top-right-radius:15px;" >

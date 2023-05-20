@@ -5,11 +5,11 @@
 <?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
 <zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
 	<div
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.HeaderVm')">
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.HeaderVm')">
 		<script src="/bootstrap/v3/bootstrap/js/bootstrap.js" />
 		<script src="/bootstrap/v3/zk/js/button-bs.js" />
 		<zscript>
-	com.sdd.caption.domain.Muser oUser = (com.sdd.caption.domain.Muser) session.getAttribute("oUser");
+	com.sdd.management.domain.Muser oUser = (com.sdd.management.domain.Muser) session.getAttribute("oUser");
 	if (oUser == null)
 		Executions.sendRedirect("/timeout.zul");
 </zscript>

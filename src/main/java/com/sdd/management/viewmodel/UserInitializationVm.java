@@ -1,4 +1,4 @@
-package com.sdd.caption.viewmodel;
+package com.sdd.management.viewmodel;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,14 +33,14 @@ import org.zkoss.zul.Treechildren;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import com.sdd.caption.dao.MmenuDAO;
-import com.sdd.caption.dao.MusergroupmenuDAO;
-import com.sdd.caption.dao.TnotifDAO;
-import com.sdd.caption.domain.Mmenu;
-import com.sdd.caption.domain.Muser;
-import com.sdd.caption.domain.Musergroupmenu;
-import com.sdd.caption.domain.Tnotif;
-import com.sdd.caption.utils.AppUtils;
+import com.sdd.management.dao.MmenuDAO;
+import com.sdd.management.dao.MusergroupmenuDAO;
+import com.sdd.management.dao.TnotifDAO;
+import com.sdd.management.domain.Mmenu;
+import com.sdd.management.domain.Muser;
+import com.sdd.management.domain.Musergroupmenu;
+import com.sdd.management.domain.Tnotif;
+import com.sdd.management.utils.AppUtils;
 import com.sdd.utils.ListModelFlyweight;
 import com.sdd.utils.db.StoreHibernateUtil;
 

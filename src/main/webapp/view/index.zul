@@ -8,7 +8,7 @@
 <?link rel="stylesheet" type="text/css"	href="/mdb/css/zkstyle.css" ?>
 <zk xmlns:w="client" xmlns:n="native">
 	<borderlayout
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.UserInitialization3Vm')">
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.UserInitializationVm')">
 		<north border="none" height="80px">
 			<div>
 				<include src="/view/header.zul" />

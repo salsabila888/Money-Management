@@ -3,7 +3,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winIndex">
 		<div
-			viewModel="@id('vm') @init('com.sdd.caption.viewmodel.IndexVm')">
+			viewModel="@id('vm') @init('com.sdd.management.viewmodel.IndexVm')">
 		</div>
 		<div>
 			<label value="Welcome" />

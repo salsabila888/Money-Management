@@ -1,4 +1,4 @@
-package com.sdd.caption.model;
+package com.sdd.management.model;
 
 import java.util.ArrayList;
 import java.util.List;

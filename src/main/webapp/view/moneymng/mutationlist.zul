@@ -5,7 +5,7 @@
 <?link rel="stylesheet" type="text/css"	href="/bootstrap/v3/bootstrap/css/bootstrap.css" ?>
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winPlan"
-		viewModel="@id('vm') @init('com.sdd.caption.viewmodel.MutationListVm')"
+		viewModel="@id('vm') @init('com.sdd.management.viewmodel.MutationListVm')"
 		validationMessages="@id('vmsgs')">
 		<caption id="captIncoming" visible="false" />
 		<script src="/bootstrap/v3/zk/js/button-bs.js" />
